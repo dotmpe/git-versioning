@@ -1,9 +1,20 @@
 GIT Versioning Hooks
 ====================
 :Created: 2015-04-19
-:Version: 0.0.3
+:Version: 0.0.4
+:project:
 
-.. _reader-start:
+  .. image:: https://secure.travis-ci.org/dotmpe/node-sitefile.png
+    :target: https://travis-ci.org/dotmpe/node-sitefile
+    :alt: Build
+
+:repository:
+
+  .. image:: https://badge.fury.io/gh/dotmpe%2Fnode-sitefile.png
+    :target: http://badge.fury.io/gh/dotmpe%2Fnode-sitefile
+    :alt: GIT
+
+
 
 Looking around for a GIT versioning hook it seemed really simple at first,
 but then some different scenarios and issues emerged.
@@ -187,5 +198,5 @@ Makefile
 
 .. _semver2: http://semver.org/spec/v2.0.0.html
 .. _semver: http://semver.org/
-.. _sitefile: http://github.com/dotmpe/note-sitefile
+.. _sitefile: http://github.com/dotmpe/node-sitefile
 
