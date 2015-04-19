@@ -13,6 +13,9 @@ STRGTS := \
 
 .PHONY: $(STRGTS)
 
+# BSD weirdness
+echo = /bin/echo
+
 empty :=
 space := $(empty) $(empty)
 default: info
@@ -24,7 +27,7 @@ install:
 	npm install
 	make test
 
-test:
+test: check
 
 update:
 	npm update
@@ -42,6 +45,7 @@ version:
 	@./tools/cli-version.sh version
 
 check:
+	@$(echo) -n "Checking for version "
 	@./tools/cli-version.sh check
 
 patch: m :=

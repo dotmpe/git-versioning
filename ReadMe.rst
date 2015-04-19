@@ -82,7 +82,6 @@ Publication:
 1. ``cli-version check`` verify source before commit
 2. ``cli-integrate`` demonstration of example GIT commit, tag, branch and push flow
 
-
 Short description
 ~~~~~~~~~~~~~~~~~~
 The `update` command allows to set versions and release/build-tags
@@ -93,8 +92,13 @@ the underlying functions are all in ``lib/git-versioning.sh``
 TODO: some integration with GIT frontend
 
 - maybe ``git ci -m " vpat++ "``
-- something like ``git ci -m " v:testing "``
+- or something like ``git ci -m " v:testing "``
+- Need to reset tags for env each increment.
 
+Working examples:
+
+- ``./tools/cli-version.sh pre-release dev``
+- ``make patch m="Commit msg"``
 
 Deployment
 ----------
