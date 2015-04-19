@@ -1,7 +1,7 @@
 GIT Versioning Hooks
 ====================
 :Created: 2015-04-19
-:Version: 0.0.2
+:Version: 0.0.3
 
 .. _reader-start:
 
@@ -128,6 +128,18 @@ versioning work flow.
 
 - A `post-merge` hook could force some increment and a push to a main repo
   to sync versions directly.
+
+In general, if the version is not increment each commit, then the
+requirements of semver are only applicable to certain snapshots
+of a repository.
+
+
+GIT config
+----------
+Use GIT as frontend for make recipes. Commit new patch::
+
+  [alias]
+    patch = !make patch m="$1"
 
 
 Package contents

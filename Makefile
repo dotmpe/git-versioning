@@ -44,9 +44,10 @@ version:
 check:
 	@./tools/cli-version.sh check
 
+patch: m :=
 patch:
 	@./tools/cli-version.sh increment
-
+	@git add -u && git ci -m '$(m)'
 
 # XXX: GIT publish
 publish: DRY := yes
