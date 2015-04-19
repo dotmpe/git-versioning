@@ -1,6 +1,6 @@
 {
   "name": "git-versioning",
-  "version": "0.0.4-dev",
+  "version": "0.0.5",
   "description": "Shell hooks and util for GIT versioning",
   "main": "package.yaml",
   "scripts": {

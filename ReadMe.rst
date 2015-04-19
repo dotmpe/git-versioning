@@ -1,7 +1,7 @@
 GIT Versioning Hooks
 ====================
 :Created: 2015-04-19
-:Version: 0.0.4-dev
+:Version: 0.0.5
 :project:
 
   .. image:: https://secure.travis-ci.org/dotmpe/git-versioning.png

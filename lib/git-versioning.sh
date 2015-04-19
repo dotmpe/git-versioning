@@ -15,7 +15,7 @@ source lib/util.sh
 }
 
 # git-versioning package version
-version=0.0.4-dev
+version=0.0.5
 
 load()
 {
@@ -48,8 +48,8 @@ applyVersion()
         sed -i .applyVersion-bak 's/^:Version:.*/'"$VER_LINE"'/' $V_TOP_PATH/$doc
       ;;
       *.sitefilerc )
-        VER_LINE="sitefilerc:\ $VER_STR"
-        sed -i .applyVersion-bak 's/^sitefilerc:.*/'"$VER_LINE"'/' $V_TOP_PATH/$doc
+        VER_LINE="\"sitefilerc\":\ \"$VER_STR\""
+        sed -i .applyVersion-bak 's/^\ \ "sitefilerc":.*/'  "$VER_LINE"'/' $V_TOP_PATH/$doc
       ;;
       *Sitefile.yaml | *Sitefile.yml  )
         VER_LINE="sitefile:\ $VER_STR"

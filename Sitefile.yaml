@@ -1,5 +1,5 @@
 #!/usr/bin/env sitefile
-sitefile: 0.0.3
+sitefile: 0.0.3-dev
 routes:
   '': redir:reader
   index: redir:ReadMe

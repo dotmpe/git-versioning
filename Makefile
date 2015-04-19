@@ -30,6 +30,7 @@ install:
 test: check
 
 update:
+	./tools/cli-version.sh update
 	npm update
 	bower update
 
