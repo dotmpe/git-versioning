@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source lib/util.sh
+
 [ -n "$V_TOP_PATH" ] || {
   V_TOP_PATH=.
 }
@@ -8,8 +10,12 @@
   V_DOC_LIST=$V_TOP_PATH/.versioned-files.list
 }
 
+[ -n "$V_CHECK" ] || {
+  V_CHECK=$V_TOP_PATH/tools/version-check.sh
+}
+
 # git-versioning package version
-version=0.0.1
+version=0.0.2
 
 load()
 {
@@ -56,7 +62,7 @@ applyVersion()
       ;;
       *.yaml | *.yml )
         VER_LINE="version:\ $VER_STR"
-        sed -i .applyVersion-bak 's/^:Version:.*/'"$VER_LINE"'/' $V_TOP_PATH/$doc
+        sed -i .applyVersion-bak 's/^  version:.*/'"  $VER_LINE"'/' $V_TOP_PATH/$doc
       ;;
       *.js )
         VER_LINE="var version\ =\ '$VER_STR';"
@@ -125,26 +131,22 @@ incrVPAT()
   applyVersion
 }
 
-gitAddAll()
+version()
 {
-  for doc in $V_PATH_LIST
-  do
-    git add $V_TOP_PATH/$doc
-  done
+  echo $VER_STR
 }
 
-trueish()
+check()
 {
-  [ "$1" = "true" ] && {
-    return 0
-  } || {
-    return 1
-  }
+  buildVER
+  version
+  $V_CHECK $V_DOC_LIST $VER_STR
 }
 
 update()
 {
   buildVER
+  version
   applyVersion
 }
 
@@ -172,4 +174,3 @@ build()
   VER_META=$(echo $* | tr ' ' '.')
   update
 }
-

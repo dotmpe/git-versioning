@@ -1,3 +1,4 @@
 ReadMe.rst
 package.json
+package.yaml
 lib/git-versioning.sh

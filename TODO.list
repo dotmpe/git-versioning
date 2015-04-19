@@ -1,0 +1,4 @@
+Makefile:# XXX: GIT publish
+lib/git-versioning.sh:  # XXX Expect rSt MAIN_DOC
+ReadMe.rst:TODO: some integration with GIT frontend
+ReadMe.rst:      FIXME: if triggered, need a trigger

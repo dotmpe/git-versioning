@@ -1,7 +1,7 @@
 GIT Versioning Hooks
 ====================
 :Created: 2015-04-19
-:Version: 0.0.1
+:Version: 0.0.2
 
 .. _reader-start:
 
@@ -79,12 +79,10 @@ and populate the other files listing in ``.versioned-files.list``.
 Other commands are to update the version from the command-line,
 the underlying functions are all in ``lib/git-versioning.sh``
 
-The pre-commit hook assures this update runs, and 
+TODO: some integration with GIT frontend
 
-Then rewrites the msg ti include the version,
-and tags the resulting commit.
-
-And leaves the branch for a new one.
+- maybe ``git ci -m " vpat++ "``
+- something like ``git ci -m " v:testing "``
 
 
 Deployment
@@ -98,12 +96,17 @@ Other might be anoter staging area or '' for production.
 Wether the project checks out/builds/installs on a environment
 would say something about the projects stability.
 
-Further integration of this into a git-versioning workflow is for another time.
+Further integration of this into a git-versioning workflow is for another time
+perhaps.
+
+A dev setup with multiple users can have unique pre-release tags
+based on username for example, or even based on (abbreviated) GIT sha1sums.
 
 
 GIT hook setup
 --------------
-A bit hypothetical. Examples.
+A bit hypothetical. Looking at examples of using GIT hooks to automate
+versioning work flow.
 
 - A `pre-commit` hook may add new files, but it has no way to get at GIT
   arguments or the commit message. 
@@ -123,6 +126,9 @@ A bit hypothetical. Examples.
   Conceivably some CI system would start to run before the new particular version
   would be approved and published to the official branch or repository.
 
+- A `post-merge` hook could force some increment and a push to a main repo
+  to sync versions directly.
+
 
 Package contents
 ----------------
@@ -135,13 +141,16 @@ lib/git-versioning.sh
   - Shell script functions library.
 
 tools/
-  git-pre-commit
+  pre-commit.sh
     - GIT pre-commit hook Shell script.
     - Updates embedded metadata and add modified files to GIT staging area.
       FIXME: if triggered, need a trigger
 
   cli-version.sh
     - Command-line facade for lib/git-versioning functions.
+
+  version-check.sh
+    - Default check greps all metadata files to verify versions all match.
 
 package
   .json

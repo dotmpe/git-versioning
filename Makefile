@@ -2,18 +2,20 @@
 STRGTS := \
    default \
    info \
-   lint \
    test \
    build \
    install \
    update \
+   version \
+   check \
+   increment \
    publish
 
 .PHONY: $(STRGTS)
 
 empty :=
 space := $(empty) $(empty)
-default:
+default: info
 	@echo 'usage:'
 	@echo '# npm [info|update|test]'
 	@echo '# make [$(subst $(space),|,$(STRGTS))]'
@@ -22,12 +24,7 @@ install:
 	npm install
 	make test
 
-lint:
-	grunt lint
-
-# FIXME jasmine from grunt?
 test:
-	#coffee test/runner.coffee
 
 update:
 	npm update
@@ -35,22 +32,26 @@ update:
 
 build: TODO.list
 
-TODO.list: Makefile bin config public lib test ReadMe.rst Gruntfile.js Sitefile.yaml
+TODO.list: Makefile lib ReadMe.rst reader.rst package.yaml Sitefile.yaml
 	grep -srI 'TODO\|FIXME\|XXX' $^ | grep -v 'grep..srI..TODO' | grep -v 'TODO.list' > $@
 
 info:
-	npm run srctree
-	npm run srcloc
+	@./tools/cli-version.sh
+
+version:
+	@./tools/cli-version.sh version
+
+check:
+	@./tools/cli-version.sh check
+
+patch:
+	@./tools/cli-version.sh increment
 
 
-VERSION :=
-
+# XXX: GIT publish
 publish: DRY := yes
-publish:
-	@[ -z "$(VERSION)" ] && exit 1 || echo Publishing $(VERSION)
-	grep version..$(VERSION) ReadMe.rst
-	@./check.coffee $(VERSION)
-	grep '^$(VERSION)' Changelog.rst
+publish: check
+	@[ -z "$(VERSION)" ] && exit 1 || echo Publishing $(./tools/cli-version.sh version)
 	git push
 	@if [ $(DRY) = 'no' ]; \
 	then \

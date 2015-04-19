@@ -18,16 +18,16 @@ snapshot()
   build $(date +%s)
 }
 
-version()
+info()
 {
   echo "git-versioning/"$version
-  echo $VER_STR
 }
 
 help()
 {
   echo 'Usage:'
-  echo 'cli-version [version]              Print current version. '
+  echo 'cli-version [info]                 Print current versions. '
+  echo 'cli-version version                Print current version. '
   echo 'cli-version update                 Update files with embedded version. '
   echo 'cli-version increment [min [maj]]  Increment patch/min/maj version. '
   echo 'cli-version pre-release tag[s..]   Mark version pre-release with tag(s). '
@@ -45,7 +45,7 @@ usage()
   exit 1
 }
 
-default=version
+default=info
 
 # Main
 if [ -n "$0" ] && [ $0 != "-bash" ]; then
