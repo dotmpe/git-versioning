@@ -4,14 +4,14 @@ GIT Versioning Hooks
 :Version: 0.0.4
 :project:
 
-  .. image:: https://secure.travis-ci.org/dotmpe/node-sitefile.png
-    :target: https://travis-ci.org/dotmpe/node-sitefile
+  .. image:: https://secure.travis-ci.org/dotmpe/git-versioning.png
+    :target: https://travis-ci.org/dotmpe/git-versioning
     :alt: Build
 
 :repository:
 
-  .. image:: https://badge.fury.io/gh/dotmpe%2Fnode-sitefile.png
-    :target: http://badge.fury.io/gh/dotmpe%2Fnode-sitefile
+  .. image:: https://badge.fury.io/gh/dotmpe%2Fgit-versioning.png
+    :target: http://badge.fury.io/gh/dotmpe%2Fgit-versioning
     :alt: GIT
 
 
