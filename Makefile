@@ -52,6 +52,7 @@ check:
 patch: m :=
 patch:
 	@./tools/cli-version.sh increment
+	@./tools/prep-version.sh
 	@git add -u && git ci -m '$(m)'
 
 # XXX: GIT publish

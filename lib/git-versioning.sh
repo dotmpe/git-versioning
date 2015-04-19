@@ -15,7 +15,7 @@ source lib/util.sh
 }
 
 # git-versioning package version
-version=0.0.5
+version=0.0.6-master
 
 load()
 {
