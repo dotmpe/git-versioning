@@ -1,0 +1,24 @@
+{
+  "name": "git-versioning",
+  "version": "0.0.1",
+  "description": "Shell hooks and util for GIT versioning",
+  "main": "package.yaml",
+  "scripts": {
+    "test": "make test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dotmpe/git-versioning"
+  },
+  "keywords": [
+    "GIT",
+    "Shell",
+    "Versioning"
+  ],
+  "author": "B. van Berkum",
+  "license": "GPLv3",
+  "bugs": {
+    "url": "https://github.com/dotmpe/git-versioning/issues"
+  },
+  "homepage": "https://github.com/dotmpe/git-versioning"
+}
