@@ -1,75 +1,82 @@
-# special rule targets
-STRGTS := \
-   default \
-   info \
-   test \
-   build \
-   install \
-   update \
-   version \
-   check \
-   increment \
-   publish
+BUILD               := .build/
+DIR                 := $(CURDIR)
+BASE                := $(shell cd $(DIR);pwd)
 
-.PHONY: $(STRGTS)
+HOST                := $(shell hostname|tr '.' '-')
+APP_ID              := 
 
-# BSD weirdness
-echo = /bin/echo
+ifeq ($(APP_ID),)
+ifeq ($(wildcard package.yml),)
+APP_ID := $(notdir $(BASE))
+else
+APP_ID := $(shell grep '^main: ' package.yaml)
+endif
+endif
 
-empty :=
-space := $(empty) $(empty)
-default: info
-	@echo 'usage:'
-	@echo '# npm [info|update|test]'
-	@echo '# make [$(subst $(space),|,$(STRGTS))]'
+#      ------------ --
 
-install:
-	npm install
-	make test
+## Make internals
 
-test: check
+# make include search path
+VPATH              := . /
 
-update:
-	./bin/cli-version.sh update
-	npm update
-	bower update
+# make shell
+SHELL              := /bin/bash
 
-build: TODO.list
+# reset file extensions
+# xxx for imlicit rules?
+.SUFFIXES:
+#.SUFFIXES:         .rst .js .xhtml .mk .tex .pdf .list
+.SUFFIXES: .rst .mk
 
-TODO.list: Makefile lib ReadMe.rst reader.rst package.yaml Sitefile.yaml
-	grep -srI 'TODO\|FIXME\|XXX' $^ | grep -v 'grep..srI..TODO' | grep -v 'TODO.list' > $@
+#      ------------ --
 
-info:
-	@./bin/cli-version.sh
+## Local setup
 
-version:
-	@./bin/cli-version.sh version
+# name default target
+default::
 
-check:
-	@$(echo) -n "Checking for version "
-	@./bin/cli-version.sh check
+# global path/file lists
+SRC                :=
+DMK                :=
+#already setMK                 :=
+DEP                :=
+TRGT               :=
+STRGT              := default stat build install clean
+CLN                :=
+TEST               :=
+INSTALL            :=
 
-patch: m :=
-patch:
-	@git add -u && git ci -m "Finalized patch: $(strip $(m) $$(./bin/cli-version.sh version))"
-	@git tag $$(./bin/cli-version.sh version)
-	@./bin/cli-version.sh increment
-	@./tools/prep-version.sh
+relative = $(patsubst $(BASE)%,$(APP_ID):%,$1)
+where-am-i = $(call relative,$(lastword $(MAKEFILE_LIST)))
 
+# rules: return Rules files for each directory in $1
+rules = $(foreach D,$1,\
+	$(wildcard \
+		$DRules.mk $D.Rules.mk \
+		$DRules.$(APP_ID).mk $D.Rules.$(APP_ID).mk \
+		$DRules.$(HOST).mk $D.Rules.$(HOST).mk))
 
-# XXX: GIT publish
-publish: DRY := yes
-publish: check
-	@[ -z "$(VERSION)" ] && exit 1 || echo Publishing $(./bin/cli-version.sh version)
-	git push
-	@if [ $(DRY) = 'no' ]; \
-	then \
-		git tag v$(VERSION)
-		git push fury master; \
-		npm publish --tag $(VERSION); \
-		npm publish; \
-	else \
-		echo "*DRY* $(VERSION)"; \
-	fi
+# Include local rules
+#
+include                $(call rules,$(DIR)/)
 
+# pseudo targets are not files, don't check with OS
+.PHONY: $(STRGT)
+
+#      ------------ --
+
+## Main rules/deps
+
+default:: $(DMK) $(DEP)
+default:: $(DEFAULT)
+
+stat:: $(SRC)
+
+build:: $(TRGT)
+
+install:: $(INSTALL)
+
+clean:: .
+	rm -rf $(CLN)
 
