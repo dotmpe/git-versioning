@@ -2,7 +2,6 @@
 STRGTS := \
    usage \
    default \
-   info \
    test \
    build \
    install \
@@ -39,8 +38,6 @@ build:: TODO.list
 TODO.list: Makefile lib ReadMe.rst reader.rst package.yaml Sitefile.yaml
 	grep -srI 'TODO\|FIXME\|XXX' $^ | grep -v 'grep..srI..TODO' | grep -v 'TODO.list' > $@
 
-info::
-
 version:
 	@./bin/cli-version.sh version
 
@@ -50,7 +47,7 @@ check:
 
 patch: m :=
 patch:
-	@git add -u && git ci -m "$(strip $(m) $$(./bin/cli-version.sh version))"
+	@git add -u && git ci -m "$(strip $(m) $(APP_ID)/$$(./bin/cli-version.sh version))"
 	@git tag $$(./bin/cli-version.sh version)
 	@./bin/cli-version.sh increment
 	@./tools/prep-version.sh

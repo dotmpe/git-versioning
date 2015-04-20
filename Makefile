@@ -81,5 +81,5 @@ clean:: .
 	rm -rf $(CLN)
 
 info::
-	echo "Id: $(APP_ID)"
+	@echo "Id: $(APP_ID)"
 
