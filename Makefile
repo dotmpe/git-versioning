@@ -5,7 +5,7 @@ BASE                := $(shell cd $(DIR);pwd)
 HOST                := $(shell hostname|tr '.' '-')
 
 APP_ID              := 
-VERSION              = 0.0.11 # git-versioning
+VERSION              = 0.0.12 # git-versioning
 
 ifneq ($(wildcard package.yml),)
 APP_ID := $(shell grep '^main: ' package.yaml)

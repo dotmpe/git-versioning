@@ -1,7 +1,7 @@
 GIT Versioning Hooks
 ====================
 :Created: 2015-04-19
-:Version: 0.0.11
+:Version: 0.0.12
 :project:
 
   .. image:: https://secure.travis-ci.org/dotmpe/git-versioning.png
@@ -103,6 +103,32 @@ Working examples:
 
 Finalize
 - ``make patch m="Commit msg"``
+
+Syntax
+~~~~~~
+Embedded metadata follows some basic rules.
+For clike languages::
+
+  # Id: app-id/0.0.0
+  # version: 0.0.0 app-id
+
+And while the exact format differs each follows the following pattern::
+
+  version = 0.0.0 # app-id
+
+For some files exceptions are made.
+For one, the main file is always assumed to be an rSt file.
+Its version line has no app-id qualifier.
+Also the package.json has no app-id qualifier at the version line.
+Both belong to a single project only.
+
+Supported 'version' variable assignments in Javascript, Coffee, Shell, Makefile.
+Each variable starts after a newline and ends with a comment containing the app-id.
+
+For JSON and YAML there can be an indendation before the 'version' tag.
+
+.. rSt example:
+.. Id: git-versioning/0.0.12 ReadMe.rst
 
 Deployment
 ----------

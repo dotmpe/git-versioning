@@ -1,6 +1,6 @@
-# Id: git-versioning/0.0.11 Rules.git-versioning.mk
+# Id: git-versioning/0.0.12 Rules.git-versioning.mk
 # special rule targets
-STRGTS := \
+STRGT += \
    usage \
    default \
    test \
@@ -9,7 +9,7 @@ STRGTS := \
    update \
    version \
    check \
-   increment \
+   path release tag \
    publish
 
 # BSD weirdness
@@ -43,13 +43,20 @@ version:
 	@./bin/cli-version.sh version
 
 check:
-	@$(echo) -n "Checking for version "
+	@$(echo) -n "Checking for $(APP_ID) version "
 	@./bin/cli-version.sh check
 
-patch: m :=
 patch:
-	@git add -u && git ci -m "$(strip $(m) $(APP_ID)/$$(./bin/cli-version.sh version))"
-	@git tag $$(./bin/cli-version.sh version)
+	@./bin/cli-version.sh increment
+
+release: maj := 
+release:
+	@./bin/cli-version.sh increment true $(maj)
+
+#	@git add -u && git ci -m "$(m)"
+
+tag:
+	@git tag $(APP_ID)/$$(./bin/cli-version.sh version)
 	@./bin/cli-version.sh increment
 	@./tools/prep-version.sh
 

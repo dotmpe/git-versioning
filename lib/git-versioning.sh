@@ -1,10 +1,10 @@
 #!/bin/bash
 
-# Id: git-versioning/0.0.11 lib/git-versioning.sh
+# Id: git-versioning/0.0.12 lib/git-versioning.sh
 
 source lib/util.sh
 
-version=0.0.11 # git-versioning
+version=0.0.12 # git-versioning
 
 [ -n "$V_TOP_PATH" ] || {
   V_TOP_PATH=.
@@ -58,9 +58,14 @@ applyVersion()
   do
     case $doc in
 
-      *ReadMe.rst )
-        VER_LINE=":Version:\ $VER_STR"
-        sed -i .applyVersion-bak 's/^:Version:.*/'"$VER_LINE"'/' $V_TOP_PATH/$doc
+      *.rst )
+        if [ "$doc" = "$V_MAIN_DOC" ]
+        then
+          VER_LINE=":Version:\ $VER_STR"
+          sed -i .applyVersion-bak 's/^:Version:.*/'"$VER_LINE"'/' $V_TOP_PATH/$doc
+        fi
+        ID_LINE=".. Id: $APP_ID\/$VER_STR "$(echo $doc | sed 's/\//\\\//g')
+        sed -i .applyVersion-bak 's/^\.\. Id: '$APP_ID'.*/'"$ID_LINE"'/' $V_TOP_PATH/$doc
       ;;
       *.sitefilerc )
         VER_LINE="\"sitefilerc\":\ \"$VER_STR\""
@@ -85,7 +90,7 @@ applyVersion()
       *.yaml | *.yml )
         commonCLikeComment $doc
         VER_LINE="version:\ $VER_STR # $APP_ID"
-        sed -i .applyVersion-bak 's/^  version:.* # '$APP_ID'/'"  $VER_LINE"'/' $V_TOP_PATH/$doc
+        sed -i .applyVersion-bak 's/^\([\ \t]*\)version:.* # '$APP_ID'/'"\1$VER_LINE"'/' $V_TOP_PATH/$doc
       ;;
       *.js )
         VER_LINE="var version\ =\ '$VER_STR'; \/\/ $APP_ID"
@@ -93,7 +98,7 @@ applyVersion()
       ;;
       *.json )
         VER_LINE="\"version\":\ \"$VER_STR\","
-        sed -i .applyVersion-bak 's/^\ \ "version":.*/  '"$VER_LINE"'/' $V_TOP_PATH/$doc
+        sed -i .applyVersion-bak 's/^\([\ \t]*\)"version":.*/\1'"$VER_LINE"'/' $V_TOP_PATH/$doc
       ;;
       *.coffee )
         commonCLikeComment $doc
