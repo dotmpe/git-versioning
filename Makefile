@@ -51,10 +51,10 @@ check:
 
 patch: m :=
 patch:
-	@git add -u && git ci -m 'Finalized patch: '$(strip $(m) $(./bin/cli-version.sh version))
-	@git tag $(./bin/cli-version.sh version)
+	@git add -u && git ci -m "Finalized patch: $(strip $(m) $$(./bin/cli-version.sh version))"
+	@git tag $$(./bin/cli-version.sh version)
 	@./bin/cli-version.sh increment
-	@./bin/prep-version.sh
+	@./tools/prep-version.sh
 
 
 # XXX: GIT publish

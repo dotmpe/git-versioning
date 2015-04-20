@@ -19,7 +19,7 @@ GIT Versioning Hooks
 Looking around for a GIT versioning hook it seemed really simple at first,
 but then some different scenarios and issues emerged.
 
-Taken a step back, more important points are raised by semver2_.
+Taken a step back, more important points are raised by semver2_. [#]_
 
 Semver makes a big deal of stable, well-defined states of software
 that at any point have a sensible patch- or upgrade-path. In case of 
@@ -66,6 +66,7 @@ Before and during development:
 1. Prep GIT project and ``.versioned-files.list``
 2. Write main doc (``ReadMe.rst``) to contain start version and tags
 3. ``cli-version update`` update embedded metadata
+4. Commit changes under pre-release tagged versions until final package commit.
 
 Packaging (manually or CI-automated):
 
@@ -80,7 +81,7 @@ Packaging (manually or CI-automated):
 Publication:
 
 1. ``cli-version check`` verify source before commit
-2. ``cli-integrate`` demonstration of example GIT commit, tag, branch and push flow
+2. TODO ``cli-integrate`` demonstration of example GIT commit, tag, branch and push flow
 
 Short description
 ~~~~~~~~~~~~~~~~~~
@@ -97,7 +98,10 @@ TODO: some integration with GIT frontend
 
 Working examples:
 
-- ``./tools/cli-version.sh pre-release dev``
+- ``./bin/cli-version.sh pre-release dev``
+- see cli-version
+
+Finalize
 - ``make patch m="Commit msg"``
 
 Deployment
@@ -108,15 +112,28 @@ One is the environment, NodeJS and Bower distinguish between
 'development', which has additional tools installed, and other.
 Other might be anoter staging area or '' for production.
 
-Wether the project checks out/builds/installs on a environment
-would say something about the projects stability.
-
+Test results of deployments indicate the stability of the project.
+It is influenced by the state of the testing or acceptation environment(s),
+in particular the stability of dependencie.
 Further integration of this into a git-versioning workflow is for another time
 perhaps.
 
 A dev setup with multiple users can have unique pre-release tags
-based on username for example, or even based on (abbreviated) GIT sha1sums.
+based on username for example, or the GIT branch name.
+To describe any further scenarios needs a plan containing the branch and
+reposisitory topology and CI systems.
 
+The example makefile offers one hypothetical flow to finalize a patch version
+by creating a tag, and then incrementing and updating the source files::
+ 
+  $ make patch m="Done with issue-123"
+
+Generally, a 'master', 'dev(elop(ment))' branch layout is the defacto GIT
+standard.
+Other flows could be to name branches after releases
+and tag the specific release versions.
+
+But for software development, a topic based layout is preferred. [#]_
 
 GIT hook setup
 --------------
@@ -167,14 +184,15 @@ Package contents
 lib/git-versioning.sh
   - Shell script functions library.
 
+bin/
+  cli-version.sh
+    - Command-line facade for lib/git-versioning functions.
+
 tools/
   pre-commit.sh
     - GIT pre-commit hook Shell script.
     - Updates embedded metadata and add modified files to GIT staging area.
       FIXME: if triggered, need a trigger
-
-  cli-version.sh
-    - Command-line facade for lib/git-versioning functions.
 
   version-check.sh
     - Default check greps all metadata files to verify versions all match.
@@ -198,6 +216,9 @@ Makefile
 ----
 
 .. [#] `Semantic Versioning 2.0.0`__
+.. [#] A successful Git branching model
+  http://nvie.com/posts/a-successful-git-branching-model/
+
 .. __: semver2_
 
 .. _semver2: http://semver.org/spec/v2.0.0.html
