@@ -1,4 +1,7 @@
 #!/bin/bash
+
+# version: 0.0.6
+
 source ./lib/git-versioning.sh
 
 testing()

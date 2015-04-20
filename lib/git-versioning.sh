@@ -1,6 +1,10 @@
 #!/bin/bash
 
+# Id: git-versioning/0.0.6 lib/git-versioning.sh
+
 source lib/util.sh
+
+version=0.0.6
 
 [ -n "$V_TOP_PATH" ] || {
   V_TOP_PATH=.
@@ -13,9 +17,6 @@ source lib/util.sh
 [ -n "$V_CHECK" ] || {
   V_CHECK=$V_TOP_PATH/tools/version-check.sh
 }
-
-# git-versioning package version
-version=0.0.6-master
 
 load()
 {
@@ -35,6 +36,15 @@ load()
   VER_TAGS=$(echo $VER_STR | awk -F- '{print $2}')
   VER_PRE=$(echo $VER_TAGS | awk -F+ '{print $1}')
   VER_META=$(echo $VER_TAGS | awk -F+ '{print $2}')
+}
+
+commonCLikeComment()
+{
+  VER_LINE="# version: $VER_STR"
+  sed -i .applyVersion-bak 's/^#\ version:\ .*/'"$VER_LINE"'/' $V_TOP_PATH/$1
+  APP_ID=$(grep 'id:' package.yaml | awk '{print $2}')
+  ID_LINE="# Id: $APP_ID\/$VER_STR "$(echo $1 | sed 's/\//\\\//g')
+  sed -i .applyVersion-bak 's/^# Id: .*/'"$ID_LINE"'/' $V_TOP_PATH/$1
 }
 
 applyVersion()
@@ -57,10 +67,12 @@ applyVersion()
       ;;
 
       *.sh )
+        commonCLikeComment $doc
         VER_LINE="version=$VER_STR"
         sed -i .applyVersion-bak 's/^version=.*/'"$VER_LINE"'/' $V_TOP_PATH/$doc
       ;;
       *.yaml | *.yml )
+        commonCLikeComment $doc
         VER_LINE="version:\ $VER_STR"
         sed -i .applyVersion-bak 's/^  version:.*/'"  $VER_LINE"'/' $V_TOP_PATH/$doc
       ;;
@@ -73,12 +85,14 @@ applyVersion()
         sed -i .applyVersion-bak 's/^\ \ "version":.*/  '"$VER_LINE"'/' $V_TOP_PATH/$doc
       ;;
       *.coffee )
+        commonCLikeComment $doc
         VER_LINE="version\ =\ '$VER_STR'"
         sed -i .applyVersion-bak 's/^version =.*/'"$VER_LINE"'/' $V_TOP_PATH/$doc
       ;;
 
-      * ) echo $0 Unable to version $doc;
-      ;;
+      * )
+        echo "Cannot version $doc"
+        exit 2;;
 
     esac
 
@@ -87,7 +101,6 @@ applyVersion()
     echo "$doc @$VER_STR"
 
   done
-  # for post-commit: git commit -m "version update: "$VER_STR
 }
 
 buildVER()
@@ -174,3 +187,17 @@ build()
   VER_META=$(echo $* | tr ' ' '.')
   update
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

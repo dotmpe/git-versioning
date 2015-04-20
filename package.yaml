@@ -1,3 +1,18 @@
+ 
+# Id: git-versioning/0.0.6 package.yaml
+# Start
+
 - type: application/x-project-mpe
-  version: 0.0.6-master
+  id: git-versioning
+  version: 0.0.6
   environments: [ 'development' ]
+
+# End
+# Id: git-versioning/0.0.6 package.yaml
+
+
+
+
+
+
+

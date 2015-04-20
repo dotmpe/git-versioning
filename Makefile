@@ -30,7 +30,7 @@ install:
 test: check
 
 update:
-	./tools/cli-version.sh update
+	./bin/cli-version.sh update
 	npm update
 	bower update
 
@@ -40,25 +40,27 @@ TODO.list: Makefile lib ReadMe.rst reader.rst package.yaml Sitefile.yaml
 	grep -srI 'TODO\|FIXME\|XXX' $^ | grep -v 'grep..srI..TODO' | grep -v 'TODO.list' > $@
 
 info:
-	@./tools/cli-version.sh
+	@./bin/cli-version.sh
 
 version:
-	@./tools/cli-version.sh version
+	@./bin/cli-version.sh version
 
 check:
 	@$(echo) -n "Checking for version "
-	@./tools/cli-version.sh check
+	@./bin/cli-version.sh check
 
 patch: m :=
 patch:
-	@./tools/cli-version.sh increment
-	@./tools/prep-version.sh
-	@git add -u && git ci -m '$(m)'
+	@git add -u && git ci -m 'Finalized patch: '$(strip $(m) $(./bin/cli-version.sh version))
+	@git tag $(./bin/cli-version.sh version)
+	@./bin/cli-version.sh increment
+	@./bin/prep-version.sh
+
 
 # XXX: GIT publish
 publish: DRY := yes
 publish: check
-	@[ -z "$(VERSION)" ] && exit 1 || echo Publishing $(./tools/cli-version.sh version)
+	@[ -z "$(VERSION)" ] && exit 1 || echo Publishing $(./bin/cli-version.sh version)
 	git push
 	@if [ $(DRY) = 'no' ]; \
 	then \

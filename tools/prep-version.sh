@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Id: git-versioning/0.0.6 tools/prep-version.sh
+
+
 # Script to reset flags for (auto) increments
 
 # just set pre-release tag to the branch

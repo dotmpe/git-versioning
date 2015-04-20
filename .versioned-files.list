@@ -1,4 +1,9 @@
 ReadMe.rst
 package.json
 package.yaml
+bin/cli-version.sh
 lib/git-versioning.sh
+lib/util.sh
+tools/pre-commit.sh
+tools/prep-version.sh
+tools/version-check.sh
