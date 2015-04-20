@@ -1,10 +1,10 @@
 #!/bin/bash
 
-# Id: git-versioning/0.0.8-master lib/git-versioning.sh
+# Id: git-versioning/0.0.9 lib/git-versioning.sh
 
 source lib/util.sh
 
-version=0.0.8
+version=0.0.9
 
 [ -n "$V_TOP_PATH" ] || {
   V_TOP_PATH=.
@@ -20,6 +20,9 @@ version=0.0.8
 
 load()
 {
+  #APP_ID=$(grep '^main:' package.yaml | awk '{print $2}')
+  APP_ID=$(make info|grep '^Id'|awk '{print $2}')
+
   V_PATH_LIST=$(cat $V_DOC_LIST)
   V_MAIN_DOC=$(head -n 1 $V_DOC_LIST)
 
@@ -43,9 +46,10 @@ commonCLikeComment()
   VER_LINE="# version: $VER_STR"
   sed -i .applyVersion-bak 's/^#\ version:\ .*/'"$VER_LINE"'/' $V_TOP_PATH/$1
 
-  APP_ID=$(grep '^main:' package.yaml | awk '{print $2}')
+  [ -n "$APP_ID" ] || return;
+
   ID_LINE="# Id: $APP_ID\/$VER_STR "$(echo $1 | sed 's/\//\\\//g')
-  sed -i .applyVersion-bak 's/^# Id: $APP_ID.*/'"$ID_LINE"'/' $V_TOP_PATH/$1
+  sed -i .applyVersion-bak 's/^# Id: '$APP_ID'.*/'"$ID_LINE"'/' $V_TOP_PATH/$1
 }
 
 applyVersion()

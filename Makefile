@@ -5,12 +5,12 @@ BASE                := $(shell cd $(DIR);pwd)
 HOST                := $(shell hostname|tr '.' '-')
 APP_ID              := 
 
-ifeq ($(APP_ID),)
-ifeq ($(wildcard package.yml),)
-APP_ID := $(notdir $(BASE))
-else
+ifneq ($(wildcard package.yml),)
 APP_ID := $(shell grep '^main: ' package.yaml)
 endif
+
+ifeq ($(APP_ID),)
+APP_ID := $(notdir $(BASE))
 endif
 
 #      ------------ --
@@ -42,7 +42,7 @@ DMK                :=
 #already setMK                 :=
 DEP                :=
 TRGT               :=
-STRGT              := default stat build install clean
+STRGT              := default stat build install clean info
 CLN                :=
 TEST               :=
 INSTALL            :=
@@ -79,4 +79,7 @@ install:: $(INSTALL)
 
 clean:: .
 	rm -rf $(CLN)
+
+info::
+	echo "Id: $(APP_ID)"
 

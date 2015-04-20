@@ -39,8 +39,7 @@ build:: TODO.list
 TODO.list: Makefile lib ReadMe.rst reader.rst package.yaml Sitefile.yaml
 	grep -srI 'TODO\|FIXME\|XXX' $^ | grep -v 'grep..srI..TODO' | grep -v 'TODO.list' > $@
 
-info:
-	@./bin/cli-version.sh
+info::
 
 version:
 	@./bin/cli-version.sh version
