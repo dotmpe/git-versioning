@@ -1,11 +1,11 @@
 #!/bin/bash
 
-# Id: git-versioning/0.0.6 tools/prep-version.sh
+# Id: git-versioning/0.0.7 tools/prep-version.sh
 
 
 # Script to reset flags for (auto) increments
 
 # just set pre-release tag to the branch
 BRANCH=$(git status|grep On.branch|awk '{print $3}')
-./tools/cli-version.sh pre-release $BRANCH
+./bin/cli-version.sh pre-release $BRANCH
 

@@ -1,10 +1,10 @@
 #!/bin/bash
 
-# Id: git-versioning/0.0.6 lib/git-versioning.sh
+# Id: git-versioning/0.0.7 lib/git-versioning.sh
 
 source lib/util.sh
 
-version=0.0.6
+version=0.0.7
 
 [ -n "$V_TOP_PATH" ] || {
   V_TOP_PATH=.
