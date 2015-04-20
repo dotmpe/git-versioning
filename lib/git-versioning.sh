@@ -1,10 +1,10 @@
 #!/bin/bash
 
-# Id: git-versioning/0.0.10 lib/git-versioning.sh
+# Id: git-versioning/0.0.11 lib/git-versioning.sh
 
 source lib/util.sh
 
-version=0.0.10
+version=0.0.11 # git-versioning
 
 [ -n "$V_TOP_PATH" ] || {
   V_TOP_PATH=.
@@ -43,8 +43,8 @@ load()
 
 commonCLikeComment()
 {
-  VER_LINE="# version: $VER_STR"
-  sed -i .applyVersion-bak 's/^#\ version:\ .*/'"$VER_LINE"'/' $V_TOP_PATH/$1
+  VER_LINE="# version: $VER_STR $APP_ID"
+  sed -i .applyVersion-bak 's/^#\ version:\ .* '$APP_ID'/'"$VER_LINE"'/' $V_TOP_PATH/$1
 
   [ -n "$APP_ID" ] || return;
 
@@ -71,19 +71,25 @@ applyVersion()
         sed -i .applyVersion-bak 's/^sitefile:.*/'"$VER_LINE"'/' $V_TOP_PATH/$doc
       ;;
 
+      *.mk | *Makefile )
+        commonCLikeComment $doc
+        VER_LINE="VERSION\1= $VER_STR # $APP_ID"
+        sed -i .applyVersion-bak 's/^VERSION\(\ *\)=.* # '$APP_ID'/'"$VER_LINE"'/' $V_TOP_PATH/$doc
+        ;;
+
       *.sh )
         commonCLikeComment $doc
-        VER_LINE="version=$VER_STR"
-        sed -i .applyVersion-bak 's/^version=.*/'"$VER_LINE"'/' $V_TOP_PATH/$doc
+        VER_LINE="version=$VER_STR # $APP_ID"
+        sed -i .applyVersion-bak 's/^version=.* # '$APP_ID'/'"$VER_LINE"'/' $V_TOP_PATH/$doc
       ;;
       *.yaml | *.yml )
         commonCLikeComment $doc
-        VER_LINE="version:\ $VER_STR"
-        sed -i .applyVersion-bak 's/^  version:.*/'"  $VER_LINE"'/' $V_TOP_PATH/$doc
+        VER_LINE="version:\ $VER_STR # $APP_ID"
+        sed -i .applyVersion-bak 's/^  version:.* # '$APP_ID'/'"  $VER_LINE"'/' $V_TOP_PATH/$doc
       ;;
       *.js )
-        VER_LINE="var version\ =\ '$VER_STR';"
-        sed -i .applyVersion-bak 's/^var version =.*/'"$VER_LINE"'/' $V_TOP_PATH/$doc
+        VER_LINE="var version\ =\ '$VER_STR'; \/\/ $APP_ID"
+        sed -i .applyVersion-bak 's/^var version =.* \/\/ '$APP_ID'/'"$VER_LINE"'/' $V_TOP_PATH/$doc
       ;;
       *.json )
         VER_LINE="\"version\":\ \"$VER_STR\","
@@ -91,8 +97,8 @@ applyVersion()
       ;;
       *.coffee )
         commonCLikeComment $doc
-        VER_LINE="version\ =\ '$VER_STR'"
-        sed -i .applyVersion-bak 's/^version =.*/'"$VER_LINE"'/' $V_TOP_PATH/$doc
+        VER_LINE="version = '$VER_STR' # $APP_ID"
+        sed -i .applyVersion-bak 's/^version =.* # '$APP_ID'/'"$VER_LINE"'/' $V_TOP_PATH/$doc
       ;;
 
       * )

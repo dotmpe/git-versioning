@@ -7,3 +7,5 @@ lib/util.sh
 tools/pre-commit.sh
 tools/prep-version.sh
 tools/version-check.sh
+Makefile
+Rules.git-versioning.mk

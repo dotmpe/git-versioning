@@ -3,7 +3,9 @@ DIR                 := $(CURDIR)
 BASE                := $(shell cd $(DIR);pwd)
 
 HOST                := $(shell hostname|tr '.' '-')
+
 APP_ID              := 
+VERSION              = 0.0.11 # git-versioning
 
 ifneq ($(wildcard package.yml),)
 APP_ID := $(shell grep '^main: ' package.yaml)
@@ -82,4 +84,5 @@ clean:: .
 
 info::
 	@echo "Id: $(APP_ID)"
+	@echo "Version: $(VERSION)"
 

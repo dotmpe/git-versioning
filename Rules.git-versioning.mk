@@ -1,3 +1,4 @@
+# Id: git-versioning/0.0.11 Rules.git-versioning.mk
 # special rule targets
 STRGTS := \
    usage \
