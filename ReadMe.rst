@@ -1,7 +1,7 @@
 GIT Versioning Hooks
 ====================
 :Created: 2015-04-19
-:Version: 0.0.13
+:Version: 0.0.14
 :project:
 
   .. image:: https://secure.travis-ci.org/dotmpe/git-versioning.png
@@ -128,7 +128,7 @@ Each variable starts after a newline and ends with a comment containing the app-
 For JSON and YAML there can be an indendation before the 'version' tag.
 
 .. rSt example:
-.. Id: git-versioning/0.0.13 ReadMe.rst
+.. Id: git-versioning/0.0.14 ReadMe.rst
 
 Deployment
 ----------

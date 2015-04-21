@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Id: git-versioning/0.0.13 bin/cli-version.sh
+# Id: git-versioning/0.0.14 bin/cli-version.sh
 
 source ./lib/git-versioning.sh
 

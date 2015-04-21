@@ -10,7 +10,7 @@
 # Made to work from paths listed in .versioned-files.list
 # Case allows easy per-project custom versioned file name/ext and format.
 
-# Id: git-versioning/0.0.13 tools/pre-commit.sh
+# Id: git-versioning/0.0.14 tools/pre-commit.sh
 
 V_TOP_PATH=$(git rev-parse --show-toplevel)
 

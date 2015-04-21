@@ -9,3 +9,4 @@ tools/prep-version.sh
 tools/version-check.sh
 Makefile
 Rules.git-versioning.mk
+Rules.git-versioning.shared.mk
