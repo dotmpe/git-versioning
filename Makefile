@@ -5,12 +5,12 @@ BASE                := $(shell cd $(DIR);pwd)
 HOST                := $(shell hostname|tr '.' '-')
 
 APP_ID              := 
-VERSION              = 0.0.12 # git-versioning
+VERSION              = 0.0.13 # git-versioning
 
+# See GIT versioning project for more complete APP_ID heuristic
 ifneq ($(wildcard package.yml),)
 APP_ID := $(shell grep '^main: ' package.yaml)
 endif
-
 ifeq ($(APP_ID),)
 APP_ID := $(notdir $(BASE))
 endif
@@ -83,6 +83,7 @@ clean:: .
 	rm -rf $(CLN)
 
 info::
-	@echo "Id: $(APP_ID)"
+	@echo "Id: $(APP_ID)/$(VERSION)"
+	@echo "Name: $(APP_ID)"
 	@echo "Version: $(VERSION)"
 

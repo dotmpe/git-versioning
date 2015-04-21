@@ -1,24 +1,29 @@
 {
   "name": "git-versioning",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "description": "Shell hooks and util for GIT versioning",
-  "main": "package.yaml",
-  "scripts": {
-    "test": "make test"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/dotmpe/git-versioning"
-  },
+  "homepage": "https://github.com/dotmpe/git-versioning",
+  "author": "B. van Berkum",
   "keywords": [
     "GIT",
     "Shell",
     "Versioning"
   ],
-  "author": "B. van Berkum",
   "license": "GPLv3",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dotmpe/git-versioning"
+  },
   "bugs": {
     "url": "https://github.com/dotmpe/git-versioning/issues"
   },
-  "homepage": "https://github.com/dotmpe/git-versioning"
+  "main": "package.yaml",
+  "scripts": {
+    "test": "make test",
+    "src-tree": "tree -I 'node_modules|build|components'",
+    "src-files": "cat .gitignore | sed -e 's/\\(.*\\)/-not -path \"*\\1*\" /' | xargs find ./ -type f -not -path '*/.git/*' ",
+    "src-loc": "cat .gitignore | sed -e 's/\\(.*\\)/-not -path \"*\\1*\" /' | xargs find ./ -type f -not -path '*/.git/*' -not -path '*.log' | xargs cat | grep -v '^\\s*$' | wc -l | awk '{print $1}'",
+    "dep-local": "echo node_modules/* | xargs basename | sort -u | awk '{print $1}'",
+    "dep-local-all": "find node_modules/ -iname node_modules | xargs /bin/ls -w1 | grep -v '^$' | grep -v 'node_modules' | sort -u | awk '{print $1}'"
+  }
 }

@@ -1,18 +1,18 @@
 #!/bin/bash
 
-# Id: git-versioning/0.0.12 bin/cli-version.sh
+# Id: git-versioning/0.0.13 bin/cli-version.sh
 
 source ./lib/git-versioning.sh
 
 testing()
 {
-  pre-release alpha $*
+  pre_release alpha $*
   update
 }
 
 unstable()
 {
-  pre-release beta $*
+  pre_release beta $*
   update
 }
 
@@ -21,16 +21,13 @@ snapshot()
   build $(date +%s)
 }
 
-info()
-{
-  echo "git-versioning/"$version
-}
-
 help()
 {
   echo 'Usage:'
-  echo 'cli-version [info]                 Print current versions. '
-  echo 'cli-version version                Print current version. '
+  echo 'cli-version [info]                 Print git-version application Id. '
+  echo 'cli-version version                Print local version. '
+  echo 'cli-version name                   Print local application name. '
+  echo 'cli-version app-id                 Print local application Id (name/version). '
   echo 'cli-version update                 Update files with embedded version. '
   echo 'cli-version increment [min [maj]]  Increment patch/min/maj version. '
   echo 'cli-version pre-release tag[s..]   Mark version pre-release with tag(s). '
@@ -55,7 +52,7 @@ if [ -n "$0" ] && [ $0 != "-bash" ]; then
   # Do something if script invoked as 'vc.sh'
   if [ "$(basename $0 .sh)" = "cli-version" ]; then
     # invoke with function name first argument,
-    func=$1
+    func=$(echo $1 | tr '-' '_')
     [ -n "$func" ] || func=$default
     type $func &>/dev/null && {
       load

@@ -1,10 +1,14 @@
 #!/bin/bash
+V_SH_SOURCED=$_
+V_SH_MAIN=$0
+V_SH_LIB=$BASH_SOURCE
 
-# Id: git-versioning/0.0.12 lib/git-versioning.sh
+
+# Id: git-versioning/0.0.13 lib/git-versioning.sh
 
 source lib/util.sh
 
-version=0.0.12 # git-versioning
+version=0.0.13 # git-versioning
 
 [ -n "$V_TOP_PATH" ] || {
   V_TOP_PATH=.
@@ -18,10 +22,63 @@ version=0.0.12 # git-versioning
   V_CHECK=$V_TOP_PATH/tools/version-check.sh
 }
 
+[ -n "$V_META_NAMES" ] || {
+  V_META_NAMES="module.meta package.yaml package.yml package.json bower.json"
+}
+
+# Determine package metafile
+module_meta_list() # $one
+{
+  for name in $V_META_NAMES
+  do
+    [ ! -e "./$name" ] || { echo $name; [ "$1" ] && return; }
+  done
+}
+
+load_app_id()
+{
+  META_FILES=$(module_meta_list)
+  for META_FILE in $META_FILES
+  do
+    if [ "${META_FILE:0:9}" = "package.y" ] || [ "$META_FILE" = "module.meta" ]
+    then
+      APP_ID=$(grep '^main:' $META_FILE | awk '{print $2}')
+      [ -n "$APP_ID" ] && {
+        break;
+      } || {
+        echo "Module with $META_FILE does not contain 'main:' entry,"
+        echo "looking further for APP_ID. "
+      }
+    else if [ "${META_FILE:-5}" = ".json" ]
+    then
+      # assume first "name": key is package name, not some nested object
+      APP_ID=$(grep '"name":' $META_FILE | sed 's/.*"name"[^"]*"\(.*\)".*/\1/')
+      [ -n "$APP_ID" ] && {
+        echo "Cannot get APP_ID from $META_FILE 'name': key";
+      }
+    fi; fi
+  done
+  [ -n "$APP_ID" ] || {
+     echo basename $PWD
+  }
+}
+
+# Set git-versioning vars
 load()
 {
-  #APP_ID=$(grep '^main:' package.yaml | awk '{print $2}')
-  APP_ID=$(make info|grep '^Id'|awk '{print $2}')
+  [ "$V_SH_LIB" == "./lib/git-versioning.sh" ] || {
+    echo "This script should be named ./lib/git-versioning.sh"
+    echo "So that PWD is be the module metadata dir. "
+    echo "Untested usage: Aborting. "
+    exit 3
+  }
+
+  load_app_id
+
+  [ -n "$APP_ID" ] || {
+    echo "Cannot get APP_ID from any metadata file. Aborting git-versioning. "
+    exit 3
+  }
 
   V_PATH_LIST=$(cat $V_DOC_LIST)
   V_MAIN_DOC=$(head -n 1 $V_DOC_LIST)
@@ -160,11 +217,6 @@ incrVPAT()
   applyVersion
 }
 
-version()
-{
-  echo $VER_STR
-}
-
 check()
 {
   buildVER
@@ -192,7 +244,7 @@ increment()
   }
 }
 
-pre-release()
+pre_release()
 {
   VER_PRE=$(echo $* | tr ' ' '.')
   update
@@ -204,16 +256,25 @@ build()
   update
 }
 
+info()
+{
+  echo "Running git-versioning/"$version
+  echo "Application name/version: "$(app_id)
+}
 
+app_id()
+{
+  echo $APP_ID/$VER_STR
+}
 
+name()
+{
+  echo $APP_ID
+}
 
-
-
-
-
-
-
-
-
+version()
+{
+  echo $VER_STR
+}
 
 
