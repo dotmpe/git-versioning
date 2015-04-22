@@ -3,11 +3,11 @@ V_SH_SOURCED=$_
 V_SH_MAIN=$0
 V_SH_LIB=$BASH_SOURCE
 
-# Id: git-versioning/0.0.15-dev+20150422-0223 lib/git-versioning.sh
+# Id: git-versioning/0.0.15-dev+20150422-0230 lib/git-versioning.sh
 
 source lib/util.sh
 
-version=0.0.15-dev+20150422-0223 # git-versioning
+version=0.0.15-dev+20150422-0230 # git-versioning
 
 [ -n "$V_TOP_PATH" ] || {
   V_TOP_PATH=.
@@ -227,7 +227,7 @@ cmd_check()
   # check without build meta
   $V_CHECK $V_DOC_LIST $(echo $VER_STR | awk -F+ '{print $1}')
   E=$?
-  [ -z "$E" ] || return $(( 1 + $? ))
+  [ "$E" -eq "0" ] || return $(( 1 + $? ))
 }
 
 cmd_update()
