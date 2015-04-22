@@ -3,11 +3,11 @@ V_SH_SOURCED=$_
 V_SH_MAIN=$0
 V_SH_LIB=$BASH_SOURCE
 
-# Id: git-versioning/0.0.15-dev+20150422_0217 lib/git-versioning.sh
+# Id: git-versioning/0.0.15-dev+20150422-0220 lib/git-versioning.sh
 
 source lib/util.sh
 
-version=0.0.15-dev+20150422_0217 # git-versioning
+version=0.0.15-dev+20150422-0220 # git-versioning
 
 [ -n "$V_TOP_PATH" ] || {
   V_TOP_PATH=.
@@ -26,7 +26,7 @@ version=0.0.15-dev+20150422_0217 # git-versioning
 }
 
 [ -n "$V_SNAPSHOT_DATE_FMT" ] || {
-  V_SNAPSHOT_DATE_FMT=%Y%m%d_%H%M
+  V_SNAPSHOT_DATE_FMT=%Y%m%d-%H%M
 }
 
 # Determine package metafile
