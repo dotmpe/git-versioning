@@ -1,52 +1,64 @@
 #!/bin/bash
 
-# https://gist.github.com/dotmpe/c24b2de68adbc72ae8ab
+# Before commit, set the version to snapshot, dev pre-release
+# or some customized edition based on ReadMe status field.
 
-# Generic file version GIT hook for Node/semver version tags
-# (YAML, JSON, JavaScript, CoffeeScript, reStructuredText) 
-
-# Source: https://github.com/neilco/xcode-pre-commit/blob/master/git-init-pre-commit
-# Adjusted for Darwin (uses BSD sed)
-# Made to work from paths listed in .versioned-files.list
-# Case allows easy per-project custom versioned file name/ext and format.
-
-# Id: git-versioning/0.0.14 tools/pre-commit.sh
+# Id: git-versioning/0.0.15-dev+20150422_0217 tools/pre-commit.sh
 
 V_TOP_PATH=$(git rev-parse --show-toplevel)
 
-source $V_TOP_PATH/lib/git-versioning.sh
+# FIXME source $V_TOP_PATH/lib/git-versioning.sh
+source ./lib/git-versioning.sh
 
 [ ! -e "$V_DOC_LIST" ] && {
-  exit 0
+  exit 1
 }
 
-Q=$1
+load;
 
-echo 'GIT versioning' $V_DOC_LIST '('$0') Q='$Q
-
-onVMAJ()
+git_add_vdoc()
 {
-  incrVMAJ
-  gitAddAll
+  for doc in $V_PATH_LIST
+  do
+    git add $doc
+  done
 }
 
-onVMIN()
-{
-  incrVMIN
-  gitAddAll
-}
+# XXX again rSt hardcoded
+V_STATUS=$(grep -i '^:Status:' $V_MAIN_DOC | awk '{print $2}' | tr 'A-Z' 'a-z')
 
-onVPAT()
-{
-  incrVPAT
-  gitAddAll
-}
+case $V_STATUS in
 
-case "$Q" in
-  *vmaj++*) load; onVMAJ;;
-  *vmin++*) load; onVMIN;;
-  *vpat++*) load; onVPAT;;
-  * ) ;;
+  release )
+    echo "Removing release tags.."
+    _1=$(release)
+    _2=$(build)
+    echo "Checking files.."
+    cmd_check
+    #echo $?
+    echo "Staging files.."
+    git_add_vdoc
+    ;;
+
+  dev* )
+    echo "Setting 'dev' and snapshot tags.."
+    _1=$(release dev)
+    _2=$(cmd_snapshot)
+    echo "Checking files.."
+    cmd_check
+    echo "Staging files.."
+    git_add_vdoc
+    ;;
+
+  mixin )
+    release $V_STATUS
+    cmd_check
+    git_add_vdoc
+    ;;
+
+  * )
+    echo "$0: Unsupported status line in $V_MAIN_DOC: $V_STATUS" 1>&2
+    ;;
+
 esac
-
 

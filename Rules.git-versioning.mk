@@ -1,4 +1,4 @@
-# Id: git-versioning/0.0.14 Rules.git-versioning.mk
+# Id: git-versioning/0.0.15-dev+20150422_0217 Rules.git-versioning.mk
 
 include $(DIR)/Rules.git-versioning.shared.mk
 
@@ -16,7 +16,7 @@ space := $(empty) $(empty)
 usage:
 	@echo 'usage:'
 	@echo '# npm [info|update|test]'
-	@echo '# make [$(subst $(space),|,$(STRGTS))]'
+	@echo '# make [$(subst $(space),|,$(STRGT))]'
 
 install::
 	npm install

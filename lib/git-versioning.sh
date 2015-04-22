@@ -3,12 +3,11 @@ V_SH_SOURCED=$_
 V_SH_MAIN=$0
 V_SH_LIB=$BASH_SOURCE
 
-
-# Id: git-versioning/0.0.14 lib/git-versioning.sh
+# Id: git-versioning/0.0.15-dev+20150422_0217 lib/git-versioning.sh
 
 source lib/util.sh
 
-version=0.0.14 # git-versioning
+version=0.0.15-dev+20150422_0217 # git-versioning
 
 [ -n "$V_TOP_PATH" ] || {
   V_TOP_PATH=.
@@ -24,6 +23,10 @@ version=0.0.14 # git-versioning
 
 [ -n "$V_META_NAMES" ] || {
   V_META_NAMES="module.meta package.yaml package.yml package.json bower.json"
+}
+
+[ -n "$V_SNAPSHOT_DATE_FMT" ] || {
+  V_SNAPSHOT_DATE_FMT=%Y%m%d_%H%M
 }
 
 # Determine package metafile
@@ -217,21 +220,24 @@ incrVPAT()
   applyVersion
 }
 
-check()
+cmd_check()
 {
   buildVER
-  version
-  $V_CHECK $V_DOC_LIST $VER_STR
+  cmd_version
+  # check without build meta
+  $V_CHECK $V_DOC_LIST $(echo $VER_STR | awk -F+ '{print $1}')
+  E=$?
+  [ -z "$E" ] || return $(( 1 + $? ))
 }
 
-update()
+cmd_update()
 {
   buildVER
-  version
+  cmd_version
   applyVersion
 }
 
-increment()
+cmd_increment()
 {
   trueish $1 && {
     trueish $2 && {
@@ -244,37 +250,87 @@ increment()
   }
 }
 
-pre_release()
+release()
 {
   VER_PRE=$(echo $* | tr ' ' '.')
-  update
+  cmd_update
 }
+cmd_release=release
+cmd_pre_release=release
 
 build()
 {
   VER_META=$(echo $* | tr ' ' '.')
-  update
+  cmd_update
 }
+cmd_build=build
 
-info()
+cmd_info()
 {
-  echo "Running git-versioning/"$version
-  echo "Application name/version: "$(app_id)
+  echo "Application name/version: "$(cmd_app_id)" (using git-versioning/$version)"
 }
 
-app_id()
+cmd_help()
+{
+  echo $(cmd_app_id)
+  echo 'Usage:'
+  echo 'cli-version [info]                 Print git-version application Id. '
+  echo 'cli-version version                Print local version. '
+  echo 'cli-version name                   Print local application name. '
+  echo 'cli-version app-id                 Print local application Id (name/version). '
+  echo 'cli-version update                 Update files with embedded version. '
+  echo 'cli-version increment [min [maj]]  Increment patch/min/maj version. '
+  echo 'cli-version [pre-]release tag[s..] Mark version with (pre-)release tag(s). '
+  echo "cli-version dev [tags..]           pre-release with default 'dev' tag. "
+  echo "cli-version testing [tags..]       pre-release with default 'alpha' tag. "
+  echo "cli-version unstable [tags..]      pre-release with default 'beta' tag. "
+  echo 'cli-version build meta[..]         Mark version with build meta tag(s). '
+  echo 'cli-version snapshot               set build-meta to datetime tag. '
+  echo 'cli-version snapshot-s             set build-meta to epoch timestamp tag. '
+  echo 'cli-version check                  Verify version embedded files. '
+  echo 'cli-version [help|*]               Print this usage. '
+}
+
+cmd_app_id()
 {
   echo $APP_ID/$VER_STR
 }
 
-name()
+cmd_name()
 {
   echo $APP_ID
 }
 
-version()
+cmd_version()
 {
   echo $VER_STR
 }
 
+# Some shortcuts to release/build
+
+cmd_dev()
+{
+  release dev $*
+}
+
+cmd_testing()
+{
+  release alpha $*
+}
+
+cmd_unstable()
+{
+  release beta $*
+}
+
+cmd_snapshot()
+{
+  build $(date "+$V_SNAPSHOT_DATE_FMT") $*
+}
+
+# seconds since epoch
+cmd_snapshot_s()
+{
+  cmd_build $(date +%s) $*
+}
 
