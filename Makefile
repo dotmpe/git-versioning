@@ -5,7 +5,7 @@ BASE                := $(shell cd $(DIR);pwd)
 HOST                := $(shell hostname|tr '.' '-')
 
 APP_ID              := 
-VERSION              = 0.0.15-dev+20150422-0220 # git-versioning
+VERSION              = 0.0.15-dev+20150422-0223 # git-versioning
 
 # See GIT versioning project for more complete APP_ID heuristic
 ifneq ($(wildcard package.yml package.yaml),)

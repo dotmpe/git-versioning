@@ -1,7 +1,7 @@
 GIT Versioning Hooks
 ====================
 :Created: 2015-04-19
-:Version: 0.0.15-dev+20150422-0220
+:Version: 0.0.15-dev+20150422-0223
 :Status: Development
 :project:
 
@@ -212,7 +212,7 @@ Each variable starts after a newline and ends with a comment containing the app-
 For JSON and YAML there can be an indendation before the 'version' tag.
 
 .. rSt example:
-.. Id: git-versioning/0.0.15-dev+20150422-0220 ReadMe.rst
+.. Id: git-versioning/0.0.15-dev+20150422-0223 ReadMe.rst
 
 
 Deployment
@@ -321,9 +321,12 @@ bin/
 
 tools/
   pre-commit.sh
-    - GIT pre-commit hook Shell script.
-    - Updates embedded metadata and add modified files to GIT staging area.
-      FIXME: if triggered, need a trigger
+    - GIT pre-commit hook  Shell script.
+    - Scans main-doc Status field for behaviour. Nothing fancy based on branch
+      name or deployment env yet.
+
+  post-commit-old.sh
+    - Started out with example, tried to make it into pre-commit hook.
 
   version-check.sh
     - Default check greps all metadata files to verify versions all match.

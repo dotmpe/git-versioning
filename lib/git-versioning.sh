@@ -3,11 +3,11 @@ V_SH_SOURCED=$_
 V_SH_MAIN=$0
 V_SH_LIB=$BASH_SOURCE
 
-# Id: git-versioning/0.0.15-dev+20150422-0220 lib/git-versioning.sh
+# Id: git-versioning/0.0.15-dev+20150422-0223 lib/git-versioning.sh
 
 source lib/util.sh
 
-version=0.0.15-dev+20150422-0220 # git-versioning
+version=0.0.15-dev+20150422-0223 # git-versioning
 
 [ -n "$V_TOP_PATH" ] || {
   V_TOP_PATH=.
