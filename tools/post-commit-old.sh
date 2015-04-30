@@ -12,7 +12,7 @@
 # Made to work from paths listed in .versioned-files.list
 # Case allows easy per-project custom versioned file name/ext and format.
 
-# Id: git-versioning/0.0.15+20150430-2142 tools/post-commit-old.sh
+# Id: git-versioning/0.0.15 tools/post-commit-old.sh
 
 V_TOP_PATH=$(git rev-parse --show-toplevel)
 

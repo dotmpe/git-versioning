@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Id: git-versioning/0.0.15+20150430-2142 lib/util.sh
+# Id: git-versioning/0.0.15 lib/util.sh
 
 gitAddAll()
 {

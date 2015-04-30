@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Id: git-versioning/0.0.15+20150430-2142 bin/cli-version.sh
+# Id: git-versioning/0.0.15 bin/cli-version.sh
 
 source ./lib/git-versioning.sh
 

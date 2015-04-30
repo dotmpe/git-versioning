@@ -1,15 +1,15 @@
 main: git-versioning
 
-# Id: git-versioning/0.0.15+20150430-2142 package.yaml
+# Id: git-versioning/0.0.15 package.yaml
 # Start
 
 - type: application/x-project-mpe
   id: git-versioning
-  version: 0.0.15+20150430-2142 # git-versioning
+  version: 0.0.15 # git-versioning
   environments: [ 'development' ]
 
 # End
-# Id: git-versioning/0.0.15+20150430-2142 package.yaml
+# Id: git-versioning/0.0.15 package.yaml
 
 
 
