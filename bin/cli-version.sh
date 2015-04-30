@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Id: git-versioning/0.0.15-dev+20150430-2056 bin/cli-version.sh
+# Id: git-versioning/0.0.15+20150430-2142 bin/cli-version.sh
 
 source ./lib/git-versioning.sh
 
@@ -11,6 +11,18 @@ usage()
   exit 1
 }
 
+cmd_release()
+{
+  release
+}
+cmd_pre_release()
+{
+  release
+}
+cmd_build()
+{
+  build
+}
 default=cmd_info
 
 # Main
@@ -18,15 +30,16 @@ if [ -n "$0" ] && [ $0 != "-bash" ]; then
   # Do something if script invoked as 'vc.sh'
   if [ "$(basename $0 .sh)" = "cli-version" ]; then
     # invoke with function name first argument,
-    func=cmd_$(echo $1 | tr '-' '_')
+    func=$(echo $1 | tr '-' '_')
     [ -n "$func" ] || func=$default
-    type $func &>/dev/null && {
+    type cmd_$func &>/dev/null && {
       load
       shift 1
-      $func $@
+      cmd_$func $@
     } || {
       e=$?
       [ "$e" = "1" ] && {
+        load
         usage
       } || {
         echo Error $e 1>&2

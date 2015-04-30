@@ -3,11 +3,11 @@ V_SH_SOURCED=$_
 V_SH_MAIN=$0
 V_SH_LIB=$BASH_SOURCE
 
-# Id: git-versioning/0.0.15-dev+20150430-2056 lib/git-versioning.sh
+# Id: git-versioning/0.0.15+20150430-2142 lib/git-versioning.sh
 
 source lib/util.sh
 
-version=0.0.15-dev+20150430-2056 # git-versioning
+version=0.0.15+20150430-2142 # git-versioning
 
 [ -n "$V_TOP_PATH" ] || {
   V_TOP_PATH=.
@@ -90,14 +90,19 @@ load()
   VER_TOKEN=":Version:"
 
   VER_STR=$(grep "^$VER_TOKEN" $V_TOP_PATH/$V_MAIN_DOC | awk '{print $2}')
- 
-  VER_MAJ=$(echo $VER_STR | sed -e 's/^\([^\.]*\).*$/\1/' )
-  VER_MIN=$(echo $VER_STR | sed -e 's/^[^\.]*\.\([^\.]*\).*$/\1/' )
-  VER_PAT=$(echo $VER_STR | sed -e 's/^[^\.]*\.[^\.]*\.\([^+-]*\).*$/\1/' )
 
-  VER_TAGS=$(echo $VER_STR | sed -e 's/^[0-9\.]*//' )
-  VER_PRE=$(echo $VER_TAGS | sed -e 's/^-\([^+]*\).*$/\1/' )
-  VER_META=$(echo $VER_TAGS | sed -e 's/^\([^+]*\)+\(.*\)$/\2/' )
+  sed_ext="sed -r"
+  [ "$(uname -s)" = "Darwin" ] && sed_ext="sed -E"
+ 
+  VER_MAJ=$(echo $VER_STR | $sed_ext 's/^([^\.]+).*$/\1/' )
+  VER_MIN=$(echo $VER_STR | $sed_ext 's/^[^\.]*\.([^\.]+).*$/\1/' )
+  VER_PAT=$(echo $VER_STR | $sed_ext 's/^[^\.]*\.[^\.]*\.([^+-]+).*$/\1/' )
+
+  VER_TAGS=$(echo $VER_STR | $sed_ext 's/^[0-9\.]*//' )
+
+  VER_PRE=$(echo $VER_TAGS | $sed_ext 's/^-?([^+]*)(\+.*)?$/\1/' )
+
+  VER_META=$(echo $VER_TAGS | $sed_ext 's/^([^+]*)\+?(.*)$/\2/' )
 }
 
 commonCLikeComment()
@@ -254,15 +259,12 @@ release()
   VER_PRE=$(echo $* | tr ' ' '.')
   cmd_update
 }
-cmd_release=release
-cmd_pre_release=release
 
 build()
 {
   VER_META=$(echo $* | tr ' ' '.')
   cmd_update
 }
-cmd_build=build
 
 cmd_info()
 {
