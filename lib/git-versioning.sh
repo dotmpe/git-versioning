@@ -3,11 +3,11 @@ V_SH_SOURCED=$_
 V_SH_MAIN=$0
 V_SH_LIB=$BASH_SOURCE
 
-# Id: git-versioning/0.0.16-dev-master+20150504-0242 lib/git-versioning.sh
+# Id: git-versioning/0.0.16-dev-master+20150504-0251 lib/git-versioning.sh
 
 source lib/util.sh
 
-version=0.0.16-dev-master+20150504-0242 # git-versioning
+version=0.0.16-dev-master+20150504-0251 # git-versioning
 
 [ -n "$V_TOP_PATH" ] || {
   V_TOP_PATH=.
@@ -257,11 +257,6 @@ cmd_increment()
 release()
 {
   VER_PRE=$(echo $* | tr ' ' '.')
-  echo VER_PRE $VER_PRE
-  buildVER
-  echo VER_TAGS $VER_TAGS
-  echo VER_PRE $VER_PRE
-  echo $VER_STR
   cmd_update
 }
 

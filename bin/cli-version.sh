@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Id: git-versioning/0.0.16-dev-master+20150504-0242 bin/cli-version.sh
+# Id: git-versioning/0.0.16-dev-master+20150504-0251 bin/cli-version.sh
 
 source ./lib/git-versioning.sh
 
