@@ -3,7 +3,7 @@
 # Before commit, set the version to snapshot, dev pre-release
 # or some customized edition based on ReadMe status field.
 
-# Id: git-versioning/0.0.16-dev+20150430-2153 tools/pre-commit.sh
+# Id: git-versioning/0.0.16-dev-master+20150504-0239 tools/pre-commit.sh
 
 V_TOP_PATH=$(git rev-parse --show-toplevel)
 
@@ -41,8 +41,9 @@ case $V_STATUS in
     ;;
 
   dev* )
-    echo "Setting 'dev' and snapshot tags.."
-    _1=$(release dev)
+    echo "Setting dev and snapshot tags.."
+    tag="dev-"$(git status | grep 'On branch' | awk '{print $3}');
+    _1=$(release "$tag")
     _2=$(cmd_snapshot)
     echo "Checking files.."
     cmd_check

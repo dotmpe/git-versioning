@@ -1,7 +1,9 @@
 GIT Versioning Hooks
 ====================
+.. Id: git-versioning/0.0.16-dev-master+20150504-0239 ReadMe.rst
+
 :Created: 2015-04-19
-:Version: 0.0.16-dev+20150430-2153
+:Version: 0.0.16-dev-master+20150504-0239
 :Status: Dev
 :project:
 
@@ -212,7 +214,7 @@ Each variable starts after a newline and ends with a comment containing the app-
 For JSON and YAML there can be an indendation before the 'version' tag.
 
 .. rSt example:
-.. Id: git-versioning/0.0.16-dev+20150430-2153 ReadMe.rst
+.. Id: git-versioning/0.0.16-dev-master+20150504-0239 ReadMe.rst
 
 
 Deployment
