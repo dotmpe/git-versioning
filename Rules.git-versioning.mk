@@ -1,4 +1,4 @@
-# Id: git-versioning/0.0.16-dev-master+20150504-0239 Rules.git-versioning.mk
+# Id: git-versioning/0.0.16-dev-master+20150504-0242 Rules.git-versioning.mk
 
 include $(DIR)/Rules.git-versioning.shared.mk
 

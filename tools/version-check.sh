@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Id: git-versioning/0.0.16-dev-master+20150504-0239 tools/version-check.sh
+# Id: git-versioning/0.0.16-dev-master+20150504-0242 tools/version-check.sh
 
 V_PATH_LIST=$(cat $1)
 VER_STR=$2

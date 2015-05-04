@@ -3,11 +3,11 @@ V_SH_SOURCED=$_
 V_SH_MAIN=$0
 V_SH_LIB=$BASH_SOURCE
 
-# Id: git-versioning/0.0.16-dev-master+20150504-0239 lib/git-versioning.sh
+# Id: git-versioning/0.0.16-dev-master+20150504-0242 lib/git-versioning.sh
 
 source lib/util.sh
 
-version=0.0.16-dev-master+20150504-0239 # git-versioning
+version=0.0.16-dev-master+20150504-0242 # git-versioning
 
 [ -n "$V_TOP_PATH" ] || {
   V_TOP_PATH=.
@@ -45,7 +45,7 @@ load_app_id()
   do
     if [ "${META_FILE:0:9}" = "package.y" ] || [ "$META_FILE" = "module.meta" ]
     then
-      APP_ID=$(grep '^main:' $META_FILE | awk '{print $2}')
+      APP_ID=$(grep '^# git-versioning main:' $META_FILE | awk '{print $4}')
       [ -n "$APP_ID" ] && {
         break;
       } || {
