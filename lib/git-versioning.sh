@@ -9,25 +9,32 @@ source lib/util.sh
 
 version=0.0.16-master # git-versioning
 
+# Path to versioned files
 [ -n "$V_TOP_PATH" ] || {
   V_TOP_PATH=.
 }
 
+# Configuration file listing file path under versioning (with embedded version)
+# first file is main file, used to determine current version
 [ -n "$V_DOC_LIST" ] || {
   V_DOC_LIST=$V_TOP_PATH/.versioned-files.list
 }
 
+# XXX External script to verify version
 [ -n "$V_CHECK" ] || {
   V_CHECK=$V_TOP_PATH/tools/cmd/version-check.sh
 }
 
+# Names of files tried to get app-name from
 [ -n "$V_META_NAMES" ] || {
   V_META_NAMES="module.meta package.yaml package.yml package.json bower.json"
 }
 
+# Format used for snapshot command
 [ -n "$V_SNAPSHOT_DATE_FMT" ] || {
   V_SNAPSHOT_DATE_FMT=%Y%m%d-%H%M
 }
+
 
 # Determine package metafile
 module_meta_list() # $one
@@ -116,6 +123,8 @@ commonCLikeComment()
   sed -i .applyVersion-bak 's/^# Id: '$APP_ID'.*/'"$ID_LINE"'/' $V_TOP_PATH/$1
 }
 
+source formats.sh
+
 applyVersion()
 {
   for doc in $V_PATH_LIST
@@ -125,54 +134,53 @@ applyVersion()
       *.rst )
         if [ "$doc" = "$V_MAIN_DOC" ]
         then
-          VER_LINE=":Version:\ $VER_STR"
-          sed -i .applyVersion-bak 's/^:Version:.*/'"$VER_LINE"'/' $V_TOP_PATH/$doc
+          rst_field_main_version $V_TOP_PATH/$doc $VER_STR
+        else
+          rst_field_version $V_TOP_PATH/$doc $VER_STR $APP_ID
         fi
-        ID_LINE=".. Id: $APP_ID\/$VER_STR "$(echo $doc | sed 's/\//\\\//g')
-        sed -i .applyVersion-bak 's/^\.\. Id: '$APP_ID'.*/'"$ID_LINE"'/' $V_TOP_PATH/$doc
+        rst_comment_id $V_TOP_PATH/$doc $VER_STR $APP_ID
       ;;
+
       *.sitefilerc )
-        VER_LINE="\1\"sitefilerc\":\ \"$VER_STR\""
-        sed -i .applyVersion-bak 's/^\([\ \t]*\)"sitefilerc":.*/'  "$VER_LINE"'/' $V_TOP_PATH/$doc
+        sfrc_version $V_TOP_PATH/$doc $VER_STR
       ;;
-      *Sitefile.yaml | *Sitefile.yml  )
-        VER_LINE="sitefile:\ $VER_STR"
-        sed -i .applyVersion-bak 's/^sitefile:.*/'"$VER_LINE"'/' $V_TOP_PATH/$doc
+
+      *Sitefile*.yaml | *Sitefile*.yml )
+        sf_version $V_TOP_PATH/$doc $VER_STR
       ;;
 
       *.mk | *Makefile )
         commonCLikeComment $doc
-        VER_LINE="VERSION\1= $VER_STR # $APP_ID"
-        sed -i .applyVersion-bak 's/^VERSION\(\ *\)=.* # '$APP_ID'/'"$VER_LINE"'/' $V_TOP_PATH/$doc
-        ;;
-
-      *.sh )
-        commonCLikeComment $doc
-        VER_LINE="version=$VER_STR # $APP_ID"
-        sed -i .applyVersion-bak 's/^version=.* # '$APP_ID'/'"$VER_LINE"'/' $V_TOP_PATH/$doc
+        mk_var_version $V_TOP_PATH/$doc $VER_STR $APP_ID
       ;;
+
+      *.sh | *configure )
+        commonCLikeComment $doc
+        sh_var_version $V_TOP_PATH/$doc $VER_STR $APP_ID
+      ;;
+
       *.yaml | *.yml )
         commonCLikeComment $doc
-        VER_LINE="version:\ $VER_STR # $APP_ID"
-        sed -i .applyVersion-bak 's/^\([\ \t]*\)version:.* # '$APP_ID'/'"\1$VER_LINE"'/' $V_TOP_PATH/$doc
+        yaml_version $V_TOP_PATH/$doc $VER_STR $APP_ID
       ;;
-      *.js )
-        VER_LINE="var version\ =\ '$VER_STR'; \/\/ $APP_ID"
-        sed -i .applyVersion-bak 's/^var version =.* \/\/ '$APP_ID'/'"$VER_LINE"'/' $V_TOP_PATH/$doc
-      ;;
+
       *.json )
-        VER_LINE="\"version\":\ \"$VER_STR\","
-        sed -i .applyVersion-bak 's/^\([\ \t]*\)"version":.*/\1'"$VER_LINE"'/' $V_TOP_PATH/$doc
+        json_version $V_TOP_PATH/$doc $VER_STR
       ;;
+
+      *.js )
+        js_var_version $V_TOP_PATH/$doc $VER_STR $APP_ID
+      ;;
+
       *.coffee )
         commonCLikeComment $doc
-        VER_LINE="version = '$VER_STR' # $APP_ID"
-        sed -i .applyVersion-bak 's/^version =.* # '$APP_ID'/'"$VER_LINE"'/' $V_TOP_PATH/$doc
+        coffee_var_version $V_TOP_PATH/$doc $VER_STR $APP_ID
       ;;
 
       * )
         echo "$0: Unable to version $doc"
-        exit 2;;
+        exit 2
+      ;;
 
     esac
 

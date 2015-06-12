@@ -1,6 +1,4 @@
-language: node_js
-node_js:
-  - "0.12"
+language: c
 
 branches:
   only:
@@ -9,6 +7,6 @@ branches:
 env:
 # default env is development
 #  - NODE_ENV=
-  - NODE_ENV=testing
+  - ENV=testing
 #  - NODE_ENV=production
 
