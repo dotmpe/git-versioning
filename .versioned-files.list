@@ -4,10 +4,12 @@ package.yaml
 bin/cli-version.sh
 lib/git-versioning.sh
 lib/util.sh
-tools/post-commit-old.sh
-tools/pre-commit.sh
-tools/prep-version.sh
-tools/version-check.sh
+tools/git-hooks/post-commit-old.sh
+tools/git-hooks/pre-commit.sh
+tools/cmd/version-check.sh
+tools/cmd/prep-version.sh
+tools/cmd/src-files.sh
+tools/cmd/src-tree.sh
 Makefile
 Rules.git-versioning.mk
 Rules.git-versioning.shared.mk

@@ -1,4 +1,4 @@
-# Id: git-versioning/0.0.16-dev-master+20150504-0251 Rules.git-versioning.shared.mk
+# Id: git-versioning/0.0.16-master Rules.git-versioning.shared.mk
 # special rule targets
 STRGT += \
    version \
@@ -24,7 +24,7 @@ tag:
 	@git tag $(APP_ID)/$$(./bin/cli-version.sh version)
 	@echo "New tag: $(APP_ID)/$$(./bin/cli-version.sh version)"
 	@./bin/cli-version.sh increment
-	@./tools/prep-version.sh
+	@./tools/cmd/prep-version.sh
 
 
 # XXX: GIT publish

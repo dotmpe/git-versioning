@@ -3,11 +3,11 @@ V_SH_SOURCED=$_
 V_SH_MAIN=$0
 V_SH_LIB=$BASH_SOURCE
 
-# Id: git-versioning/0.0.16-dev-master+20150504-0251 lib/git-versioning.sh
+# Id: git-versioning/0.0.16-master lib/git-versioning.sh
 
 source lib/util.sh
 
-version=0.0.16-dev-master+20150504-0251 # git-versioning
+version=0.0.16-master # git-versioning
 
 [ -n "$V_TOP_PATH" ] || {
   V_TOP_PATH=.
@@ -18,7 +18,7 @@ version=0.0.16-dev-master+20150504-0251 # git-versioning
 }
 
 [ -n "$V_CHECK" ] || {
-  V_CHECK=$V_TOP_PATH/tools/version-check.sh
+  V_CHECK=$V_TOP_PATH/tools/cmd/version-check.sh
 }
 
 [ -n "$V_META_NAMES" ] || {

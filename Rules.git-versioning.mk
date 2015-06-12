@@ -1,4 +1,4 @@
-# Id: git-versioning/0.0.16-dev-master+20150504-0251 Rules.git-versioning.mk
+# Id: git-versioning/0.0.16-master Rules.git-versioning.mk
 
 include $(DIR)/Rules.git-versioning.shared.mk
 
@@ -6,7 +6,6 @@ include $(DIR)/Rules.git-versioning.shared.mk
 STRGT += \
    usage \
    install \
-   test \
    update \
    build
 
@@ -22,7 +21,7 @@ install::
 	npm install
 	make test
 
-test: check
+TEST += check
 
 update:
 	./bin/cli-version.sh update
