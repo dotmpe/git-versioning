@@ -195,10 +195,10 @@ Syntax
 Embedded metadata follows some basic rules.
 For clike or hash-comment languages::
 
-  # Id: app-id/0.0.0
-  # version: 0.0.0 app-id
+  # Id: app-id/0.0.0 path/filename.ext
+  # version: 0.0.0 app-id path/filename.ext
 
-And while the exact format differs each follows the following pattern::
+And while the exact format differs they mostly follow the pattern::
 
   version = 0.0.0 # app-id
 

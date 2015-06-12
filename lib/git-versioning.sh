@@ -4,6 +4,7 @@ V_SH_MAIN=$0
 V_SH_LIB=$BASH_SOURCE
 
 # Id: git-versioning/0.0.16-master lib/git-versioning.sh
+# version: 0.0.16-master git-versioning lib/git-versioning.sh
 
 source lib/util.sh
 
@@ -112,17 +113,6 @@ load()
   VER_META=$(echo $VER_TAGS | $sed_ext 's/^([^+]*)\+?(.*)$/\2/' )
 }
 
-commonCLikeComment()
-{
-  VER_LINE="# version: $VER_STR $APP_ID"
-  sed -i .applyVersion-bak 's/^#\ version:\ .* '$APP_ID'/'"$VER_LINE"'/' $V_TOP_PATH/$1
-
-  [ -n "$APP_ID" ] || return;
-
-  ID_LINE="# Id: $APP_ID\/$VER_STR "$(echo $1 | sed 's/\//\\\//g')
-  sed -i .applyVersion-bak 's/^# Id: '$APP_ID'.*/'"$ID_LINE"'/' $V_TOP_PATH/$1
-}
-
 source formats.sh
 
 applyVersion()
@@ -134,47 +124,47 @@ applyVersion()
       *.rst )
         if [ "$doc" = "$V_MAIN_DOC" ]
         then
-          rst_field_main_version $V_TOP_PATH/$doc $VER_STR
+          rst_field_main_version $doc
         else
-          rst_field_version $V_TOP_PATH/$doc $VER_STR $APP_ID
+          rst_field_version $doc
         fi
-        rst_comment_id $V_TOP_PATH/$doc $VER_STR $APP_ID
+        rst_comment_id $doc
       ;;
 
       *.sitefilerc )
-        sfrc_version $V_TOP_PATH/$doc $VER_STR
+        sfrc_version $doc
       ;;
 
       *Sitefile*.yaml | *Sitefile*.yml )
-        sf_version $V_TOP_PATH/$doc $VER_STR
+        sf_version $doc
       ;;
 
       *.mk | *Makefile )
         commonCLikeComment $doc
-        mk_var_version $V_TOP_PATH/$doc $VER_STR $APP_ID
+        mk_var_version $doc
       ;;
 
       *.sh | *configure )
         commonCLikeComment $doc
-        sh_var_version $V_TOP_PATH/$doc $VER_STR $APP_ID
+        sh_var_version $doc
       ;;
 
       *.yaml | *.yml )
         commonCLikeComment $doc
-        yaml_version $V_TOP_PATH/$doc $VER_STR $APP_ID
+        yaml_version $doc
       ;;
 
       *.json )
-        json_version $V_TOP_PATH/$doc $VER_STR
+        json_version $doc
       ;;
 
       *.js )
-        js_var_version $V_TOP_PATH/$doc $VER_STR $APP_ID
+        js_var_version $doc
       ;;
 
       *.coffee )
         commonCLikeComment $doc
-        coffee_var_version $V_TOP_PATH/$doc $VER_STR $APP_ID
+        coffee_var_version $doc
       ;;
 
       * )

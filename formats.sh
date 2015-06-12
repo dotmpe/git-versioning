@@ -5,63 +5,95 @@
 # Main version line has no further qualifier
 function rst_field_main_version()
 {
-  VER_LINE=":Version:\ $2"
-  sed -i .applyVersion-bak 's/^:Version:.*/'"$VER_LINE"'/' $1
+  VER_LINE=":Version:\ $VER_STR"
+  P=$V_TOP_PATH/$1
+  sed -i .applyVersion-bak 's/^:Version:.*/'"$VER_LINE"'/' $P
 }
 function rst_field_version()
 {
-  VER_LINE=":Version:\ $2 ($3)"
-  sed -i .applyVersion-bak 's/^:Version:.*'$3'.*$/'"$VER_LINE"'/' $1
+  VER_LINE=":Version:\ $VER_STR ($APP_ID)"
+  P=$V_TOP_PATH/$1
+  sed -i .applyVersion-bak 's/^:Version:.*'$APP_ID'.*$/'"$VER_LINE"'/' $P
 }
 function rst_field_id()
 {
-  ID_LINE=":Id: $3\/$2 "$(basename $1 | sed 's/\//\\\//g')
-  sed -i .applyVersion-bak 's/^:Id: '$3'.*/'"$ID_LINE"'/' $1
+  ID_LINE=":Id: $APP_ID\/$VER_STR "$(echo $1 | sed 's/\//\\\//g')
+  P=$V_TOP_PATH/$1
+  sed -i .applyVersion-bak 's/^:Id: '$APP_ID'.*/'"$ID_LINE"'/' $P
 }
 function rst_comment_id()
 {
-  ID_LINE=".. Id: $3\/$2 "$(basename $1 | sed 's/\//\\\//g')
-  sed -i .applyVersion-bak 's/^\.\. Id: '$3'.*/'"$ID_LINE"'/' $1
+  ID_LINE=".. Id: $APP_ID\/$VER_STR "$(echo $1 | sed 's/\//\\\//g')
+  P=$V_TOP_PATH/$1
+  sed -i .applyVersion-bak 's/^\.\. Id: '$APP_ID'.*/'"$ID_LINE"'/' $P
 }
+
+function clike_comment_id()
+{
+  ID_LINE="# Id: $APP_ID\/$VER_STR "$(echo $1 | sed 's/\//\\\//g')
+  P=$V_TOP_PATH/$1
+  sed -i .applyVersion-bak 's/^# Id: '$APP_ID'.*/'"$ID_LINE"'/' $P
+}
+function clike_comment_version()
+{
+  VER_LINE="# version: $VER_STR $APP_ID"
+  P=$V_TOP_PATH/$1
+  sed -i .applyVersion-bak 's/^#\ version:\ .* '$APP_ID'/'"$VER_LINE"'/' $P
+}
+commonCLikeComment()
+{
+  clike_comment_id $1
+  clike_comment_version $1
+}
+
+
 function sfrc_version()
 {
-  VER_LINE="\1\"sitefilerc\":\ \"$2\""
-  sed -i .applyVersion-bak 's/^\([\ \t]*\)"sitefilerc":.*/'  "$VER_LINE"'/' $1
+  VER_LINE="\1\"sitefilerc\":\ \"$VER_STR\""
+  P=$V_TOP_PATH/$1
+  sed -i .applyVersion-bak 's/^\([\ \t]*\)"sitefilerc":.*/'  "$VER_LINE"'/' $P
 }
 function sf_version()
 {
-  VER_LINE="sitefile:\ $2"
-  sed -i .applyVersion-bak 's/^sitefile:.*/'"$VER_LINE"'/' $1
+  VER_LINE="sitefile:\ $VER_STR"
+  P=$V_TOP_PATH/$1
+  sed -i .applyVersion-bak 's/^sitefile:.*/'"$VER_LINE"'/' $P
 }
 function mk_var_version()
 {
-  VER_LINE="VERSION\1= $2 # $3"
-  sed -i .applyVersion-bak 's/^VERSION\(\ *\)=.* # '$3'/'"$VER_LINE"'/' $1
+  VER_LINE="VERSION\1= $VER_STR # $APP_ID"
+  P=$V_TOP_PATH/$1
+  sed -i .applyVersion-bak 's/^VERSION\(\ *\)=.* # '$APP_ID'/'"$VER_LINE"'/' $P
 }
 function sh_var_version()
 {
-  VER_LINE="version=$2 # $3"
-  sed -i .applyVersion-bak 's/^version=.* # '$3'/'"$VER_LINE"'/' $1
+  VER_LINE="version=$VER_STR # $APP_ID"
+  P=$V_TOP_PATH/$1
+  sed -i .applyVersion-bak 's/^version=.* # '$APP_ID'/'"$VER_LINE"'/' $P
 }
 function yaml_version()
 {
-  VER_LINE="version:\ $2 # $3"
-  sed -i .applyVersion-bak 's/^\([\ \t]*\)version:.* # '$3'/'"\1$VER_LINE"'/' $1
+  VER_LINE="version:\ $VER_STR # $APP_ID"
+  P=$V_TOP_PATH/$1
+  sed -i .applyVersion-bak 's/^\([\ \t]*\)version:.* # '$APP_ID'/'"\1$VER_LINE"'/' $P
 }
 function json_version()
 {
-  VER_LINE="\"version\":\ \"$2\","
-  sed -i .applyVersion-bak 's/^\([\ \t]*\)"version":.*/\1'"$VER_LINE"'/' $1
+  VER_LINE="\"version\":\ \"$VER_STR\","
+  P=$V_TOP_PATH/$1
+  sed -i .applyVersion-bak 's/^\([\ \t]*\)"version":.*/\1'"$VER_LINE"'/' $P
 }
 function js_var_version()
 {
-  VER_LINE="var version\ =\ '$2'; \/\/ $3"
-  sed -i .applyVersion-bak 's/^var version =.* \/\/ '$3'/'"$VER_LINE"'/' $1
+  VER_LINE="var version\ =\ '$VER_STR'; \/\/ $APP_ID"
+  P=$V_TOP_PATH/$1
+  sed -i .applyVersion-bak 's/^var version =.* \/\/ '$APP_ID'/'"$VER_LINE"'/' $P
 }
 function coffee_var_version()
 {
-  VER_LINE="version = '$2' # $3"
-  sed -i .applyVersion-bak 's/^version =.* # '$3'/'"$2"'/' $1
+  VER_LINE="version = '$VER_STR' # $APP_ID"
+  P=$V_TOP_PATH/$1
+  sed -i .applyVersion-bak 's/^version =.* # '$APP_ID'/'"$VER_STR"'/' $P
 }
 
 
