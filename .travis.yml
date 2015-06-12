@@ -6,7 +6,7 @@ branches:
 
 env:
 # default env is development
-#  - NODE_ENV=
+#  - ENV=
   - ENV=testing
-#  - NODE_ENV=production
+#  - ENV=production
 
