@@ -41,4 +41,8 @@ publish: check
 		echo "*DRY* $(VERSION)"; \
 	fi
 
+TRGT += package2.json
+
+package2.json: package.yaml
+	yaml2json $< > $@
 
