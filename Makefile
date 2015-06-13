@@ -6,6 +6,7 @@ HOST                := $(shell hostname|tr '.' '-')
 
 APP_ID              := 
 VERSION              = 0.0.16-master # git-versioning
+ENV                 ?= development
 
 # See GIT versioning project for more complete APP_ID heuristic
 ifneq ($(wildcard package.yml package.yaml),)
@@ -38,8 +39,11 @@ SHELL              := /bin/bash
 
 ## Local setup
 
-# name default target
+# name default target, dont set deps yet
 default::
+
+# preset DEFAULT based on environment/goals
+include Makefile.default-goals
 
 # global path/file lists
 SRC                :=
@@ -47,7 +51,7 @@ DMK                :=
 #already setMK                 :=
 DEP                :=
 TRGT               :=
-STRGT              := default stat build install clean info
+STRGT              := default usage stat build test install check clean info 
 CLN                :=
 TEST               :=
 INSTALL            :=
@@ -69,6 +73,8 @@ include                $(call rules,$(DIR)/)
 # pseudo targets are not files, don't check with OS
 .PHONY: $(STRGT)
 
+DEFAULT ?= usage
+
 #      ------------ --
 
 ## Main rules/deps
@@ -76,13 +82,18 @@ include                $(call rules,$(DIR)/)
 default:: $(DMK) $(DEP)
 default:: $(DEFAULT)
 
+usage::
+	@echo 'set ENV to [development|testing|production] for other default behaviour'
+
 stat:: $(SRC)
 
 build:: $(TRGT)
 
+test:: $(TEST)
+
 install:: $(INSTALL)
 
-test:: $(TEST)
+check::
 
 clean:: .
 	rm -rf $(CLN)

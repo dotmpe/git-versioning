@@ -1,0 +1,16 @@
+
+ifeq ($(MAKECMDGOALS),)
+ifeq ($(ENV),testing)
+DEFAULT ?= build test
+else
+DEFAULT ?= build
+endif
+endif
+
+ifeq ($(MAKECMDGOALS),install)
+#ifeq ($(ENV),production)
+# all env:
+DEFAULT ?= install check
+#endif
+endif
+

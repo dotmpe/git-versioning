@@ -2,14 +2,13 @@
 # special rule targets
 STRGT += \
    version \
-   check \
    path release tag \
    publish
 
 version:
 	@./bin/cli-version.sh version
 
-check:
+check::
 	@$(echo) -n "Checking for $(APP_ID) version "
 	@./bin/cli-version.sh check
 

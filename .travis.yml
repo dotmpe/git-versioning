@@ -6,7 +6,7 @@ branches:
 
 env:
 # default env is development
-#  - ENV=
+  - ENV=
   - ENV=testing
-#  - ENV=production
+  - ENV=production
 

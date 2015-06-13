@@ -4,24 +4,19 @@ include $(DIR)/Rules.git-versioning.shared.mk
 
 # special rule targets
 STRGT += \
-   usage \
    install \
    update \
    build
 
-DEFAULT := usage
 empty :=
 space := $(empty) $(empty)
-usage:
+usage::
 	@echo 'usage:'
 	@echo '# npm [info|update|test]'
 	@echo '# make [$(subst $(space),|,$(STRGT))]'
 
 install::
 	npm install
-	make test
-
-TEST += check
 
 update:
 	./bin/cli-version.sh update

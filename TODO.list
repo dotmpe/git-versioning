@@ -1,4 +1,6 @@
-Makefile:# XXX: GIT publish
+lib/git-versioning.sh:# XXX External script to verify version
 lib/git-versioning.sh:  # XXX Expect rSt MAIN_DOC
-ReadMe.rst:TODO: some integration with GIT frontend
-ReadMe.rst:      FIXME: if triggered, need a trigger
+ReadMe.rst:Ideas for actual GIT hooks are emerging, but the only GIT hook here has a FIXME
+ReadMe.rst:| TODO: test all this.
+ReadMe.rst:| TODO: some integration with GIT frontend? Some ideas:
+ReadMe.rst:- XXX: Tags using project name (``app-name/0.0.1``) are nice when dealing with
