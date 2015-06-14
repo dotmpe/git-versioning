@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Id: git-versioning/0.0.17-master bin/cli-version.sh
+# Id: git-versioning/0.0.17 bin/cli-version.sh
 
 # Globals
 

@@ -1,4 +1,4 @@
-# Id: git-versioning/0.0.17-master Rules.git-versioning.mk
+# Id: git-versioning/0.0.17 Rules.git-versioning.mk
 
 # Build a tar from the local files. Tagging the build causes Travis to
 # upload the package to the github releases.
