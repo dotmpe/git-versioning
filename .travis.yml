@@ -4,8 +4,8 @@ branches:
 
 env:
 - ENV=
-- ENV=testing
-- ENV=production
+#- ENV=testing
+#- ENV=production
 
 deploy:
   provider: releases

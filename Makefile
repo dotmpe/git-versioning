@@ -95,6 +95,9 @@ test:: deps stat $(TEST)
 
 install:: deps stat $(INSTALL)
 
+clean-dep::
+	rm -rf $(DEP)
+
 clean:: .
 	rm -rf $(CLN)
 
