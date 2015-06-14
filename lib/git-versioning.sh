@@ -129,9 +129,14 @@ sed_rewrite="sed "
 
 function sed_rewrite_tag()
 {
-  $sed_rewrite "$1" $2
+  $sed_rewrite "$1" $2 > $2.out
   test -e $2.applyBack && {
-    mv $2.applyBack $2
+    # Darwin BSD sed
+    rm $2.applyBack $2.out
+  } || {
+    # GNU sed
+    cat $2.out > $2
+    rm $2.out
   }
 }
 
