@@ -1,4 +1,4 @@
-# Id: git-versioning/0.0.16 Rules.git-versioning.mk
+# Id: git-versioning/0.0.17-master Rules.git-versioning.mk
 
 # Build a tar from the local files. Tagging the build causes Travis to
 # upload the package to the github releases.
@@ -52,7 +52,7 @@ V_SH_SHARE := /usr/local/share/git-versioning
 INSTALL += $(V_SH_SHARE)
 
 $(V_SH_SHARE):
-	@mkdir -p $@/{bin,lib,tools}
+	@mkdir -p $@/
 	@cp -vr bin/ $@/bin; chmod +x $@/bin/*
 	@cp -vr lib/ $@/lib
 	@cp -vr tools/ $@/tools; chmod +x $@/tools/*/*.sh

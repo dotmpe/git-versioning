@@ -3,12 +3,12 @@ V_SH_SOURCED=$_
 V_SH_MAIN=$0
 V_SH_LIB=$BASH_SOURCE
 
-# Id: git-versioning/0.0.16 lib/git-versioning.sh
-# version: 0.0.16 git-versioning lib/git-versioning.sh
+# Id: git-versioning/0.0.17-master lib/git-versioning.sh
+# version: 0.0.17-master git-versioning lib/git-versioning.sh
 
 source $LIB/util.sh
 
-version=0.0.16 # git-versioning
+version=0.0.17-master # git-versioning
 
 [ -n "$PREFIX" ] || {
   PREFIX=/usr/local
