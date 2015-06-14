@@ -12,6 +12,8 @@ VER_STR=$2
 e=0
 for doc in $V_PATH_LIST
 do
+  # FIXME: scan all [id|version]...[app-name] lines, fail on version mismatch
+
   # XXX: should want to know if any mismatches, regardless wether one matches
   ( grep -i 'version.*'$2 $doc || grep -i 'Id:.*'$2 $doc ) >> /dev/null && {
     echo "Version match in $doc"

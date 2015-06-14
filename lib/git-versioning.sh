@@ -124,6 +124,19 @@ load()
   VER_META=$(echo $VER_TAGS | $sed_ext 's/^([^+]*)\+?(.*)$/\2/' )
 }
 
+function sed_rewrite_tag()
+{
+  sed -i .applyVersion-bak "$1" $2
+  rm $2.applyVersion-bak
+  #sed -i .applyVersion-bak "$1" $2.tmp
+  #diff -bqr $2.tmp.applyVersion-bak $2.tmp && {
+  #  rm $2.tmp.applyVersion-bak
+  #  mv $2.tmp $2
+  #} || {
+  #  rm $2.tmp.applyVersion-bak $2.tmp
+  #}
+}
+
 source $LIB/formats.sh
 
 applyVersion()
@@ -184,8 +197,6 @@ applyVersion()
       ;;
 
     esac
-
-    rm $V_TOP_PATH/$doc.applyVersion-bak
 
     echo "$doc @$VER_STR"
 
