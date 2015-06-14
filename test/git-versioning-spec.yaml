@@ -1,0 +1,14 @@
+git-versioning:
+  cli-component:
+    "has a CLI component, which":
+    -
+      - 'by default gives a short message about itself and exits normally'
+      -
+        - 'default means without arguments'
+        - 'normally means exit-status is zero, no data on stder'
+        - 'short means readable in a 80x24 terminal'
+        - 'it identifies itself'
+        - 'it indicates indicates how to get more help'
+
+
+

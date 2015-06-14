@@ -52,6 +52,8 @@ V_SH_SHARE := /usr/local/share/git-versioning
 INSTALL += $(V_SH_SHARE)
 
 $(V_SH_SHARE):
+	@test -n "$(V_SH_SHARE)"
+	@test ! -e "$(V_SH_SHARE)"
 	@mkdir -p $@/
 	@cp -vr bin/ $@/bin; chmod +x $@/bin/*
 	@cp -vr lib/ $@/lib
@@ -68,3 +70,4 @@ uninstall:
 	 [ "$P" != "/" ] && rm -rfv $$P
 
 reinstall: uninstall install
+
