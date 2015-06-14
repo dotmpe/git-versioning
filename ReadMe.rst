@@ -3,7 +3,7 @@ GIT Versioning Hooks
 .. Id: git-versioning/0.0.17 ReadMe.rst
 
 :Created: 2015-04-19
-:Version: 0.0.17
+:Version: 0.0.18-master
 :Status: Dev
 :project:
 
