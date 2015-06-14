@@ -124,17 +124,15 @@ load()
   VER_META=$(echo $VER_TAGS | $sed_ext 's/^([^+]*)\+?(.*)$/\2/' )
 }
 
+sed_rewrite="sed "
+[ "$(uname -s)" = "Darwin" ] && sed_rewrite="sed -i.applyBack "
+
 function sed_rewrite_tag()
 {
-  sed -i .applyVersion-bak "$1" $2
-  rm $2.applyVersion-bak
-  #sed -i .applyVersion-bak "$1" $2.tmp
-  #diff -bqr $2.tmp.applyVersion-bak $2.tmp && {
-  #  rm $2.tmp.applyVersion-bak
-  #  mv $2.tmp $2
-  #} || {
-  #  rm $2.tmp.applyVersion-bak $2.tmp
-  #}
+  $sed_rewrite "$1" $2
+  test -e $2.applyBack && {
+    mv $2.applyBack $2
+  }
 }
 
 source $LIB/formats.sh

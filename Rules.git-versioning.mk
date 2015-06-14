@@ -34,7 +34,7 @@ TODO.list: $(SRC)
 
 DEP += .cli-version-update
 .cli-version-update: ReadMe.rst $(shell echo $$(cat .versioned-files.list ))
-	echo Because $?
+	@echo $@ Because $?
 	./bin/cli-version.sh update
 	touch $@
 
