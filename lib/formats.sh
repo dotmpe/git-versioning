@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Id: git-versioning/0.0.17 lib/formats.sh
+# Id: git-versioning/0.0.18-master lib/formats.sh
 
 # Main version line has no further qualifier
 function rst_field_main_version()
@@ -65,7 +65,7 @@ function mk_var_version()
 {
   VER_LINE="VERSION\1= $VER_STR# $APP_ID"
   P=$V_TOP_PATH/$1
-  sed -i .applyVersion-bak 's/^VERSION\(\ *\)=.*# '$APP_ID'/'"$VER_LINE"'/' $P
+  sed -i .applyVersion-bak 's/^VERSION\(\ *[?:]*\)=.*# '$APP_ID'/'"$VER_LINE"'/' $P
 }
 function mk_var_id()
 {

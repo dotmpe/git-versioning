@@ -14,7 +14,7 @@ ifeq ($(APP_ID),)
 APP_ID := $(notdir $(BASE))
 endif
 
-VERSION             := 0.0.16-master# git-versioning
+VERSION             := 0.0.18-master# git-versioning
 #ID                  := git-versioning/0.0.16-master
 #VERSION             := $(patsubst $(APP_ID)/%,%,$(ID))
 
@@ -81,21 +81,19 @@ DEFAULT ?= usage
 
 ## Main rules/deps
 
-default:: $(DMK) $(DEP)
-default:: $(DEFAULT)
+deps:: $(DMK) $(DEP)
+
+default:: deps $(DEFAULT)
 
 usage::
-	@echo 'set ENV to [development|testing|production] for other default behaviour'
 
 stat:: $(SRC)
 
-build:: $(TRGT)
+build:: deps stat $(TRGT)
 
-test:: $(TEST)
+test:: deps stat $(TEST)
 
-install:: $(INSTALL)
-
-check::
+install:: deps stat $(INSTALL)
 
 clean:: .
 	rm -rf $(CLN)

@@ -1,4 +1,4 @@
-script: make check && sudo make install && git-versioning help
+script: make build && sudo make install && git-versioning help
 
 branches:
 

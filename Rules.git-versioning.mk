@@ -1,4 +1,4 @@
-# Id: git-versioning/0.0.17 Rules.git-versioning.mk
+# Id: git-versioning/0.0.18-master Rules.git-versioning.mk
 
 # Build a tar from the local files. Tagging the build causes Travis to
 # upload the package to the github releases.
@@ -32,7 +32,7 @@ $(APP_ID)-$(VERSION).tar: $(SRC) $(filter-out %.tar,$(TRGT))
 TODO.list: $(SRC)
 	-grep -srI 'TODO\|FIXME\|XXX' $^ | grep -v 'grep..srI..TODO' | grep -v 'TODO.list' > $@
 
-STRGT += update
+DEP += update
 update:
 	./bin/cli-version.sh update
 
@@ -46,6 +46,7 @@ update:
 #	git tag $(VERSION)
 #	git push origin
 #	git push --tags
+
 
 V_SH_SHARE := /usr/local/share/git-versioning
 
