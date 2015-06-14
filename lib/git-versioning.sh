@@ -3,12 +3,19 @@ V_SH_SOURCED=$_
 V_SH_MAIN=$0
 V_SH_LIB=$BASH_SOURCE
 
-# Id: git-versioning/0.0.16-master lib/git-versioning.sh
-# version: 0.0.16-master git-versioning lib/git-versioning.sh
+# Id: git-versioning/0.0.16 lib/git-versioning.sh
+# version: 0.0.16 git-versioning lib/git-versioning.sh
 
-source lib/util.sh
+source $LIB/util.sh
 
-version=0.0.16-master # git-versioning
+version=0.0.16 # git-versioning
+
+[ -n "$PREFIX" ] || {
+  PREFIX=/usr/local
+  V_SH_ROOT=$PREFIX/share/git-versioning
+  LIB=$V_SH_ROOT/lib
+  TOOLS=$V_SH_ROOT/lib
+}
 
 # Path to versioned files
 [ -n "$V_TOP_PATH" ] || {
@@ -23,7 +30,11 @@ version=0.0.16-master # git-versioning
 
 # XXX External script to verify version
 [ -n "$V_CHECK" ] || {
-  V_CHECK=$V_TOP_PATH/tools/cmd/version-check.sh
+  [ -e "$V_TOP_PATH/tools/cmd/version-check.sh" ] && {
+    V_CHECK=$V_TOP_PATH/tools/cmd/version-check.sh
+  } || {
+    V_CHECK=$TOOLS/cmd/version-check.sh
+  }
 }
 
 # Names of files tried to get app-name from
@@ -113,7 +124,7 @@ load()
   VER_META=$(echo $VER_TAGS | $sed_ext 's/^([^+]*)\+?(.*)$/\2/' )
 }
 
-source formats.sh
+source $LIB/formats.sh
 
 applyVersion()
 {

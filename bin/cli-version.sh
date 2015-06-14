@@ -1,8 +1,18 @@
 #!/bin/bash
 
-# Id: git-versioning/0.0.16-master bin/cli-version.sh
+# Id: git-versioning/0.0.16 bin/cli-version.sh
 
-source ./lib/git-versioning.sh
+# Globals
+
+PREFIX=.
+LIB=$PREFIX/lib
+TOOLS=$PREFIX/tools
+
+# Path to versioned files
+V_TOP_PATH=.
+
+
+source $LIB/git-versioning.sh
 
 
 usage()
@@ -25,10 +35,11 @@ cmd_build()
 }
 default=cmd_info
 
+
 # Main
 if [ -n "$0" ] && [ $0 != "-bash" ]; then
   # Do something (only) if script invoked as 'cli-version.sh'
-  if [ "$(basename $0 .sh)" = "cli-version" ]; then
+  if [ "$(basename $0 .sh)" = "cli-version" -o "$(basename $0 .sh)" = "git-versioning" ]; then
     # invoke with function name first argument,
     func=$(echo $1 | tr '-' '_')
     # or default

@@ -1,14 +1,18 @@
-language: c
+script: make check && make install && git-versioning
 
 branches:
-  only:
-  - master
-
-install: npm install -g yamljs
 
 env:
-# default env is development
-  - ENV=
-  - ENV=testing
-  - ENV=production
+- ENV=
+- ENV=testing
+- ENV=production
+
+deploy:
+  provider: releases
+  api_key:
+    secure: cN2/NBh4TRW9vritc/KopfZksj/oarMC1KV+N4c436usQlcf4uxbanuN26FcO49fQ/2sxT/IFIasvJ0bR6CnALWzsB4Of7FBqCf85m81M/3mTiPRd7yARQdzQHB5p+f+7fTRsdLz3XkaP4Ww1ARYtckDUHnFXJOF9vC2DX/2rL0=
+  file: git-versioning-$TRAVIS_TAG.tar
+  on:
+    repo: dotmpe/git-versioning
+    tags: true
 

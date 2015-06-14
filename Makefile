@@ -4,8 +4,6 @@ BASE                := $(shell cd $(DIR);pwd)
 
 HOST                := $(shell hostname|tr '.' '-')
 
-APP_ID              := 
-VERSION              = 0.0.16-master # git-versioning
 ENV                 ?= development
 
 # See GIT versioning project for more complete APP_ID heuristic
@@ -15,6 +13,10 @@ endif
 ifeq ($(APP_ID),)
 APP_ID := $(notdir $(BASE))
 endif
+
+VERSION             := 0.0.16-master# git-versioning
+#ID                  := git-versioning/0.0.16-master
+#VERSION             := $(patsubst $(APP_ID)/%,%,$(ID))
 
 # BSD weirdness
 echo = /bin/echo

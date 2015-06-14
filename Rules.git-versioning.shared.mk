@@ -1,4 +1,4 @@
-# Id: git-versioning/0.0.16-master Rules.git-versioning.shared.mk
+# Id: git-versioning/0.0.16 Rules.git-versioning.shared.mk
 # special rule targets
 STRGT += \
    version \
@@ -40,9 +40,4 @@ publish: check
 	else \
 		echo "*DRY* $(VERSION)"; \
 	fi
-
-TRGT += package2.json
-
-package2.json: package.yaml
-	yaml2json $< > $@
 

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Id: git-versioning/0.0.16-master formats.sh
+# Id: git-versioning/0.0.16 formats.sh
 
 # Main version line has no further qualifier
 function rst_field_main_version()
@@ -59,24 +59,38 @@ function sf_version()
   P=$V_TOP_PATH/$1
   sed -i .applyVersion-bak 's/^sitefile:.*/'"$VER_LINE"'/' $P
 }
+
+# Makefile
 function mk_var_version()
 {
-  VER_LINE="VERSION\1= $VER_STR # $APP_ID"
+  VER_LINE="VERSION\1= $VER_STR# $APP_ID"
   P=$V_TOP_PATH/$1
-  sed -i .applyVersion-bak 's/^VERSION\(\ *\)=.* # '$APP_ID'/'"$VER_LINE"'/' $P
+  sed -i .applyVersion-bak 's/^VERSION\(\ *\)=.*# '$APP_ID'/'"$VER_LINE"'/' $P
 }
+function mk_var_id()
+{
+  VER_LINE="ID\1= $APP_ID/$VER_STR"
+  P=$V_TOP_PATH/$1
+  sed -i .applyVersion-bak 's/^.*ID\(\ *\)= '$APP_ID'.*/'"$VER_LINE"'/' $P
+}
+
+# Shell script
 function sh_var_version()
 {
   VER_LINE="version=$VER_STR # $APP_ID"
   P=$V_TOP_PATH/$1
   sed -i .applyVersion-bak 's/^version=.* # '$APP_ID'/'"$VER_LINE"'/' $P
 }
+
+# YAML
 function yaml_version()
 {
   VER_LINE="version:\ $VER_STR # $APP_ID"
   P=$V_TOP_PATH/$1
   sed -i .applyVersion-bak 's/^\([\ \t]*\)version:.* # '$APP_ID'/'"\1$VER_LINE"'/' $P
 }
+
+# JSON
 function json_version()
 {
   VER_LINE="\"version\":\ \"$VER_STR\","

@@ -13,5 +13,4 @@ tools/cmd/src-tree.sh
 Makefile
 Rules.git-versioning.mk
 Rules.git-versioning.shared.mk
-formats.sh
-configure
+lib/formats.sh
