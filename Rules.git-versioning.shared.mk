@@ -1,8 +1,8 @@
-# Id: git-versioning/0.0.18-master Rules.git-versioning.shared.mk
+# Id: git-versioning/0.0.19-master Rules.git-versioning.shared.mk
 # special rule targets
 STRGT += \
    version \
-   path release tag \
+   patch release tag \
    publish
 
 version:
@@ -25,19 +25,4 @@ tag:
 	@./bin/cli-version.sh increment
 	@./tools/cmd/prep-version.sh
 
-
-# XXX: GIT publish
-publish: DRY := yes
-publish: check
-	@[ -z "$(VERSION)" ] && exit 1 || echo Publishing $(./bin/cli-version.sh version)
-	git push
-	@if [ $(DRY) = 'no' ]; \
-	then \
-		git tag v$(VERSION)
-		git push fury master; \
-		npm publish --tag $(VERSION); \
-		npm publish; \
-	else \
-		echo "*DRY* $(VERSION)"; \
-	fi
 

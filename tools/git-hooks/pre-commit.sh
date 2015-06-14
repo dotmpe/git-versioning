@@ -3,7 +3,7 @@
 # Before commit, set the version to snapshot, dev pre-release
 # or some customized edition based on ReadMe status field.
 
-# Id: git-versioning/0.0.18-master tools/git-hooks/pre-commit.sh
+# Id: git-versioning/0.0.19-master tools/git-hooks/pre-commit.sh
 
 V_TOP_PATH=$(git rev-parse --show-toplevel)
 

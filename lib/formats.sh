@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Id: git-versioning/0.0.18-master lib/formats.sh
+# Id: git-versioning/0.0.19-master lib/formats.sh
 
 # Main version line has no further qualifier
 function rst_field_main_version()
@@ -63,21 +63,21 @@ function sf_version()
 # Makefile
 function mk_var_version()
 {
-  VER_LINE="VERSION\1= $VER_STR# $APP_ID"
+  VER_LINE="VERSION\1=\ $VER_STR#\ $APP_ID"
   P=$V_TOP_PATH/$1
   sed_rewrite_tag 's/^VERSION\(\ *[?:]*\)=.*# '$APP_ID'/'"$VER_LINE"'/' $P
 }
-function mk_var_id()
-{
-  VER_LINE="ID\1= $APP_ID/$VER_STR"
-  P=$V_TOP_PATH/$1
-  sed_rewrite_tag 's/^.*ID\(\ *\)= '$APP_ID'.*/'"$VER_LINE"'/' $P
-}
+#function mk_var_id()
+#{
+#  VER_LINE="ID\1=\ $APP_ID\/$VER_STR"
+#  P=$V_TOP_PATH/$1
+#  sed_rewrite_tag 's/^ID\(\ *[?:]*\)=.*'$APP_ID'.*/'$VER_LINE'/' $P
+#}
 
 # Shell script
 function sh_var_version()
 {
-  VER_LINE="version=$VER_STR # $APP_ID"
+  VER_LINE="version=$VER_STR\ #\ $APP_ID"
   P=$V_TOP_PATH/$1
   sed_rewrite_tag 's/^version=.* # '$APP_ID'/'"$VER_LINE"'/' $P
 }
@@ -85,7 +85,7 @@ function sh_var_version()
 # YAML
 function yaml_version()
 {
-  VER_LINE="version:\ $VER_STR # $APP_ID"
+  VER_LINE="version:\ $VER_STR\ #\ $APP_ID"
   P=$V_TOP_PATH/$1
   sed_rewrite_tag 's/^\([\ \t]*\)version:.* # '$APP_ID'/'"\1$VER_LINE"'/' $P
 }
