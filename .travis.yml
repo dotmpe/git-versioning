@@ -3,7 +3,7 @@ script: ./configure && make && sudo ENV=$ENV make install && make test
 branches:
 
 env:
-#- ENV=
+- ENV=
 - ENV=testing
 - ENV=production
 
