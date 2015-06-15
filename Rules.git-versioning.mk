@@ -52,8 +52,8 @@ cli-version-check::
 
 
 STRGT += do-release
-do-release: min := 
-do-release: maj := 
+do-release:: min := 
+do-release:: maj := 
 do-release::
 do-release:: M=Release
 do-release:: cli-version-check

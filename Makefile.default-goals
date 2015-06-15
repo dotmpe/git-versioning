@@ -5,11 +5,9 @@ DEFAULT ?= .cli-version-update
 endif
 ifeq ($(ENV),testing)
 DEFAULT ?= .cli-version-update install
-CMDP := sudo
 endif
 ifeq ($(ENV),production)
 DEFAULT ?= build install
-CMDP := sudo
 endif
 endif
 

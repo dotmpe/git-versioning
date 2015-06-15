@@ -4,7 +4,7 @@ BASE                := $(shell cd $(DIR);pwd)
 
 HOST                := $(shell hostname|tr '.' '-')
 
-ENV                 ?= development
+ENV                 ?= $(shell [ -n "$$ENV" ] && echo $$ENV || echo development)
 
 $(info ENV=$(shell echo $$ENV))
 $(info ENV=$(ENV))
