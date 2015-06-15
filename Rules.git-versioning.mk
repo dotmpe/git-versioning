@@ -1,4 +1,4 @@
-# Id: git-versioning/0.0.26 Rules.git-versioning.mk
+# Id: git-versioning/0.0.27-master Rules.git-versioning.mk
 
 include $(DIR)/Rules.git-versioning.shared.mk
 
@@ -90,4 +90,8 @@ uninstall::
 	 [ "$P" != "/" ] && rm -rfv $$P
 
 reinstall:: uninstall install
+
+
+test::
+	git-versioning
 

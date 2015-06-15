@@ -3,12 +3,12 @@ V_SH_SOURCED=$_
 V_SH_MAIN=$0
 V_SH_LIB=$BASH_SOURCE
 
-# Id: git-versioning/0.0.26 lib/git-versioning.sh
-# version: 0.0.26 git-versioning lib/git-versioning.sh
+# Id: git-versioning/0.0.27-master lib/git-versioning.sh
+# version: 0.0.27-master git-versioning lib/git-versioning.sh
 
 source $LIB/util.sh
 
-version=0.0.26 # git-versioning
+version=0.0.27-master # git-versioning
 
 [ -n "$PREFIX" ] || {
   PREFIX=/usr/local
@@ -88,10 +88,11 @@ load_app_id()
 # Set git-versioning vars
 load()
 {
-  [ "$V_SH_LIB" == "./lib/git-versioning.sh" ] || {
+	[ "$(basename $V_SH_LIB)" == "git-versioning.sh" ] || {
     echo "$0: This script should be named ./lib/git-versioning.sh"  1>&2
     echo "So that PWD is be the module metadata dir. "  1>&2
     echo "Untested usage: Aborting. "  1>&2
+    echo "Found V_SH_LIB=$V_SH_LIB"  1>&2
     exit 2
   }
 

@@ -17,7 +17,7 @@ ifeq ($(APP_ID),)
 APP_ID := $(notdir $(BASE))
 endif
 
-VERSION             := 0.0.26# git-versioning
+VERSION             := 0.0.27-master# git-versioning
 #ID                  := git-versioning/0.0.16-master
 #VERSION             := $(patsubst $(APP_ID)/%,%,$(ID))
 

@@ -1,10 +1,10 @@
 #!/bin/bash
 
-# Id: git-versioning/0.0.26 bin/cli-version.sh
+# Id: git-versioning/0.0.27-master bin/cli-version.sh
 
 # Globals
 
-PREFIX=.
+PREFIX=/usr/local/share/git-versioning
 LIB=$PREFIX/lib
 TOOLS=$PREFIX/tools
 
