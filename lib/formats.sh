@@ -1,14 +1,8 @@
 #!/bin/bash
 
-# Id: git-versioning/0.0.22 lib/formats.sh
+# Id: git-versioning/0.0.23 lib/formats.sh
 
-# Main version line has no further qualifier
-function rst_field_main_version()
-{
-  VER_LINE=":Version:\ $VER_STR"
-  P=$V_TOP_PATH/$1
-  sed_rewrite_tag 's/^:Version:.*/'"$VER_LINE"'/' $P
-}
+# reStructureText
 function rst_field_version()
 {
   VER_LINE=":Version:\ $VER_STR ($APP_ID)"
@@ -27,7 +21,15 @@ function rst_comment_id()
   P=$V_TOP_PATH/$1
   sed_rewrite_tag 's/^\.\. Id: '$APP_ID'.*/'"$ID_LINE"'/' $P
 }
+# Main version line has no further qualifier
+function rst_field_main_version()
+{
+  VER_LINE=":Version:\ $VER_STR"
+  P=$V_TOP_PATH/$1
+  sed_rewrite_tag 's/^:Version:.*/'"$VER_LINE"'/' $P
+}
 
+# C-like comments
 function clike_comment_id()
 {
   ID_LINE="# Id: $APP_ID\/$VER_STR "$(echo $1 | sed 's/\//\\\//g')
@@ -46,7 +48,7 @@ commonCLikeComment()
   clike_comment_version $1
 }
 
-
+# Sitefile
 function sfrc_version()
 {
   VER_LINE="\1\"sitefilerc\":\ \"$VER_STR\""
@@ -67,7 +69,7 @@ function mk_var_version()
   P=$V_TOP_PATH/$1
   sed_rewrite_tag 's/^VERSION\(\ *[?:]*\)=.*# '$APP_ID'/'"$VER_LINE"'/' $P
 }
-#function mk_var_id()
+# FIXME function mk_var_id()
 #{
 #  VER_LINE="ID\1=\ $APP_ID\/$VER_STR"
 #  P=$V_TOP_PATH/$1
@@ -98,6 +100,7 @@ function json_version()
   $sed_rewrite 's/^\(.*\)"version":\ ".*"/\1"version":\ "'$VER_STR'"/' $P > $P.out
   sed_post $P
 }
+# JS
 function js_var_version()
 {
   VER_LINE="var version\ =\ '$VER_STR'; \/\/ $APP_ID"
@@ -105,6 +108,7 @@ function js_var_version()
   $sed_rewrite 's/^var version =.* \/\/ '$APP_ID'/'"$VER_LINE"'/' $P > $P.out
   sed_post $P
 }
+# JS/Coffee-Script
 function coffee_var_version()
 {
   P=$V_TOP_PATH/$1
