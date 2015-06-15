@@ -24,7 +24,7 @@ TAR_SRC += \
 			Makefile Makefile.default-goals \
 			Rules.$(APP_ID).mk Rules.$(APP_ID).shared.mk .travis.yml \
 			reader.rst Sitefile.yaml \
-			package.yaml package.json \
+			package.yaml package.json
 else
 TAR_SRC += install.sh
 endif
