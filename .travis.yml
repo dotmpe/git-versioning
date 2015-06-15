@@ -3,9 +3,9 @@ script: ./configure && make && make test
 branches:
 
 env:
-- ENV=
-#- ENV=testing
-#- ENV=production
+#- ENV=
+- ENV=testing
+- ENV=production
 
 deploy:
   provider: releases

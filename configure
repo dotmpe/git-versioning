@@ -23,7 +23,7 @@ HEREDOC
 ) > .versioned-files.list
 
 
-[ "$ENV" != "testing" ] || {
+[ "$ENV" == "production" ] || {
 (
 cat <<HEREDOC
 test/example/rst_field_version.rst
