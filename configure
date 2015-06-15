@@ -23,7 +23,7 @@ HEREDOC
 ) > .versioned-files.list
 
 
-[ "$ENV" == "testing" ] && 
+[ "$ENV" != "testing" ] || {
 (
 cat <<HEREDOC
 test/example/rst_field_version.rst
@@ -38,4 +38,4 @@ test/example/js_var_version.js
 test/example/coffee_var_version.coffee
 HEREDOC
 ) >> .versioned-files.list
-
+}
