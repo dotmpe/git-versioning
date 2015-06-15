@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Id: git-versioning/0.0.21-master lib/formats.sh
+# Id: git-versioning/0.0.22 lib/formats.sh
 
 # Main version line has no further qualifier
 function rst_field_main_version()

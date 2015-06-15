@@ -1,4 +1,4 @@
-script: ./configure && $([ "$ENV" = development ] || echo sudo ) make && make test
+script: ./configure && ENV=$ENV $([ "$ENV" = development ] || echo sudo ) make && make test
 
 branches:
 
