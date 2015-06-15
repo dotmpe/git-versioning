@@ -1,4 +1,6 @@
 
+# FIXME: set production to install from tar
+
 ifeq ($(MAKECMDGOALS),)
 # Set default target for CI environments:
 ifeq ($(ENV),development)

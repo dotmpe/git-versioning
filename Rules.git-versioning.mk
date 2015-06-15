@@ -13,20 +13,30 @@ usage::
 # Build a tar from the local files. Tagging the build causes Travis to
 # upload the package to the github releases.
 
-SRC += Makefile Rules.$(APP_ID).mk Rules.$(APP_ID).shared.mk .travis.yml \
-			 Makefile.default-goals \
-			 ReadMe.rst \
-			 package.yaml package.json \
-			 Sitefile.yaml \
-			 lib/git-versioning.sh \
-			 lib/formats.sh \
-			 bin/ tools/
-#			 reader.rst \
+TAR_SRC += \
+			ReadMe.rst \
+			lib/git-versioning.sh \
+			lib/formats.sh \
+			bin/ tools/
 
+ifeq ($(ENV),development)
+TAR_SRC += \
+			Makefile Makefile.default-goals \
+			Rules.$(APP_ID).mk Rules.$(APP_ID).shared.mk .travis.yml \
+			reader.rst Sitefile.yaml \
+			package.yaml package.json \
+else
+TAR_SRC += install.sh
+endif
+
+SRC += $(TAR_SRC)
+
+ifneq ($(ENV),development)
 CLN += $(APP_ID)-$(VERSION).tar
 TRGT += $(APP_ID)-$(VERSION).tar
+endif
 
-$(APP_ID)-$(VERSION).tar: $(SRC) $(filter-out %.tar,$(TRGT))
+$(APP_ID)-$(VERSION).tar: $(TAR_SRC) $(filter-out %.tar,$(TRGT))
 	tar cvjf $@ $^
 
 
@@ -72,8 +82,6 @@ V_SH_SHARE := /usr/local/share/git-versioning
 INSTALL += $(V_SH_SHARE)
 
 $(V_SH_SHARE):
-	@test -n "$(V_SH_SHARE)"
-	@test ! -e "$(V_SH_SHARE)"
 	@mkdir -p $@/
 	@cp -vr bin/ $@/bin; chmod +x $@/bin/*
 	@cp -vr lib/ $@/lib
