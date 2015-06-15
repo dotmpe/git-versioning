@@ -15,4 +15,4 @@ deploy:
   on:
     repo: dotmpe/git-versioning
     tags: true
-
+    condition: $ENV = production
