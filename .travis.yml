@@ -1,4 +1,4 @@
-script: make build && sudo make install && git-versioning help
+script: ./configure && make && make test
 
 branches:
 

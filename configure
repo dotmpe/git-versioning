@@ -1,3 +1,8 @@
+#!/bin/bash
+
+#[ "$ENV" == "development" ] && 
+(
+cat <<HEREDOC
 ReadMe.rst
 package.json
 package.yaml
@@ -14,6 +19,13 @@ Makefile
 Rules.git-versioning.mk
 Rules.git-versioning.shared.mk
 lib/formats.sh
+HEREDOC
+) > .versioned-files.list
+
+
+[ "$ENV" == "testing" ] && 
+(
+cat <<HEREDOC
 test/example/rst_field_version.rst
 test/example/rst_field_id.rst
 test/example/clike_comment_id.sh
@@ -24,3 +36,6 @@ test/example/yaml_version.yaml
 test/example/json_version.json
 test/example/js_var_version.js
 test/example/coffee_var_version.coffee
+HEREDOC
+) >> .versioned-files.list
+

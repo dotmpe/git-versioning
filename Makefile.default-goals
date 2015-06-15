@@ -1,25 +1,25 @@
 
-#ifeq ($(MAKECMDGOALS),)
-#ifeq ($(ENV),development)
-#DEFAULT ?= build
-#endif
+ifeq ($(MAKECMDGOALS),)
+ifeq ($(ENV),development)
+DEFAULT ?= .cli-version-update
+endif
 #ifeq ($(ENV),testing)
 #DEFAULT ?= build
 #endif
 #ifeq ($(ENV),production)
 #DEFAULT ?= build
 #endif
-#endif
-#
-#ifeq ($(MAKECMDGOALS),test)
-#ifeq ($(ENV),development)
-#DEFAULT ?= test
-#endif
+endif
+
+ifeq ($(MAKECMDGOALS),test)
+ifeq ($(ENV),development)
+DEFAULT ?= cli-version-check
+endif
 #ifeq ($(ENV),testing)
 #DEFAULT ?= test install check
 #endif
 ##ifeq ($(ENV),production)
 ##DEFAULT ?= test install check
 ##endif
-#endif
+endif
 

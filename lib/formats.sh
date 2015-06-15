@@ -87,27 +87,29 @@ function yaml_version()
 {
   VER_LINE="version:\ $VER_STR\ #\ $APP_ID"
   P=$V_TOP_PATH/$1
-  sed_rewrite_tag 's/^\([\ \t]*\)version:.* # '$APP_ID'/'"\1$VER_LINE"'/' $P
+  $sed_rewrite 's/^\([\ \t]*\)version:.* # '$APP_ID'/'"\1$VER_LINE"'/' $P > $P.out
+  sed_post $P
 }
 
 # JSON
 function json_version()
 {
-  VER_LINE="\"version\":\ \"$VER_STR\","
   P=$V_TOP_PATH/$1
-  sed_rewrite_tag 's/^\([\ \t]*\)"version":.*/\1'"$VER_LINE"'/' $P
+  $sed_rewrite 's/^\(.*\)"version":\ ".*"/\1"version":\ "'$VER_STR'"/' $P > $P.out
+  sed_post $P
 }
 function js_var_version()
 {
   VER_LINE="var version\ =\ '$VER_STR'; \/\/ $APP_ID"
   P=$V_TOP_PATH/$1
-  sed_rewrite_tag 's/^var version =.* \/\/ '$APP_ID'/'"$VER_LINE"'/' $P
+  $sed_rewrite 's/^var version =.* \/\/ '$APP_ID'/'"$VER_LINE"'/' $P > $P.out
+  sed_post $P
 }
 function coffee_var_version()
 {
-  VER_LINE="version = '$VER_STR' # $APP_ID"
   P=$V_TOP_PATH/$1
-  sed_rewrite_tag 's/^version =.* # '$APP_ID'/'"$VER_STR"'/' $P
+  $sed_rewrite 's/^version =.* # '$APP_ID'/version\ =\ "'$VER_STR'"\ #\ '$APP_ID'/' $P > $P.out
+  sed_post $P
 }
 
 

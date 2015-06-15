@@ -32,12 +32,15 @@ $(APP_ID)-$(VERSION).tar: $(SRC) $(filter-out %.tar,$(TRGT))
 TODO.list: $(SRC)
 	-grep -srI 'TODO\|FIXME\|XXX' $^ | grep -v 'grep..srI..TODO' | grep -v 'TODO.list' > $@
 
-DEP += .cli-version-update
+#DEP += .cli-version-update
 .cli-version-update: ReadMe.rst $(shell echo $$(cat .versioned-files.list ))
 	@echo $@ Because $?
 	./bin/cli-version.sh update
 	touch $@
 
+TEST += cli-version-check
+cli-version-check::
+	./bin/cli-version.sh check
 
 #STRGT += release
 #release: M=Release

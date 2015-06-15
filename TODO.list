@@ -1,4 +1,3 @@
-Rules.git-versioning.shared.mk:# XXX: GIT publish
 ReadMe.rst:Ideas for actual GIT hooks are emerging, but the only GIT hook here has a FIXME
 ReadMe.rst:| TODO: test all this.
 ReadMe.rst:| TODO: some integration with GIT frontend? Some ideas:
