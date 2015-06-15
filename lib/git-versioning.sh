@@ -184,6 +184,11 @@ applyVersion()
         coffee_var_version $doc
       ;;
 
+      *.properties )
+        commonCLikeComment $doc
+        properties_version $doc
+      ;;
+
       * )
         echo "$0: Unable to version $doc"
         exit 2

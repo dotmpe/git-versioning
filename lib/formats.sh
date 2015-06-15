@@ -116,4 +116,11 @@ function coffee_var_version()
   sed_post $P
 }
 
+# Java properties
+function properties_version()
+{
+  P=$V_TOP_PATH/$1
+  $sed_rewrite 's/^'$APP_ID'\.version=.*/'$APP_ID'.version='$VER_STR'/' $P > $P.out
+  sed_post $P
+}
 
