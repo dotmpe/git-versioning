@@ -5,9 +5,9 @@
 # reStructureText
 function rst_field_version()
 {
-  VER_LINE=":Version:\ $VER_STR ($APP_ID)"
+  VER_LINE=":[Vv]ersion:\ $VER_STR ($APP_ID)"
   P=$V_TOP_PATH/$1
-  sed_rewrite_tag 's/^:Version:.*'$APP_ID'.*$/'"$VER_LINE"'/' $P
+  sed_rewrite_tag 's/^:[Vv]ersion:.*'$APP_ID'.*$/'"$VER_LINE"'/' $P
 }
 function rst_field_id()
 {

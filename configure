@@ -1,5 +1,18 @@
 #!/bin/bash
 
+source lib/util.sh
+
+
+[ "$ENV" == "development" ] || {
+
+  # set for production or testing
+  PREFIX=/usr/local/share/git-versioning
+
+  P=$(echo $PREFIX | sed 's/\//\\\//g')
+  sed_rewrite_tag 's/^PREFIX=.*/PREFIX='$P'/' bin/cli-version.sh
+
+}
+
 #[ "$ENV" == "development" ] && 
 (
 cat <<HEREDOC

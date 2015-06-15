@@ -4,7 +4,7 @@
 
 # Globals
 
-PREFIX=/usr/local/share/git-versioning
+PREFIX=.
 LIB=$PREFIX/lib
 TOOLS=$PREFIX/tools
 

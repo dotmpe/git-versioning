@@ -91,7 +91,6 @@ uninstall::
 
 reinstall:: uninstall install
 
-
-test::
+test-run::
 	git-versioning
 

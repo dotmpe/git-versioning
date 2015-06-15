@@ -59,6 +59,10 @@ module_meta_list() # $one
 
 load_app_id()
 {
+  [ -e .app-id ] && {
+    APP_ID=$(cat .app-id)
+    return
+  }
   META_FILES=$(module_meta_list)
   for META_FILE in $META_FILES
   do
@@ -81,14 +85,14 @@ load_app_id()
     fi; fi
   done
   [ -n "$APP_ID" ] || {
-     echo basename $PWD
+    APP_ID=$(basename $PWD)
   }
 }
 
 # Set git-versioning vars
 load()
 {
-	[ "$(basename $V_SH_LIB)" == "git-versioning.sh" ] || {
+  [ "$(basename $V_SH_LIB)" == "git-versioning.sh" ] || {
     echo "$0: This script should be named ./lib/git-versioning.sh"  1>&2
     echo "So that PWD is be the module metadata dir. "  1>&2
     echo "Untested usage: Aborting. "  1>&2
@@ -107,7 +111,7 @@ load()
   V_MAIN_DOC=$(head -n 1 $V_DOC_LIST)
 
   # XXX Expect rSt MAIN_DOC
-  VER_TOKEN=":Version:"
+  VER_TOKEN=":[Vv]ersion:"
 
   VER_STR=$(grep "^$VER_TOKEN" $V_TOP_PATH/$V_MAIN_DOC | awk '{print $2}')
 
@@ -123,26 +127,6 @@ load()
   VER_PRE=$(echo $VER_TAGS | $sed_ext 's/^-?([^+]*)(\+.*)?$/\1/' )
 
   VER_META=$(echo $VER_TAGS | $sed_ext 's/^([^+]*)\+?(.*)$/\2/' )
-}
-
-sed_rewrite="sed "
-[ "$(uname -s)" = "Darwin" ] && sed_rewrite="sed -i.applyBack "
-
-function sed_rewrite_tag()
-{
-  $sed_rewrite "$1" $2 > $2.out
-  sed_post $2
-}
-function sed_post()
-{
-  test -e $1.applyBack && {
-    # Darwin BSD sed
-    rm $1.applyBack $1.out
-  } || {
-    # GNU sed
-    cat $1.out > $1
-    rm $1.out
-  }
 }
 
 source $LIB/formats.sh
