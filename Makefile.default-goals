@@ -4,10 +4,10 @@ ifeq ($(ENV),development)
 DEFAULT ?= .cli-version-update
 endif
 ifeq ($(ENV),testing)
-DEFAULT ?= .cli-version-update
+DEFAULT ?= .cli-version-update install
 endif
 ifeq ($(ENV),production)
-DEFAULT ?= .cli-version-update
+DEFAULT ?= install
 endif
 endif
 
@@ -16,10 +16,10 @@ ifeq ($(ENV),development)
 DEFAULT ?= cli-version-check
 endif
 ifeq ($(ENV),testing)
-DEFAULT ?= test install check
+DEFAULT ?= .cli-version-check test check
 endif
 ifeq ($(ENV),production)
-DEFAULT ?= test install check
+DEFAULT ?= test check
 endif
 endif
 
