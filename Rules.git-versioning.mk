@@ -1,4 +1,4 @@
-# Id: git-versioning/0.0.20 Rules.git-versioning.mk
+# Id: git-versioning/0.0.21-master Rules.git-versioning.mk
 
 include $(DIR)/Rules.git-versioning.shared.mk
 
@@ -62,8 +62,9 @@ do-release:: cli-version-check
 	git tag $(VERSION)
 	git push origin
 	git push --tags
-	@./bin/cli-version.sh increment $(min) $(maj)
-	git add $$(echo $$(cat .versioned-files))
+	./bin/cli-version.sh increment $(min) $(maj)
+	./tools/cmd/prep-version.sh
+	@git add $$(echo $$(cat .versioned-files.list))
 
 # install/uninstall
 V_SH_SHARE := /usr/local/share/git-versioning

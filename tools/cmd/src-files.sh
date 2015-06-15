@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Id: git-versioning/0.0.20 tools/cmd/src-files.sh
+# Id: git-versioning/0.0.21-master tools/cmd/src-files.sh
 
 # Seed code for 'src-files' command. Lists (versioned) src files.
 
