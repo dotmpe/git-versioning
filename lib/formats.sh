@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Id: git-versioning/0.0.24 lib/formats.sh
+# Id: git-versioning/0.0.25 lib/formats.sh
 
 # reStructureText
 function rst_field_version()
