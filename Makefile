@@ -6,6 +6,9 @@ HOST                := $(shell hostname|tr '.' '-')
 
 ENV                 ?= development
 
+$(info ENV=$(shell echo $$ENV))
+$(info ENV=$(ENV))
+
 # See GIT versioning project for more complete APP_ID heuristic
 ifneq ($(wildcard package.yml package.yaml),)
 APP_ID := $(shell grep '^main: ' $(wildcard package.yml package.yaml) | sed 's/^main: //' )
