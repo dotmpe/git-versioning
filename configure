@@ -10,7 +10,6 @@ source lib/util.sh
 
   P=$(echo $PREFIX | sed 's/\//\\\//g')
   sed_rewrite_tag 's/^PREFIX=.*/PREFIX='$P'/' bin/cli-version.sh
-
 }
 
 #[ "$ENV" == "development" ] && 
@@ -50,6 +49,7 @@ test/example/json_version.json
 test/example/js_var_version.js
 test/example/coffee_var_version.coffee
 test/example/properties_version.properties
+test/example/build.xml
 HEREDOC
 ) >> .versioned-files.list
 }

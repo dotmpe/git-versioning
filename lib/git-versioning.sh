@@ -189,6 +189,11 @@ applyVersion()
         properties_version $doc
       ;;
 
+      *build.xml )
+        xml_comment_id $doc
+        ant_var_version $doc
+      ;;
+
       * )
         echo "$0: Unable to version $doc"
         exit 2

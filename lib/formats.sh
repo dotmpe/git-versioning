@@ -124,3 +124,16 @@ function properties_version()
   sed_post $P
 }
 
+function ant_var_version()
+{
+  P=$V_TOP_PATH/$1
+  $sed_rewrite 's/<var\ name="'$APP_ID'\.version"\ value=".*"\ \/>/<var\ name="'$APP_ID'.version"\ value="'$VER_STR'"\ \/>/g' $P > $P.out
+  sed_post $P
+}
+
+function xml_comment_id()
+{
+  P=$V_TOP_PATH/$1
+  $sed_rewrite 's/<!--\ Id: '$APP_ID'\/.*\ -->/<!--\ Id:\ '$APP_ID'\/'$VER_STR'\ '$(echo $1 | sed 's/\//\\\//g')'\ -->/g' $P > $P.out
+  sed_post $P
+}
