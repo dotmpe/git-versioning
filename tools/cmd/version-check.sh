@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Id: git-versioning/0.0.25 tools/cmd/version-check.sh
+# Id: git-versioning/0.0.26 tools/cmd/version-check.sh
 
 # External hook for git-vesioning.
 # See V_CHECK=$V_TOP_PATH/tools/version-check.sh

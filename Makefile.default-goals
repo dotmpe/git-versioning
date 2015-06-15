@@ -1,5 +1,6 @@
 
 ifeq ($(MAKECMDGOALS),)
+# Set default target for CI environments:
 ifeq ($(ENV),development)
 DEFAULT ?= .cli-version-update
 endif
@@ -11,15 +12,16 @@ DEFAULT ?= build
 endif
 endif
 
-ifeq ($(MAKECMDGOALS),test)
-ifeq ($(ENV),development)
-DEFAULT ?= cli-version-check
-endif
-ifeq ($(ENV),testing)
-DEFAULT ?= .cli-version-check test check
-endif
-ifeq ($(ENV),production)
-DEFAULT ?= test check
-endif
-endif
-
+# FIXME: this would't work like this
+#ifeq ($(MAKECMDGOALS),test)
+#ifeq ($(ENV),development)
+#DEFAULT ?= cli-version-check
+#endif
+#ifeq ($(ENV),testing)
+#DEFAULT ?= .cli-version-check test check
+#endif
+#ifeq ($(ENV),production)
+#DEFAULT ?= test check
+#endif
+#endif
+#
