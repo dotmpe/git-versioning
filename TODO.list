@@ -1,5 +1,4 @@
-ReadMe.rst:Ideas for actual GIT hooks are emerging, but the only GIT hook here has a FIXME
-ReadMe.rst:| TODO: test all this.
+ReadMe.rst:| TODO: use complete semver and variations for testing.
 ReadMe.rst:| TODO: some integration with GIT frontend? Some ideas:
 ReadMe.rst:- XXX: Tags using project name (``app-name/0.0.1``) are nice when dealing with
 lib/git-versioning.sh:# XXX External script to verify version
@@ -10,3 +9,4 @@ tools//cmd/version-check.sh:  # XXX: should want to know if any mismatches, rega
 tools//git-hooks/post-commit-old.sh:# FIXME
 tools//git-hooks/pre-commit.sh:# FIXME source $V_TOP_PATH/lib/git-versioning.sh
 tools//git-hooks/pre-commit.sh:# XXX again rSt hardcoded
+Makefile.default-goals:# FIXME: set production to install from tar
