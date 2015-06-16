@@ -8,8 +8,9 @@ function uninstall()
   test -e "$V_SH_SHARE"
   rm -vf /usr/local/bin/git-versioning
 
-  P=$(dirname $V_SH_SHARE)/$$(basename $V_SH_SHARE)
-  [ "$P" != "/" ] && rm -rfv $$P
+  # prevent removing linked dir
+  P=$(dirname $V_SH_SHARE)/$(basename $V_SH_SHARE)
+  [ "$P" != "/" ] && rm -rfv $P
 }
 
 function install()

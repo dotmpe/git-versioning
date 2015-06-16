@@ -2,8 +2,15 @@
 
 source lib/util.sh
 
+[ -n "$ENV" ] || ENV=development
 
-[ "$ENV" == "development" ] || {
+[ "$ENV" == "development" ] && {
+
+  PREFIX=.
+  P=$(echo $PREFIX | sed 's/\//\\\//g')
+  sed_rewrite_tag 's/^PREFIX=.*/PREFIX='$P'/' bin/cli-version.sh
+
+} || {
 
   # set for production or testing
   PREFIX=/usr/local/share/git-versioning
