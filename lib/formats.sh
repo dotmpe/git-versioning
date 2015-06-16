@@ -1,13 +1,13 @@
 #!/bin/bash
 
-# Id: git-versioning/0.0.27-master lib/formats.sh
+# Id: git-versioning/0.0.27-test lib/formats.sh
 
 # reStructureText
 function rst_field_version()
 {
-  VER_LINE=":[Vv]ersion:\ $VER_STR ($APP_ID)"
+  VER_LINE=":\1ersion:\ $VER_STR ($APP_ID)"
   P=$V_TOP_PATH/$1
-  sed_rewrite_tag 's/^:[Vv]ersion:.*'$APP_ID'.*$/'"$VER_LINE"'/' $P
+  sed_rewrite_tag 's/^:\([Vv]\)ersion:.*'$APP_ID'.*$/'"$VER_LINE"'/' $P
 }
 function rst_field_id()
 {
