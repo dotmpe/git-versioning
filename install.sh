@@ -17,7 +17,7 @@ function install()
 {
   test -n "$V_SH_SHARE"
   test ! -e "$V_SH_SHARE"
-  mkdir -p $V_SH_SHARE/
+  mkdir -p $(dirname $V_SH_SHARE)
   cp -vr bin/ $V_SH_SHARE/bin; chmod +x $V_SH_SHARE/bin/*
   cp -vr lib/ $V_SH_SHARE/lib
   cp -vr tools/ $V_SH_SHARE/tools; chmod +x $V_SH_SHARE/tools/*/*.sh
