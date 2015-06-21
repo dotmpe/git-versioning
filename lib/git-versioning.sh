@@ -368,3 +368,13 @@ cmd_snapshot_s()
   cmd_build $(date +%s) $*
 }
 
+# git helpers
+cmd_prepare_commit_msg()
+{
+	echo -n "Prepare Commit Msg: "
+	cmd_app_id
+	echo COMMIT_MSG=$1
+	echo COMMIT_MSG_SRC=$2
+	echo COMMIT_UPDATES=$3
+}
+

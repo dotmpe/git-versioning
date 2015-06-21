@@ -1,3 +1,4 @@
+# Id: git-versioning/0.0.27-master Rules.git-hooks.shared.mk
 
 # http://git-scm.com/docs/githooks
 
