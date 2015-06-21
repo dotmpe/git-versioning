@@ -371,10 +371,8 @@ cmd_snapshot_s()
 # git helpers
 cmd_prepare_commit_msg()
 {
-	echo -n "Prepare Commit Msg: "
-	cmd_app_id
-	echo COMMIT_MSG=$1
-	echo COMMIT_MSG_SRC=$2
-	echo COMMIT_UPDATES=$3
+	cp $1 $1.tmp
+	echo "$(head -n 1 $1.tmp) ($APP_ID/$VER_STR)" > $1
+	tail -n +2 $1.tmp >> $1
 }
 
