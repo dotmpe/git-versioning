@@ -294,25 +294,35 @@ cmd_info()
   echo "Application name/version: "$(cmd_app_id)" (using git-versioning/$version)"
 }
 
+cmd_path()
+{
+  echo "Prefix: $PREFIX"
+  echo "Shared files: $V_SH_ROOT"
+  echo "Lib: $LIB"
+  echo "Tools: $TOOLS"
+}
+
 cmd_help()
 {
   echo $(cmd_app_id)
-  echo 'Usage:'
-  echo 'cli-version [info]                 Print git-version application Id. '
-  echo 'cli-version version                Print local version. '
-  echo 'cli-version name                   Print local application name. '
-  echo 'cli-version app-id                 Print local application Id (name/version). '
-  echo 'cli-version update                 Update files with embedded version. '
-  echo 'cli-version increment [min [maj]]  Increment patch/min/maj version. '
-  echo 'cli-version [pre-]release tag[s..] Mark version with (pre-)release tag(s). '
-  echo "cli-version dev [tags..]           pre-release with default 'dev' tag. "
-  echo "cli-version testing [tags..]       pre-release with default 'alpha' tag. "
-  echo "cli-version unstable [tags..]      pre-release with default 'beta' tag. "
-  echo 'cli-version build meta[..]         Mark version with build meta tag(s). '
-  echo 'cli-version snapshot               set build-meta to datetime tag. '
-  echo 'cli-version snapshot-s             set build-meta to epoch timestamp tag. '
-  echo 'cli-version check                  Verify version embedded files. '
-  echo 'cli-version [help|*]               Print this usage. '
+  echo 'Usage: '
+  echo '  project-dir $ git-versioning <command> [<args>..]'
+  echo 'Commands: '
+  echo '  version                Print local version. '
+  echo '  name                   Print local application name. '
+  echo '  app-id                 Print local application Id (name/version). '
+  echo '  update                 Update files with embedded version. '
+  echo '  increment [min [maj]]  Increment patch/min/maj version. '
+  echo '  [pre-]release <tags>.. Mark version with (pre-)release tag(s). '
+  echo "  dev [<tags>..]         pre-release with default 'dev' tag. "
+  echo "  testing [<tags>..]     pre-release with default 'alpha' tag. "
+  echo "  unstable [<tags>..]    pre-release with default 'beta' tag. "
+  echo '  build meta[..]         Mark version with build meta tag(s). '
+  echo '  snapshot               set build-meta to datetime tag. '
+  echo '  snapshot-s             set build-meta to epoch timestamp tag. '
+  echo '  check                  Verify version embedded files. '
+  echo '  info|path              Print git-versioning version, or paths. '
+  echo '  [help|*]               Print this git-versioning usage guide. '
 }
 
 cmd_app_id()
