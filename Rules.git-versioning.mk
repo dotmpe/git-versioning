@@ -6,7 +6,7 @@ include $(DIR)/Rules.git-versioning.shared.mk
 empty :=
 space := $(empty) $(empty)
 usage::
-	@echo 'usage:'
+	@echo '[$(PROJECT)] usage:'
 	@echo '# make [$(subst $(space),|,$(STRGT))]'
 
 
