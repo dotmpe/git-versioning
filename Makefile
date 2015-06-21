@@ -9,17 +9,17 @@ ENV                 ?= $(shell [ -n "$$ENV" ] && echo $$ENV || echo development)
 $(info ENV=$(shell echo $$ENV))
 $(info ENV=$(ENV))
 
-# See GIT versioning project for more complete APP_ID heuristic
+# See GIT versioning project for more complete PROJECT heuristic
 ifneq ($(wildcard package.yml package.yaml),)
-APP_ID := $(shell grep '^main: ' $(wildcard package.yml package.yaml) | sed 's/^main: //' )
+PROJECT := $(shell grep '^main: ' $(wildcard package.yml package.yaml) | sed 's/^main: //' )
 endif
-ifeq ($(APP_ID),)
-APP_ID := $(notdir $(BASE))
+ifeq ($(PROJECT),)
+PROJECT := $(notdir $(BASE))
 endif
 
 VERSION             := 0.0.27-master# git-versioning
 #ID                  := git-versioning/0.0.16-master
-#VERSION             := $(patsubst $(APP_ID)/%,%,$(ID))
+#VERSION             := $(patsubst $(PROJECT)/%,%,$(ID))
 
 # BSD weirdness
 echo = /bin/echo
@@ -61,14 +61,14 @@ CLN                :=
 TEST               :=
 INSTALL            :=
 
-relative = $(patsubst $(BASE)%,$(APP_ID):%,$1)
+relative = $(patsubst $(BASE)%,$(PROJECT):%,$1)
 where-am-i = $(call relative,$(lastword $(MAKEFILE_LIST)))
 
 # rules: return Rules files for each directory in $1
 rules = $(foreach D,$1,\
 	$(wildcard \
 		$DRules.mk $D.Rules.mk \
-		$DRules.$(APP_ID).mk $D.Rules.$(APP_ID).mk \
+		$DRules.$(PROJECT).mk $D.Rules.$(PROJECT).mk \
 		$DRules.$(HOST).mk $D.Rules.$(HOST).mk))
 
 # Include local rules
@@ -105,7 +105,7 @@ clean:: .
 	rm -rf $(CLN)
 
 info::
-	@echo "Id: $(APP_ID)/$(VERSION)"
-	@echo "Name: $(APP_ID)"
+	@echo "Id: $(PROJECT)/$(VERSION)"
+	@echo "Name: $(PROJECT)"
 	@echo "Version: $(VERSION)"
 
