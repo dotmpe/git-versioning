@@ -59,12 +59,11 @@ function apply_clike_comment_version()
 {
   VER_LINE="# version: $VER_STR $APP_ID"
   P=$V_TOP_PATH/$1
-  sed_rewrite_tag 's/^#\ version:\ .* '$APP_ID'/'"$VER_LINE"'/' $P
+  sed_rewrite_tag 's/^# version: .* '$APP_ID'/'"$VER_LINE"'/' $P
 }
-function apply_commonCLikeComment()
+function get_clike_comment_version()
 {
-  apply_clike_comment_id $1
-  apply_clike_comment_version $1
+  sed -n 's/^# version: [^\/]*\/\([^\ ]*\).*/\1/p' $1
 }
 
 # Sitefile

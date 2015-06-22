@@ -209,6 +209,12 @@ getVersion()
   unset doc
 }
 
+function apply_commonCLikeComment()
+{
+  apply_clike_comment_id $1
+  apply_clike_comment_version $1
+}
+
 applyVersion()
 {
   doc=$1
