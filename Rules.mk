@@ -7,13 +7,14 @@ git-pre-commit::
 	@git-versioning check
 
 
-git-prepare-commit-msg:
+git-prepare-commit-msg::
 	@bash .git/hooks/prepare-commit-msg.sample \
 		$(COMMIT_MSG) $(COMMIT_MSG_SRC) $(COMMIT_UPDATES)
 	@./tools/cmd/append-version-to-commit-msg.sh \
 		$(COMMIT_MSG) $(COMMIT_MSG_SRC) $(COMMIT_UPDATES)
 
-git-pre-push:: 
+
+git-pre-push::
 	@./tools/cmd/test-for-clean-branch.sh \
 		$(LOCAL_REF) $(LOCAL_SHA1)
 	@#$(REMOTE_REF) $(REMOTE_SHA1)
