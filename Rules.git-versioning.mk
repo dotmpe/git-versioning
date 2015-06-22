@@ -54,7 +54,6 @@ TODO.list: $(SRC)
 	touch $@
 
 
-TEST += cli-version-check
 cli-version-check::
 	./bin/cli-version.sh check
 
