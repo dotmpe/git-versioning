@@ -3,59 +3,78 @@
 # Id: git-versioning/0.0.27-master lib/formats.sh
 
 # reStructureText
-function rst_field_version()
+RST_VER_TOKEN=':\([Vv]\)ersion:'
+function apply_rst_field_version()
 {
+  P=$V_TOP_PATH/$1
   VER_LINE=":\1ersion:\ $VER_STR ($APP_ID)"
-  P=$V_TOP_PATH/$1
-  sed_rewrite_tag 's/^:\([Vv]\)ersion:.*'$APP_ID'.*$/'"$VER_LINE"'/' $P
+  sed_rewrite_tag 's/^'$RST_VER_TOKEN'.*'$APP_ID'.*$/'"$VER_LINE"'/' $P
 }
-function rst_field_id()
+function get_rst_field_version()
 {
-  ID_LINE=":Id: $APP_ID\/$VER_STR "$(echo $1 | sed 's/\//\\\//g')
-  P=$V_TOP_PATH/$1
-  sed_rewrite_tag 's/^:Id: '$APP_ID'.*/'"$ID_LINE"'/' $P
-}
-function rst_comment_id()
-{
-  ID_LINE=".. Id: $APP_ID\/$VER_STR "$(echo $1 | sed 's/\//\\\//g')
-  P=$V_TOP_PATH/$1
-  sed_rewrite_tag 's/^\.\. Id: '$APP_ID'.*/'"$ID_LINE"'/' $P
+  grep '^'$RST_VER_TOKEN'.*('$APP_ID')' $1 | awk '{print $2}'
 }
 # Main version line has no further qualifier
-function rst_field_main_version()
+function apply_rst_field_main_version()
 {
-  VER_LINE=":Version:\ $VER_STR"
-  P=$V_TOP_PATH/$1
-  sed_rewrite_tag 's/^:Version:.*/'"$VER_LINE"'/' $P
+  VER_LINE=":\1ersion:\ $VER_STR"
+  sed_rewrite_tag 's/^'$RST_VER_TOKEN'.*/'"$VER_LINE"'/' $1
+}
+function get_rst_field_main_version()
+{
+  grep '^'$RST_VER_TOKEN'.*' $1 | awk '{print $2}'
+}
+# 
+function apply_rst_field_id()
+{
+  ID_LINE=":Id: $APP_ID\/$VER_STR "$(echo $1 | sed 's/\//\\\//g')
+  sed_rewrite_tag 's/^:Id: '$APP_ID'.*/'"$ID_LINE"'/' $1
+}
+# Common Id line adapted to rSt comments
+function apply_rst_comment_id()
+{
+  ID_LINE=".. Id: $APP_ID\/$VER_STR "$(echo $1 | sed 's/\//\\\//g')
+  sed_rewrite_tag 's/^\.\. Id: '$APP_ID'.*/'"$ID_LINE"'/' $1
+}
+function get_rst_comment_id()
+{
+  DOC=$(echo $1 | sed 's/\//\\\//g')
+  grep '^\.\. Id:\ '$APP_ID $1 | \
+    sed 's/^.. Id: [^\/]*\/\([^\ ]*\).*$/\1/'
 }
 
 # C-like comments
-function clike_comment_id()
+function apply_clike_comment_id()
 {
   ID_LINE="# Id: $APP_ID\/$VER_STR "$(echo $1 | sed 's/\//\\\//g')
   P=$V_TOP_PATH/$1
   sed_rewrite_tag 's/^# Id: '$APP_ID'.*/'"$ID_LINE"'/' $P
 }
-function clike_comment_version()
+function get_clike_comment_id()
+{
+  sed -n 's/^# Id: [^\/]*\/\([^\ ]*\).*/\1/p' $1
+}
+
+function apply_clike_comment_version()
 {
   VER_LINE="# version: $VER_STR $APP_ID"
   P=$V_TOP_PATH/$1
   sed_rewrite_tag 's/^#\ version:\ .* '$APP_ID'/'"$VER_LINE"'/' $P
 }
-commonCLikeComment()
+function apply_commonCLikeComment()
 {
-  clike_comment_id $1
-  clike_comment_version $1
+  apply_clike_comment_id $1
+  apply_clike_comment_version $1
 }
 
 # Sitefile
-function sfrc_version()
+function apply_sfrc_version()
 {
   VER_LINE="\1\"sitefilerc\":\ \"$VER_STR\""
   P=$V_TOP_PATH/$1
   sed_rewrite_tag 's/^\([\ \t]*\)"sitefilerc":.*/'  "$VER_LINE"'/' $P
 }
-function sf_version()
+function apply_sf_version()
 {
   VER_LINE="sitefile:\ $VER_STR"
   P=$V_TOP_PATH/$1
@@ -63,13 +82,19 @@ function sf_version()
 }
 
 # Makefile
-function mk_var_version()
+function apply_mk_var_version()
 {
   VER_LINE="VERSION\1=\ $VER_STR#\ $APP_ID"
   P=$V_TOP_PATH/$1
   sed_rewrite_tag 's/^VERSION\(\ *[?:]*\)=.*# '$APP_ID'/'"$VER_LINE"'/' $P
 }
-# FIXME function mk_var_id()
+
+function get_mk_var_version()
+{
+  sed -n 's/^VERSION\ *[?:]= \([^\ ]*\)# .*/\1/p' $1
+}
+
+# FIXME function apply_mk_var_id()
 #{
 #  VER_LINE="ID\1=\ $APP_ID\/$VER_STR"
 #  P=$V_TOP_PATH/$1
@@ -77,15 +102,20 @@ function mk_var_version()
 #}
 
 # Shell script
-function sh_var_version()
+function apply_sh_var_version()
 {
   VER_LINE="version=$VER_STR\ #\ $APP_ID"
   P=$V_TOP_PATH/$1
   sed_rewrite_tag 's/^version=.* # '$APP_ID'/'"$VER_LINE"'/' $P
 }
 
+function get_sh_var_version()
+{
+  grep '^version=.*' $1
+}
+
 # YAML
-function yaml_version()
+function apply_yaml_version()
 {
   VER_LINE="version:\ $VER_STR\ #\ $APP_ID"
   P=$V_TOP_PATH/$1
@@ -94,14 +124,14 @@ function yaml_version()
 }
 
 # JSON
-function json_version()
+function apply_json_version()
 {
   P=$V_TOP_PATH/$1
   $sed_rewrite 's/^\(.*\)"version":\ ".*"/\1"version":\ "'$VER_STR'"/' $P > $P.out
   sed_post $P
 }
 # JS
-function js_var_version()
+function apply_js_var_version()
 {
   VER_LINE="var version\ =\ '$VER_STR'; \/\/ $APP_ID"
   P=$V_TOP_PATH/$1
@@ -109,7 +139,7 @@ function js_var_version()
   sed_post $P
 }
 # JS/Coffee-Script
-function coffee_var_version()
+function apply_coffee_var_version()
 {
   P=$V_TOP_PATH/$1
   $sed_rewrite 's/^version =.* # '$APP_ID'/version\ =\ "'$VER_STR'"\ #\ '$APP_ID'/' $P > $P.out
@@ -117,21 +147,21 @@ function coffee_var_version()
 }
 
 # Java properties
-function properties_version()
+function apply_properties_version()
 {
   P=$V_TOP_PATH/$1
   $sed_rewrite 's/^'$APP_ID'\.version=.*/'$APP_ID'.version='$VER_STR'/' $P > $P.out
   sed_post $P
 }
 
-function ant_var_version()
+function apply_ant_var_version()
 {
   P=$V_TOP_PATH/$1
   $sed_rewrite 's/<var\ name="'$APP_ID'\.version"\ value=".*"\ \/>/<var\ name="'$APP_ID'.version"\ value="'$VER_STR'"\ \/>/g' $P > $P.out
   sed_post $P
 }
 
-function xml_comment_id()
+function apply_xml_comment_id()
 {
   P=$V_TOP_PATH/$1
   $sed_rewrite 's/<!--\ Id: '$APP_ID'\/.*\ -->/<!--\ Id:\ '$APP_ID'\/'$VER_STR'\ '$(echo $1 | sed 's/\//\\\//g')'\ -->/g' $P > $P.out
