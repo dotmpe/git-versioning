@@ -8,7 +8,7 @@ version:
 
 # verify versioned-files
 check::
-	@$(echo) -n "Checking for $(APP_ID) version "
+	@$(echo) -n "Checking for $(PROJECT) version "
 	@./bin/cli-version.sh check
 
 
@@ -25,8 +25,8 @@ release:
 
 # Create app/0.0.0 tag, then increment (patch)
 tag:
-	@git tag $(APP_ID)/$$(./bin/cli-version.sh version)
-	@echo "New tag: $(APP_ID)/$$(./bin/cli-version.sh version)"
+	@git tag $(PROJECT)/$$(./bin/cli-version.sh version)
+	@echo "New tag: $(PROJECT)/$$(./bin/cli-version.sh version)"
 	@./bin/cli-version.sh increment $(min) $(maj)
 	@./tools/cmd/prep-version.sh
 
