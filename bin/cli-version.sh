@@ -56,6 +56,7 @@ if [ -n "$0" ] && [ $0 != "-bash" ]; then
         usage
       } || {
         echo Error $e 1>&2
+        exit $e
       }
     }
   fi

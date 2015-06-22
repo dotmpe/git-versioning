@@ -7,7 +7,7 @@ ifeq ($(ENV),development)
 DEFAULT ?= .cli-version-update
 endif
 ifeq ($(ENV),testing)
-DEFAULT ?= .cli-version-update
+DEFAULT ?=
 endif
 ifeq ($(ENV),production)
 DEFAULT ?= build
@@ -19,7 +19,7 @@ ifneq ($(ENV),development)
 TEST += test-run
 endif
 ifeq ($(ENV),testing)
-TEST ?= .cli-version-check
+TEST ?= 
 endif
 endif
 

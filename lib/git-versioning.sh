@@ -93,9 +93,6 @@ load_app_id()
 parse_version()
 {
   STR="$1"
-  # XXX Expect rSt MAIN_DOC
-  #VER_TOKEN=":[Vv]ersion:"
-  #VER_STR=$(grep "^$VER_TOKEN" $V_TOP_PATH/$V_MAIN_DOC | awk '{print $2}')
 
   sed_ext="sed -r"
   [ "$(uname -s)" = "Darwin" ] && sed_ext="sed -E"
