@@ -1,12 +1,10 @@
 # Id: git-versioning/0.0.27-test Rules.git-versioning.mk
 
-include $(DIR)/Rules.git-versioning.shared.mk
-
 
 empty :=
 space := $(empty) $(empty)
 usage::
-	@echo 'usage:'
+	@echo '[$(PROJECT)] usage:'
 	@echo '# make [$(subst $(space),|,$(STRGT))]'
 
 
@@ -22,7 +20,7 @@ TAR_SRC += \
 ifeq ($(ENV),development)
 TAR_SRC += \
 			Makefile Makefile.default-goals \
-			Rules.$(APP_ID).mk Rules.$(APP_ID).shared.mk .travis.yml \
+			Rules.$(PROJECT).mk Rules.$(PROJECT).shared.mk .travis.yml \
 			reader.rst Sitefile.yaml \
 			package.yaml package.json
 else
@@ -32,11 +30,11 @@ endif
 SRC += $(TAR_SRC)
 
 ifneq ($(ENV),development)
-CLN += $(APP_ID)-$(VERSION).tar
-TRGT += $(APP_ID)-$(VERSION).tar
+CLN += $(PROJECT)-$(VERSION).tar
+TRGT += $(PROJECT)-$(VERSION).tar
 endif
 
-$(APP_ID)-$(VERSION).tar: $(TAR_SRC) $(filter-out %.tar,$(TRGT))
+$(PROJECT)-$(VERSION).tar: $(TAR_SRC) $(filter-out %.tar,$(TRGT))
 	tar cvjf $@ $^
 
 
@@ -56,7 +54,6 @@ TODO.list: $(SRC)
 	touch $@
 
 
-TEST += cli-version-check
 cli-version-check::
 	./bin/cli-version.sh check
 

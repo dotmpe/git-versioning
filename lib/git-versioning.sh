@@ -89,6 +89,51 @@ load_app_id()
   }
 }
 
+# 1:doc
+parse_version()
+{
+  STR="$1"
+
+  sed_ext="sed -r"
+  [ "$(uname -s)" = "Darwin" ] && sed_ext="sed -E"
+ 
+  VER_MAJ=$(echo $STR | $sed_ext 's/^([^\.]+).*$/\1/' )
+  VER_MIN=$(echo $STR | $sed_ext 's/^[^\.]*\.([^\.]+).*$/\1/' )
+  VER_PAT=$(echo $STR | $sed_ext 's/^[^\.]*\.[^\.]*\.([^+-]+).*$/\1/' )
+
+  VER_TAGS=$(echo $STR | $sed_ext 's/^[0-9\.]*//' )
+  VER_PRE=$(echo $VER_TAGS | $sed_ext 's/^-?([^+]*)(\+.*)?$/\1/' )
+  VER_META=$(echo $VER_TAGS | $sed_ext 's/^([^+]*)\+?(.*)$/\2/' )
+  unset VER_TAGS
+
+  VER=`concatVersion`
+  [ "$VER" = "$STR" ] || {
+    echo "Expected VER=$VER to equal STR=$STR" >&2
+  }
+  echo $VER
+  unset STR VER
+}
+
+loadVersion()
+{
+  doc=$1
+  case $doc in
+
+    *.rst )
+      STR=`get_rst_field_main_version $doc`
+      VER_STR=`parse_version "$STR"`
+    ;;
+
+    * )
+      echo "$0: Unable load version from $doc"
+      exit 2
+    ;;
+
+  esac
+  #echo "Loaded version from $doc: $VER_STR"
+  unset doc
+}
+
 # Set git-versioning vars
 load()
 {
@@ -110,111 +155,162 @@ load()
   V_PATH_LIST=$(cat $V_DOC_LIST)
   V_MAIN_DOC=$(head -n 1 $V_DOC_LIST)
 
-  # XXX Expect rSt MAIN_DOC
-  VER_TOKEN=":[Vv]ersion:"
-
-  VER_STR=$(grep "^$VER_TOKEN" $V_TOP_PATH/$V_MAIN_DOC | awk '{print $2}')
-
-  sed_ext="sed -r"
-  [ "$(uname -s)" = "Darwin" ] && sed_ext="sed -E"
- 
-  VER_MAJ=$(echo $VER_STR | $sed_ext 's/^([^\.]+).*$/\1/' )
-  VER_MIN=$(echo $VER_STR | $sed_ext 's/^[^\.]*\.([^\.]+).*$/\1/' )
-  VER_PAT=$(echo $VER_STR | $sed_ext 's/^[^\.]*\.[^\.]*\.([^+-]+).*$/\1/' )
-
-  VER_TAGS=$(echo $VER_STR | $sed_ext 's/^[0-9\.]*//' )
-
-  VER_PRE=$(echo $VER_TAGS | $sed_ext 's/^-?([^+]*)(\+.*)?$/\1/' )
-
-  VER_META=$(echo $VER_TAGS | $sed_ext 's/^([^+]*)\+?(.*)$/\2/' )
+  loadVersion $V_TOP_PATH/$V_MAIN_DOC
 }
 
 source $LIB/formats.sh
 
+getVersion()
+{
+  case $1 in
+
+    *.rst )
+
+      if [ "$1" = "$V_MAIN_DOC" ]
+      then
+
+        get_rst_field_main_version $1 | while read STR
+        do echo "rSt Field Version (Main): $STR"; done
+
+      fi
+
+      get_rst_comment_id $1 | while read STR
+      do echo "rSt Comment Id: $STR"; done
+
+      get_rst_field_version $1 | while read STR
+      do echo "rSt Field Version: $STR"; done
+
+    ;;
+
+    *.mk | *Makefile )
+      get_clike_comment_id $1 | while read STR;
+      do echo "C-Like Comment: $STR"; done
+      get_mk_var_version $1 | while read STR;
+      do echo "MK Var: $STR"; done
+    ;;
+
+    *.sh | *configure )
+      get_clike_comment_id $1 | while read STR;
+      do echo "C-Like Comment: $STR"; done
+      get_sh_var_version $1 | while read STR;
+      do echo "SH Var: $STR"; done
+    ;;
+
+    * )
+      echo "$0: Unable to retrieve version from $1"
+      exit 2
+    ;;
+
+  esac
+
+  unset doc
+}
+
+function apply_commonCLikeComment()
+{
+  apply_clike_comment_id $1
+  apply_clike_comment_version $1
+}
+
 applyVersion()
+{
+  doc=$1
+  case $doc in
+
+    *.rst )
+      if [ "$doc" = "$V_MAIN_DOC" ]
+      then
+        apply_rst_field_main_version $doc
+      else
+        apply_rst_field_version $doc
+      fi
+      apply_rst_field_id $doc
+      apply_rst_comment_id $doc
+    ;;
+
+    *.sitefilerc )
+      apply_sfrc_version $doc
+    ;;
+
+    *Sitefile*.yaml | *Sitefile*.yml )
+      apply_sf_version $doc
+    ;;
+
+    *.mk | *Makefile )
+      apply_commonCLikeComment $doc
+      apply_mk_var_version $doc
+    ;;
+
+    *.sh | *configure )
+      apply_commonCLikeComment $doc
+      apply_sh_var_version $doc
+    ;;
+
+    *.yaml | *.yml )
+      apply_commonCLikeComment $doc
+      apply_yaml_version $doc
+    ;;
+
+    *.json )
+      apply_json_version $doc
+    ;;
+
+    *.js )
+      apply_js_var_version $doc
+    ;;
+
+    *.coffee )
+      apply_commonCLikeComment $doc
+      apply_coffee_var_version $doc
+    ;;
+
+    *.properties )
+      apply_commonCLikeComment $doc
+      apply_properties_version $doc
+    ;;
+
+    *build.xml )
+      apply_xml_comment_id $doc
+      apply_ant_var_version $doc
+    ;;
+
+    * )
+      echo "$0: Unable to version $doc"
+      exit 2
+    ;;
+
+  esac
+
+  echo "$doc @$VER_STR"
+
+  unset doc
+}
+
+applyVersions()
 {
   for doc in $V_PATH_LIST
   do
-    case $doc in
-
-      *.rst )
-        if [ "$doc" = "$V_MAIN_DOC" ]
-        then
-          rst_field_main_version $doc
-        else
-          rst_field_version $doc
-        fi
-        rst_field_id $doc
-        rst_comment_id $doc
-      ;;
-
-      *.sitefilerc )
-        sfrc_version $doc
-      ;;
-
-      *Sitefile*.yaml | *Sitefile*.yml )
-        sf_version $doc
-      ;;
-
-      *.mk | *Makefile )
-        commonCLikeComment $doc
-        mk_var_version $doc
-      ;;
-
-      *.sh | *configure )
-        commonCLikeComment $doc
-        sh_var_version $doc
-      ;;
-
-      *.yaml | *.yml )
-        commonCLikeComment $doc
-        yaml_version $doc
-      ;;
-
-      *.json )
-        json_version $doc
-      ;;
-
-      *.js )
-        js_var_version $doc
-      ;;
-
-      *.coffee )
-        commonCLikeComment $doc
-        coffee_var_version $doc
-      ;;
-
-      *.properties )
-        commonCLikeComment $doc
-        properties_version $doc
-      ;;
-
-      *build.xml )
-        xml_comment_id $doc
-        ant_var_version $doc
-      ;;
-
-      * )
-        echo "$0: Unable to version $doc"
-        exit 2
-      ;;
-
-    esac
-
-    echo "$doc @$VER_STR"
-
+    applyVersion $doc
   done
+  unset doc
+}
+
+concatVersion()
+{
+  STR=$VER_MAJ"."$VER_MIN"."$VER_PAT
+  [ -z "$VER_PRE" ] || {
+    STR=$STR-$VER_PRE
+  }
+  [ -z "$VER_META" ] || {
+    STR=$STR+$VER_META
+  }
+  echo $STR
+  unset STR
 }
 
 buildVER()
 {
-  VER_STR=$VER_MAJ"."$VER_MIN"."$VER_PAT
-  [ -z "$VER_PRE" ] || {
-    VER_STR=$VER_STR-$VER_PRE
-  }
-  [ -z "$VER_META" ] || {
-    VER_STR=$VER_STR+$VER_META
-  }
+  concatVersion | read VER_STR
 }
 
 incrVMAJ()
@@ -225,7 +321,7 @@ incrVMAJ()
   VER_PRE=
   VER_META=
   buildVER
-  applyVersion
+  applyVersions
 }
 
 incrVMIN()
@@ -235,7 +331,7 @@ incrVMIN()
   VER_PRE=
   VER_META=
   buildVER
-  applyVersion
+  applyVersions
 }
 
 incrVPAT()
@@ -244,13 +340,12 @@ incrVPAT()
   VER_PRE=
   VER_META=
   buildVER
-  applyVersion
+  applyVersions
 }
 
 cmd_check()
 {
-  buildVER
-  cmd_version
+  echo "Checking all files for $VER_STR"
   # check without build meta
   $V_CHECK $V_DOC_LIST $(echo $VER_STR | awk -F+ '{print $1}')
   E=$?
@@ -261,7 +356,7 @@ cmd_update()
 {
   buildVER
   cmd_version
-  applyVersion
+  applyVersions
 }
 
 cmd_increment()
@@ -294,25 +389,35 @@ cmd_info()
   echo "Application name/version: "$(cmd_app_id)" (using git-versioning/$version)"
 }
 
+cmd_path()
+{
+  echo "Prefix: $PREFIX"
+  echo "Shared files: $V_SH_ROOT"
+  echo "Lib: $LIB"
+  echo "Tools: $TOOLS"
+}
+
 cmd_help()
 {
   echo $(cmd_app_id)
-  echo 'Usage:'
-  echo 'cli-version [info]                 Print git-version application Id. '
-  echo 'cli-version version                Print local version. '
-  echo 'cli-version name                   Print local application name. '
-  echo 'cli-version app-id                 Print local application Id (name/version). '
-  echo 'cli-version update                 Update files with embedded version. '
-  echo 'cli-version increment [min [maj]]  Increment patch/min/maj version. '
-  echo 'cli-version [pre-]release tag[s..] Mark version with (pre-)release tag(s). '
-  echo "cli-version dev [tags..]           pre-release with default 'dev' tag. "
-  echo "cli-version testing [tags..]       pre-release with default 'alpha' tag. "
-  echo "cli-version unstable [tags..]      pre-release with default 'beta' tag. "
-  echo 'cli-version build meta[..]         Mark version with build meta tag(s). '
-  echo 'cli-version snapshot               set build-meta to datetime tag. '
-  echo 'cli-version snapshot-s             set build-meta to epoch timestamp tag. '
-  echo 'cli-version check                  Verify version embedded files. '
-  echo 'cli-version [help|*]               Print this usage. '
+  echo 'Usage: '
+  echo '  project-dir $ git-versioning <command> [<args>..]'
+  echo 'Commands: '
+  echo '  version                Print local version. '
+  echo '  name                   Print local application name. '
+  echo '  app-id                 Print local application Id (name/version). '
+  echo '  update                 Update files with embedded version. '
+  echo '  increment [min [maj]]  Increment patch/min/maj version. '
+  echo '  [pre-]release <tags>.. Mark version with (pre-)release tag(s). '
+  echo "  dev [<tags>..]         pre-release with default 'dev' tag. "
+  echo "  testing [<tags>..]     pre-release with default 'alpha' tag. "
+  echo "  unstable [<tags>..]    pre-release with default 'beta' tag. "
+  echo '  build meta[..]         Mark version with build meta tag(s). '
+  echo '  snapshot               set build-meta to datetime tag. '
+  echo '  snapshot-s             set build-meta to epoch timestamp tag. '
+  echo '  check                  Verify version embedded files. '
+  echo '  info|path              Print git-versioning version, or paths. '
+  echo '  [help|*]               Print this git-versioning usage guide. '
 }
 
 cmd_app_id()
@@ -356,5 +461,16 @@ cmd_snapshot()
 cmd_snapshot_s()
 {
   cmd_build $(date +%s) $*
+}
+
+cmd_get_version()
+{
+  getVersion $1
+}
+
+cmd_grep_version()
+{
+	branch=$1
+	git grep '[^'
 }
 

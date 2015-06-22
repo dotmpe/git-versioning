@@ -28,16 +28,23 @@ package.yaml
 bin/cli-version.sh
 lib/git-versioning.sh
 lib/util.sh
+lib/formats.sh
+tools/git-hooks/pre-commit-old.sh
 tools/git-hooks/post-commit-old.sh
+tools/git-hooks/prepare-commit-msg.sh
 tools/git-hooks/pre-commit.sh
+tools/git-hooks/pre-push.sh
 tools/cmd/version-check.sh
 tools/cmd/prep-version.sh
 tools/cmd/src-files.sh
 tools/cmd/src-tree.sh
+tools/cmd/append-version-to-commit-msg.sh
+tools/cmd/test-for-clean-branch.sh
 Makefile
+Rules.mk
 Rules.git-versioning.mk
 Rules.git-versioning.shared.mk
-lib/formats.sh
+Rules.git-hooks.shared.mk
 HEREDOC
 ) > .versioned-files.list
 
