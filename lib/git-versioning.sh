@@ -48,6 +48,10 @@ version=0.0.27-test # git-versioning
 }
 
 
+APP_ID=
+VER_STR=
+VER_MIN=
+
 # Determine package metafile
 module_meta_list() # $one
 {
@@ -104,14 +108,11 @@ parse_version()
   VER_TAGS=$(echo $STR | $sed_ext 's/^[0-9\.]*//' )
   VER_PRE=$(echo $VER_TAGS | $sed_ext 's/^-?([^+]*)(\+.*)?$/\1/' )
   VER_META=$(echo $VER_TAGS | $sed_ext 's/^([^+]*)\+?(.*)$/\2/' )
-  unset VER_TAGS
 
   VER=`concatVersion`
   [ "$VER" = "$STR" ] || {
     echo "Expected VER=$VER to equal STR=$STR" >&2
   }
-  echo $VER
-  unset STR VER
 }
 
 loadVersion()
@@ -121,7 +122,10 @@ loadVersion()
 
     *.rst )
       STR=`get_rst_field_main_version $doc`
-      VER_STR=`parse_version "$STR"`
+      parse_version "$STR"
+      #VER_STR=$STR
+      #echo VER_STR:$STR
+      #parse_version "$STR" | read VER_STR
     ;;
 
     * )
@@ -156,6 +160,9 @@ load()
   V_MAIN_DOC=$(head -n 1 $V_DOC_LIST)
 
   loadVersion $V_TOP_PATH/$V_MAIN_DOC
+
+  buildVER
+  echo "Version set to $VER_STR"
 }
 
 source $LIB/formats.sh
@@ -310,7 +317,7 @@ concatVersion()
 
 buildVER()
 {
-  concatVersion | read VER_STR
+  VER_STR=$(concatVersion)
 }
 
 incrVMAJ()
@@ -374,13 +381,22 @@ cmd_increment()
 
 release()
 {
+  #cmd_update
   VER_PRE=$(echo $* | tr ' ' '.')
-  cmd_update
+  echo "Setting pre-release to '$VER_PRE'"
+  #concatVersion
+  buildVER
+  #VER_STR=`parse_version "$STR"`
+  parse_version "$STR" | read VER_STR
+  echo VER_STR:$VER_STR
+  #cmd_version
+  #applyVersions
 }
 
 build()
 {
   VER_META=$(echo $* | tr ' ' '.')
+  echo "Setting build-meta to '$VER_META'"
   cmd_update
 }
 
@@ -460,7 +476,7 @@ cmd_snapshot()
 # seconds since epoch
 cmd_snapshot_s()
 {
-  cmd_build $(date +%s) $*
+  build $(date +%s) $*
 }
 
 cmd_get_version()

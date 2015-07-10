@@ -33,7 +33,7 @@ cmd_build()
 {
   build $*
 }
-default=cmd_info
+default=info
 
 
 # Main
