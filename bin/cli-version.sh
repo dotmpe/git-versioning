@@ -1,39 +1,38 @@
 #!/bin/bash
 
-# Id: git-versioning/0.0.27-master bin/cli-version.sh
-
 # Globals
 
-PREFIX=.
-LIB=$PREFIX/lib
-TOOLS=$PREFIX/tools
+V_SH_SHARE=.
+LIB=$V_SH_SHARE/lib
+TOOLS=$V_SH_SHARE/tools
 
 # Path to versioned files
 V_TOP_PATH=.
 
+# Id: git-versioning/0.0.27-master bin/cli-version.sh
 
 source $LIB/git-versioning.sh
 
 
 usage()
 {
-  cmd_help
-  exit 1
+	cmd_help
+	exit 1
 }
 
 cmd_release()
 {
-  release $*
+	release $*
 }
 cmd_pre_release()
 {
-  release $*
+	release $*
 }
 cmd_build()
 {
-  build $*
+	build $*
 }
-default=cmd_info
+default=info
 
 
 # Main

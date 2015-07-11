@@ -1,31 +1,65 @@
 #!/bin/bash
 
-V_SH_SHARE=/usr/local/share/git-versioning
+# Install for non-dev environments
 
-function uninstall()
-{
-  test -n "$V_SH_SHARE"
-  test -e "$V_SH_SHARE"
-  rm -vf /usr/local/bin/git-versioning
+set -e
 
-  # prevent removing linked dir
-  P=$(dirname $V_SH_SHARE)/$(basename $V_SH_SHARE)
-  [ "$P" != "/" ] && rm -rfv $P
-}
+PREFIX=.
+V_SH_SHARE=.
 
-function install()
-{
-  test -n "$V_SH_SHARE"
-  test ! -e "$V_SH_SHARE"
-  mkdir -p $V_SH_SHARE
-  cp -vr bin/ $V_SH_SHARE/bin; chmod +x $V_SH_SHARE/bin/*
-  cp -vr lib/ $V_SH_SHARE/lib
-  cp -vr tools/ $V_SH_SHARE/tools; chmod +x $V_SH_SHARE/tools/*/*.sh
-  ( cd /usr/local/bin/;pwd;ln -vs $V_SH_SHARE/bin/cli-version.sh git-versioning )
+[ "$PREFIX" != "." ] || {
+	echo "Cannot install, see configure. Or use make."
+	exit 1
 }
 
 
-[ ! -e "$V_SH_SHARE" ] || uninstall
+c_uninstall()
+{
+	echo "Running uninstall"
+	# must be valid to proceed
+	test -n "$V_SH_SHARE"
+	test "$V_SH_SHARE" != "."
+	test -e "$V_SH_SHARE"
 
-install
+	echo Removing $PREFIX/bin/git-versioning
+	rm -vf $PREFIX/bin/git-versioning
+
+	# prevent removing linked dir (strip trailing /)
+	P=$(dirname $V_SH_SHARE)/$(basename $V_SH_SHARE)
+	echo Removing $P..
+	[ "$P" != "/" ] && rm -rfv $P
+}
+
+c_install()
+{
+	echo "Running install"
+	test -n "$V_SH_SHARE"
+	test ! -e "$V_SH_SHARE"
+	mkdir -p $V_SH_SHARE
+	cp -vr bin/ $V_SH_SHARE/bin
+	cp -vr lib/ $V_SH_SHARE/lib
+	cp -vr tools/ $V_SH_SHARE/tools
+	chmod +x $V_SH_SHARE/tools/*/*.sh
+	# TODO: make symlink relative
+	ln -vs $V_SH_SHARE/bin/cli-version.sh $PREFIX/bin/git-versioning
+	chmod +x $PREFIX/bin/git-versioning
+}
+
+func="c_$1"
+( test -n "$1" && type $func &> /dev/null ) && {
+
+	shift 1
+	$func $@
+	exit
+
+} || {
+
+	# auto-remove for existing install
+	[ ! -e "$V_SH_SHARE" ] || c_uninstall
+	c_install
+	exit
+
+}
+
+# Id: git-versioning/0.0.27-master install.sh
 

@@ -3,23 +3,26 @@
 source lib/util.sh
 
 [ -n "$ENV" ] || ENV=development
+echo "Environment: $ENV"
 
-[ "$ENV" == "development" ] && {
+[ -n "$1" ] || PREFIX=$1
+[ -n "$PREFIX" ] || PREFIX=.
+echo "Prefix: $PREFIX"
+	
+[ "." != "$PREFIX" ] && V_SH_SHARE=$PREFIX/share/git-versioning || V_SH_SHARE=$PREFIX
+echo "Location: $V_SH_SHARE"
 
-  PREFIX=.
-  P=$(echo $PREFIX | sed 's/\//\\\//g')
-  sed_rewrite_tag 's/^PREFIX=.*/PREFIX='$P'/' bin/cli-version.sh
+P=$(echo $PREFIX | sed 's/\//\\\//g')
+sed_rewrite_tag 's/^PREFIX=.*/PREFIX='$P'/' install.sh
 
-} || {
+P=$(echo $V_SH_SHARE | sed 's/\//\\\//g')
+sed_rewrite_tag 's/^V_SH_SHARE=.*/V_SH_SHARE='$P'/' install.sh
+sed_rewrite_tag 's/^V_SH_SHARE=.*/V_SH_SHARE='$P'/' bin/cli-version.sh
 
-  # set for production or testing
-  PREFIX=/usr/local/share/git-versioning
+echo "Rewrote installer and bin/cli-version include paths"
 
-  P=$(echo $PREFIX | sed 's/\//\\\//g')
-  sed_rewrite_tag 's/^PREFIX=.*/PREFIX='$P'/' bin/cli-version.sh
-}
 
-#[ "$ENV" == "development" ] && 
+# reset .versioned-files.list
 (
 cat <<HEREDOC
 ReadMe.rst
@@ -47,11 +50,13 @@ Rules.git-versioning.shared.mk
 Rules.git-hooks.shared.mk
 HEREDOC
 ) > .versioned-files.list
+echo "Reset .versioned-files.list"
 
 
+# for dev and test add test files
 [ "$ENV" == "production" ] || {
-(
-cat <<HEREDOC
+	(
+		cat <<HEREDOC
 test/example/rst_field_version.rst
 test/example/rst_field_id.rst
 test/example/clike_comment_id.sh
@@ -65,5 +70,9 @@ test/example/coffee_var_version.coffee
 test/example/properties_version.properties
 test/example/build.xml
 HEREDOC
-) >> .versioned-files.list
+	) >> .versioned-files.list
+	echo "Test files appended to .versioned-files.list"
 }
+
+# Id: git-versioning/0.0.27-master configure.sh
+
