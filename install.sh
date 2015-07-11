@@ -1,14 +1,14 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Install for non-dev environments
 
 set -e
 
-PREFIX=.
-V_SH_SHARE=.
+PREFIX=/usr/local
+V_SH_SHARE=/usr/local/share/git-versioning
 
 [ "$PREFIX" != "." ] || {
-	echo "Cannot install, see configure. Or use make."
+	echo "Cannot install, see configure. "
 	exit 1
 }
 

@@ -1,11 +1,11 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 source lib/util.sh
 
 [ -n "$ENV" ] || ENV=development
 echo "Environment: $ENV"
 
-[ -n "$1" ] || PREFIX=$1
+[ -n "$1" ] && PREFIX=$1
 [ -n "$PREFIX" ] || PREFIX=.
 echo "Prefix: $PREFIX"
 	
@@ -48,6 +48,8 @@ Rules.mk
 Rules.git-versioning.mk
 Rules.git-versioning.shared.mk
 Rules.git-hooks.shared.mk
+test/git-versioning.bats
+test/helpers.bash
 HEREDOC
 ) > .versioned-files.list
 echo "Reset .versioned-files.list"

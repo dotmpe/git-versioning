@@ -78,21 +78,29 @@ V_SH_SHARE := /usr/local/share/git-versioning
 
 INSTALL += $(V_SH_SHARE)
 
-ENV      := development
-PREFIX   := /usr/local
-
-STRGT += uninstall reinstall
+STRGT += reset uninstall
 
 $(V_SH_SHARE):
-	@ENV=$(ENV) ./configure.sh $(PREFIX)
-	@ENV=$(ENV) sudo ./install.sh install
+	@ENV=production ./configure.sh /usr/local
+	@ENV=production sudo ./install.sh install
+
+reset::
+	@ENV=production ./configure.sh
 
 uninstall::
-	@ENV=$(ENV) ./configure.sh $(PREFIX)
-	@ENV=$(ENV) sudo ./install.sh uninstall
-
-reinstall:: uninstall install
+	@ENV=production ./configure.sh /usr/local
+	@ENV=production sudo ./install.sh uninstall
 
 test-run::
 	git-versioning
+
+test-tags::
+	git-versioning check
+
+test-specs::
+	./test/git-versioning.bats
+	#./test/git-versioning-spec.rst
+
+TEST := test-run test-tags test-specs
+
 

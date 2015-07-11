@@ -34,6 +34,30 @@ GIT Versioning Hooks
          version="1.0.0-alpha+exp.sha.5114f85"; # application-name
 
 
+.. admonition:: Quickstart
+
+   Install ::
+
+     $ make install
+
+   Use::
+
+     cd myproject
+     echo my-project > .app-id
+     echo :Version: 0.0.1  > ReadMe.rst
+     echo "# Id: my-project" > test.sh
+     echo 'version=0.0.1 # my-project' >> test.sh
+     echo -e '{\n"version":"0.0.1"\n}' > package.json
+     echo ReadMe.rst > .versioned-files.list
+     echo package.json >> .versioned-files.lst
+     echo test.sh >> .versioned-files.lst
+     git-versioning check
+     git-versioning update
+
+
+.. contents::
+
+
 Looking around for a GIT versioning hook it seemed mildy simple at first, but
 some different scenarios and issues emerged.
 What to commit, and when is not that predictable outside any CI environment.

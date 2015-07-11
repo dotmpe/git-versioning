@@ -21,3 +21,5 @@ Rules.mk
 Rules.git-versioning.mk
 Rules.git-versioning.shared.mk
 Rules.git-hooks.shared.mk
+test/git-versioning.bats
+test/helpers.bash
