@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Id: git-versioning/0.0.27-master tools/cmd/prep-version.sh
+# Id: git-versioning/0.0.28-dev tools/cmd/prep-version.sh
 
 # Script to reset flags for (auto) increments
 

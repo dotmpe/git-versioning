@@ -9,7 +9,7 @@ TOOLS=$V_SH_SHARE/tools
 # Path to versioned files
 V_TOP_PATH=.
 
-# Id: git-versioning/0.0.27-master bin/cli-version.sh
+# Id: git-versioning/0.0.28-dev bin/cli-version.sh
 
 source $LIB/git-versioning.sh
 

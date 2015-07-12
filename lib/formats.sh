@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Id: git-versioning/0.0.27-master lib/formats.sh
+# Id: git-versioning/0.0.28-dev lib/formats.sh
 
 # reStructureText
 RST_VER_TOKEN=':\([Vv]\)ersion:'
