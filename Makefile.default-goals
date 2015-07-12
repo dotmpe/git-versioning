@@ -19,7 +19,6 @@ ifneq ($(ENV),development)
 TEST += test-run
 endif
 ifeq ($(ENV),testing)
-TEST ?= 
 TEST += .cli-version-update cli-version-check
 endif
 endif

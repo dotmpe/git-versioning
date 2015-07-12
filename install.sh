@@ -62,4 +62,3 @@ func="c_$1"
 }
 
 # Id: git-versioning/0.0.27-master install.sh
-

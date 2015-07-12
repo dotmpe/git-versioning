@@ -8,7 +8,7 @@ git-pre-commit::
 	@./test/git-versioning.bats
 
 
-git-prepare-commit-msg:
+git-prepare-commit-msg::
 	@bash .git/hooks/prepare-commit-msg.sample \
 		$(COMMIT_MSG) $(COMMIT_MSG_SRC) $(COMMIT_UPDATES)
 	@./tools/cmd/append-version-to-commit-msg.sh \
