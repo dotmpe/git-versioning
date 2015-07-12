@@ -16,4 +16,6 @@ test -n "${bats}" -a -x "${bats}" && {
   bats --version
 }
 
+bats --version
+
 # Id: git-versioning/0.0.27-test install-dependencies.sh
