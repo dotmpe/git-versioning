@@ -3,7 +3,8 @@
 mkdir ~/test-app/{,bin}
 mkdir ~/test-dep/{,bin}
 
-test -x "$(which bats)" && {
+bats="$(which bats)"
+test -n "${bats}" -a -x "${bats}" && {
   bats --version
 } || {
   pushd $HOME
