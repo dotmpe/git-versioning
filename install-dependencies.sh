@@ -4,6 +4,7 @@ mkdir ~/test-app/{,bin}
 mkdir ~/test-dep/{,bin}
 
 bats="$(which bats)"
+
 test -n "${bats}" -a -x "${bats}" && {
   bats --version
 } || {

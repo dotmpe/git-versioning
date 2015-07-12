@@ -1,9 +1,8 @@
 
-install: bash ./install-dependencies.sh
-
-script: 
-- ls -la ~/test-*/
-- bats --version
+script:
+- ./install-dependencies.sh
+- ls -la ~/test-*/bin/
+- echo PATH=$PATH
 - ./configure.sh ~/test-app/ && ENV=$ENV ./install.sh && make test
 
 sudo: false
