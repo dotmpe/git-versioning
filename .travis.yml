@@ -1,6 +1,7 @@
-script: ./configure.sh ~/test-app/ && ENV=$ENV ./install.sh && make test
 
-install: ./install-dependencies.sh
+install: bash ./install-dependencies.sh
+
+script: ./configure.sh ~/test-app/ && ENV=$ENV ./install.sh && make test
 
 sudo: false
 
