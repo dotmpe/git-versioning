@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 mkdir ~/test-app/{,bin}
 mkdir ~/test-dep/{,bin}
