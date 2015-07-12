@@ -1,6 +1,6 @@
 script: ./configure.sh /usr/local && sudo ENV=$ENV ./install.sh && make test
 
-install:
+install: ./install-dependencies.sh
 
 branches:
   only:
