@@ -1,16 +1,19 @@
-script: ./configure.sh /usr/local && sudo ENV=$ENV ./install.sh && make test
+script: ./configure.sh ~/test-app/ && ENV=$ENV ./install.sh && make test
 
 install: ./install-dependencies.sh
 
+sudo: false
+
 branches:
   only:
+  - master
   - test
   - '/^[0-9]*\.[0-9]*\.[0-9]*/'
 
 env:
-- ENV=
-- ENV=testing
-- ENV=production
+- ENV= PATH=$PATH:~/test-app/bin/
+#- ENV=testing
+#- ENV=production
 
 deploy:
   provider: releases

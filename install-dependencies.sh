@@ -6,7 +6,8 @@ test -x "$(which bats)" && {
   pushd $HOME
   git clone https://github.com/sstephenson/bats.git
   cd bats
-  sudo ./install.sh /usr/local
+  ./install.sh ~/test-dep/
+  export PATH=$PATH:~/test-dep/bin/
   popd
   bats --version
 }
