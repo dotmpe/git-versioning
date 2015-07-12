@@ -1,11 +1,7 @@
 
-script:
-- ./install-dependencies.sh
-- ls -la ~/test-*/bin/
-- echo PATH=$PATH
-- ./configure.sh ~/test-app/ && ENV=$ENV ./install.sh && make test
+install: ./install-dependencies.sh
 
-sudo: false
+script: ./configure.sh /usr/local && sudo ENV=$ENV ./install.sh && make test
 
 branches:
   only:
@@ -14,7 +10,7 @@ branches:
   - '/^[0-9]*\.[0-9]*\.[0-9]*/'
 
 env:
-- ENV= PATH=$PATH:~/test-app/bin/
+- ENV=
 #- ENV=testing
 #- ENV=production
 

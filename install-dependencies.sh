@@ -1,16 +1,12 @@
 #!/usr/bin/env bash
 
-mkdir ~/test-app/{,bin}
-
-bats="$(which bats)"
-
-test -n "${bats}" -a -x "${bats}" && {
+test -x "$(which bats)" && {
   bats --version
 } || {
   pushd $HOME
   git clone https://github.com/sstephenson/bats.git
   cd bats
-  ./install.sh ~/test-app/
+  sudo ./install.sh /usr/local
   popd
   bats --version
 }
