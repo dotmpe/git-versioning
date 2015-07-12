@@ -78,24 +78,29 @@ V_SH_SHARE := /usr/local/share/git-versioning
 
 INSTALL += $(V_SH_SHARE)
 
-$(V_SH_SHARE):
-	@mkdir -p $@/
-	@cp -vr bin/ $@/bin; chmod +x $@/bin/*
-	@cp -vr lib/ $@/lib
-	@cp -vr tools/ $@/tools; chmod +x $@/tools/*/*.sh
-	@cd /usr/local/bin/;pwd;ln -vs $(V_SH_SHARE)/bin/cli-version.sh git-versioning
+STRGT += reset uninstall
 
-STRGT += uninstall reinstall
+$(V_SH_SHARE):
+	@ENV=production ./configure.sh /usr/local
+	@ENV=production sudo ./install.sh install
+
+reset::
+	@ENV=production ./configure.sh
 
 uninstall::
-	@test -n "$(V_SH_SHARE)"
-	@test -e "$(V_SH_SHARE)"
-	@rm -vf /usr/local/bin/git-versioning
-	@P=$$(dirname $(V_SH_SHARE))/$$(basename $(V_SH_SHARE)); \
-	 [ "$P" != "/" ] && rm -rfv $$P
-
-reinstall:: uninstall install
+	@ENV=production ./configure.sh /usr/local
+	@ENV=production sudo ./install.sh uninstall
 
 test-run::
 	git-versioning
+
+test-tags::
+	git-versioning check
+
+test-specs::
+	./test/git-versioning.bats
+	#./test/git-versioning-spec.rst
+
+TEST := test-run test-tags test-specs
+
 

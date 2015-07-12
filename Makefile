@@ -6,8 +6,6 @@ HOST                := $(shell hostname|tr '.' '-')
 
 ENV                 ?= $(shell [ -n "$$ENV" ] && echo $$ENV || echo development)
 
-$(info ENV=$(shell echo $$ENV))
-$(info ENV=$(ENV))
 
 # See GIT versioning project for more complete PROJECT heuristic
 ifneq ($(wildcard package.yml package.yaml),)

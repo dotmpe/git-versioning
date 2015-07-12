@@ -123,9 +123,6 @@ loadVersion()
     *.rst )
       STR=`get_rst_field_main_version $doc`
       parse_version "$STR"
-      #VER_STR=$STR
-      #echo VER_STR:$STR
-      #parse_version "$STR" | read VER_STR
     ;;
 
     * )
@@ -162,7 +159,7 @@ load()
   loadVersion $V_TOP_PATH/$V_MAIN_DOC
 
   buildVER
-  echo "Version set to $VER_STR"
+  #echo "Version set to $VER_STR"
 }
 
 source $LIB/formats.sh
@@ -248,7 +245,7 @@ applyVersion()
       apply_mk_var_version $doc
     ;;
 
-    *.sh | *configure )
+    *.sh | *.bash | *configure | *.bats )
       apply_commonCLikeComment $doc
       apply_sh_var_version $doc
     ;;
@@ -420,7 +417,7 @@ cmd_help()
   echo '  project-dir $ git-versioning <command> [<args>..]'
   echo 'Commands: '
   echo '  version                Print local version. '
-  echo '  name                   Print local application name. '
+  echo '  id|name                Print local application name (project). '
   echo '  app-id                 Print local application Id (name/version). '
   echo '  update                 Update files with embedded version. '
   echo '  increment [min [maj]]  Increment patch/min/maj version. '
@@ -441,6 +438,10 @@ cmd_app_id()
   echo $APP_ID/$VER_STR
 }
 
+cmd_id()
+{
+  echo $APP_ID
+}
 cmd_name()
 {
   echo $APP_ID
