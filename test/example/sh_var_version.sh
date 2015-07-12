@@ -1,2 +1,2 @@
-version=0.0.27-master # git-versioning
+version=0.0.27-test # git-versioning
 echo $version
