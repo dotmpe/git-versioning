@@ -1,1 +1,1 @@
-VERSION := 0.0.27-test# git-versioning
+VERSION := 0.0.27# git-versioning
