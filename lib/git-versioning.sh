@@ -3,12 +3,12 @@ V_SH_SOURCED=$_
 V_SH_MAIN=$0
 V_SH_LIB=$BASH_SOURCE
 
-# Id: git-versioning/0.0.28-dev lib/git-versioning.sh
-# version: 0.0.28-dev git-versioning lib/git-versioning.sh
+# Id: git-versioning/0.0.28-dev+20150716-2336 lib/git-versioning.sh
+# version: 0.0.28-dev+20150716-2336 git-versioning lib/git-versioning.sh
 
 source $LIB/util.sh
 
-version=0.0.28-dev # git-versioning
+version=0.0.28-dev+20150716-2336 # git-versioning
 
 [ -n "$PREFIX" ] || {
   PREFIX=/usr/local
@@ -349,6 +349,7 @@ incrVPAT()
 
 cmd_check()
 {
+  cmd_validate_version
   echo "Checking all files for $VER_STR"
   # check without build meta
   $V_CHECK $V_DOC_LIST $(echo $VER_STR | awk -F+ '{print $1}')
@@ -359,12 +360,14 @@ cmd_check()
 cmd_update()
 {
   buildVER
+  cmd_validate_version >> /dev/null
   cmd_version
   applyVersions
 }
 
 cmd_increment()
 {
+  cmd_validate_version >> /dev/null
   trueish $1 && {
     trueish $2 && {
       incrVMAJ
@@ -428,6 +431,7 @@ cmd_help()
   echo '  build meta[..]         Mark version with build meta tag(s). '
   echo '  snapshot               set build-meta to datetime tag. '
   echo '  snapshot-s             set build-meta to epoch timestamp tag. '
+  echo '  validate               Validate syntax of version string from main file. '
   echo '  check                  Verify version embedded files. '
   echo '  info|path              Print git-versioning version, or paths. '
   echo '  [help|*]               Print this git-versioning usage guide. '
@@ -480,14 +484,16 @@ cmd_snapshot_s()
   build $(date +%s) $*
 }
 
+# XXX get/update specific versions from a file?
 cmd_get_version()
 {
   getVersion $1
 }
 
-cmd_grep_version()
+cmd_validate()
 {
-	branch=$1
-	git grep '[^'
+  echo $VER_STR | grep -E '^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*)?(\+[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*)?$' >> /dev/null || {
+    err "Not a valid semver: '$VER_STR'" 1
+  }
 }
 

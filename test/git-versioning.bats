@@ -3,7 +3,7 @@
 load helpers
 
 bin=git-versioning
-version=0.0.28-dev # git-versioning
+version=0.0.28-dev+20150716-2336 # git-versioning
 
 @test "no arguments prints application info" {
   echo bin=${bin}
