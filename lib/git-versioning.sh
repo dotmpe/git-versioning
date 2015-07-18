@@ -349,8 +349,9 @@ incrVPAT()
 
 cmd_check()
 {
-  cmd_validate_version
-  echo "Checking all files for $VER_STR"
+  cmd_validate || return 1
+  log "Checking all files for $VER_STR"
+  log "Using $V_CHECK"
   # check without build meta
   $V_CHECK $V_DOC_LIST $(echo $VER_STR | awk -F+ '{print $1}')
   E=$?
@@ -360,14 +361,14 @@ cmd_check()
 cmd_update()
 {
   buildVER
-  cmd_validate_version >> /dev/null
+  cmd_validate || return 1
   cmd_version
   applyVersions
 }
 
 cmd_increment()
 {
-  cmd_validate_version >> /dev/null
+  cmd_validate || return 1
   trueish $1 && {
     trueish $2 && {
       incrVMAJ
@@ -492,8 +493,10 @@ cmd_get_version()
 
 cmd_validate()
 {
-  echo $VER_STR | grep -E '^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*)?(\+[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*)?$' >> /dev/null || {
-    err "Not a valid semver: '$VER_STR'" 1
-  }
+  echo $VER_STR | grep -E
+  '^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*)?(\+[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*)?$'
+  >> /dev/null \
+    && log "$VER_STR ok" \
+    || err "Not a valid semver: '$VER_STR'"
 }
 
