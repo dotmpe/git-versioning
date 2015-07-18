@@ -1,6 +1,7 @@
-script: ./configure.sh /usr/local && sudo ENV=$ENV ./install.sh && make test
 
 install: ./install-dependencies.sh
+
+script: ./configure.sh /usr/local && sudo ENV=$ENV ./install.sh && make test
 
 branches:
   only:
@@ -9,8 +10,8 @@ branches:
 
 env:
 - ENV=
-- ENV=testing
-- ENV=production
+#- ENV=testing
+#- ENV=production
 
 deploy:
   provider: releases

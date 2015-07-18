@@ -3,18 +3,18 @@ V_SH_SOURCED=$_
 V_SH_MAIN=$0
 V_SH_LIB=$BASH_SOURCE
 
-# Id: git-versioning/0.0.27 lib/git-versioning.sh
-# version: 0.0.27 git-versioning lib/git-versioning.sh
+# Id: git-versioning/0.0.28-test lib/git-versioning.sh
+# version: 0.0.28-test git-versioning lib/git-versioning.sh
 
 source $LIB/util.sh
 
-version=0.0.27 # git-versioning
+version=0.0.28-test # git-versioning
 
 [ -n "$PREFIX" ] || {
   PREFIX=/usr/local
   V_SH_ROOT=$PREFIX/share/git-versioning
   LIB=$V_SH_ROOT/lib
-  TOOLS=$V_SH_ROOT/lib
+  TOOLS=$V_SH_ROOT/tools
 }
 
 # Path to versioned files
@@ -65,6 +65,7 @@ load_app_id()
 {
   [ -e .app-id ] && {
     APP_ID=$(cat .app-id)
+    echo "Loaded APP_ID=$APP_ID from ./.app-id " 1>&2
     return
   }
   META_FILES=$(module_meta_list)
@@ -77,7 +78,6 @@ load_app_id()
         break;
       } || {
         echo "Module with $META_FILE does not contain 'main:' entry,"  1>&2
-        echo "looking further for APP_ID. "  1>&2
       }
     else if [ "${META_FILE:-5}" = ".json" ]
     then
@@ -90,6 +90,7 @@ load_app_id()
   done
   [ -n "$APP_ID" ] || {
     APP_ID=$(basename $PWD)
+    echo "Warning: using directory basename for APP_ID. " 1>&2
   }
 }
 
@@ -349,7 +350,9 @@ incrVPAT()
 
 cmd_check()
 {
-  echo "Checking all files for $VER_STR"
+  cmd_validate >> /dev/null || return 1
+  log "Checking all files for $VER_STR"
+  log "Using $V_CHECK"
   # check without build meta
   $V_CHECK $V_DOC_LIST $(echo $VER_STR | awk -F+ '{print $1}')
   E=$?
@@ -359,12 +362,14 @@ cmd_check()
 cmd_update()
 {
   buildVER
+  cmd_validate >> /dev/null || return 1
   cmd_version
   applyVersions
 }
 
 cmd_increment()
 {
+  cmd_validate >> /dev/null || return 1
   trueish $1 && {
     trueish $2 && {
       incrVMAJ
@@ -428,6 +433,7 @@ cmd_help()
   echo '  build meta[..]         Mark version with build meta tag(s). '
   echo '  snapshot               set build-meta to datetime tag. '
   echo '  snapshot-s             set build-meta to epoch timestamp tag. '
+  echo '  validate               Validate syntax of version string from main file. '
   echo '  check                  Verify version embedded files. '
   echo '  info|path              Print git-versioning version, or paths. '
   echo '  [help|*]               Print this git-versioning usage guide. '
@@ -480,14 +486,18 @@ cmd_snapshot_s()
   build $(date +%s) $*
 }
 
+# XXX get/update specific versions from a file?
 cmd_get_version()
 {
   getVersion $1
 }
 
-cmd_grep_version()
+V_GREP_PAT='^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*)?(\+[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*)?$'
+
+cmd_validate()
 {
-	branch=$1
-	git grep '[^'
+  echo $VER_STR | grep -E $V_GREP_PAT >> /dev/null \
+    && log "$VER_STR ok" \
+    || err "Not a valid semver: '$VER_STR'"
 }
 

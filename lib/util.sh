@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Id: git-versioning/0.0.27 lib/util.sh
+# Id: git-versioning/0.0.28-test lib/util.sh
 
 gitAddAll()
 {
@@ -37,6 +37,20 @@ function sed_post()
     cat $1.out > $1
     rm $1.out
   }
+}
+
+
+# stdio/stderr/exit util
+log()
+{
+	[ -n "$(echo $*)" ] || return 1;
+	echo "[$scriptname.sh:$cmd] $1"
+}
+err()
+{
+	[ -n "$(echo $*)" ] || return 1;
+	echo "$1 [$scriptname.sh:$cmd]" 1>&2
+	[ -n "$2" ] && exit $2
 }
 
 

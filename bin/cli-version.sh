@@ -9,10 +9,11 @@ TOOLS=$V_SH_SHARE/tools
 # Path to versioned files
 V_TOP_PATH=.
 
-# Id: git-versioning/0.0.27 bin/cli-version.sh
+# Id: git-versioning/0.0.28-test bin/cli-version.sh
 
 source $LIB/git-versioning.sh
 
+scriptname=git-versioning
 
 usage()
 {
@@ -32,32 +33,55 @@ cmd_build()
 {
 	build $*
 }
-default=info
 
 
 # Main
+
+def_func=cmd_info
+
 if [ -n "$0" ] && [ $0 != "-bash" ]; then
-  # Do something (only) if script invoked as 'cli-version.sh'
-  if [ "$(basename $0 .sh)" = "cli-version" -o "$(basename $0 .sh)" = "git-versioning" ]; then
-    # invoke with function name first argument,
-    func=$(echo $1 | tr '-' '_')
-    # or default
-    [ -n "$func" ] || func=$default
-    type cmd_$func &>/dev/null && {
-      load
-      shift 1
-      cmd_$func $@
-    } || {
-      # or print usage
-      e=$?
-      [ "$e" = "1" ] && {
+
+  # Do something (only) if script invoked as ...
+  base=$(basename $0 .sh)
+  case "$base" in
+
+    $scriptname | cli-version )
+
+      # function name first as argument,
+      cmd=$1
+      [ -n "$def_func" -a -z "$cmd" ] \
+        && func=$def_func \
+        || func=$(echo cmd_$cmd | tr '-' '_')
+
+      # load/exec if func exists
+      type $func &> /dev/null && {
+        func_exists=1
         load
-        usage
+        shift 1
+        $func $@
       } || {
-        echo Error $e 1>&2
-        exit $e
+        # handle non-zero return or print usage for non-existant func
+        e=$?
+        [ -z "$cmd" ] && {
+          load
+          usage
+          err 'No command given, see "help"' 1
+        } || {
+          [ "$e" = "1" -a -z "$func_exists" ] && {
+            load
+            usage
+            err "No such command: $cmd" 1
+          } || {
+            err "Command $cmd returned $e" $e
+          }
+        }
       }
-    }
-  fi
+
+      ;;
+
+    * )
+      echo No frontend for $base
+
+  esac
 fi
 
