@@ -10,11 +10,13 @@ source $LIB/util.sh
 
 version=0.0.28-dev+20150716-2336 # git-versioning
 
-[ -n "$PREFIX" ] || {
-  PREFIX=/usr/local
-  V_SH_ROOT=$PREFIX/share/git-versioning
-  LIB=$V_SH_ROOT/lib
-  TOOLS=$V_SH_ROOT/tools
+[ -n "$V_SH_SHARE" ] || {
+  [ -n "$PREFIX" ] || {
+    PREFIX=/usr/local
+  }
+  V_SH_SHARE=$PREFIX/share/git-versioning
+  LIB=$V_SH_SHARE/lib
+  TOOLS=$V_SH_SHARE/tools
 }
 
 # Path to versioned files
@@ -188,14 +190,14 @@ getVersion()
     ;;
 
     *.mk | *Makefile )
-      get_clike_comment_id $1 | while read STR;
+      get_unix_comment_id $1 | while read STR;
       do echo "C-Like Comment: $STR"; done
       get_mk_var_version $1 | while read STR;
       do echo "MK Var: $STR"; done
     ;;
 
     *.sh | *configure )
-      get_clike_comment_id $1 | while read STR;
+      get_unix_comment_id $1 | while read STR;
       do echo "C-Like Comment: $STR"; done
       get_sh_var_version $1 | while read STR;
       do echo "SH Var: $STR"; done
@@ -211,10 +213,10 @@ getVersion()
   unset doc
 }
 
-function apply_commonCLikeComment()
+function apply_commonUnixComment()
 {
-  apply_clike_comment_id $1
-  apply_clike_comment_version $1
+  apply_unix_comment_id $1
+  apply_unix_comment_version $1
 }
 
 applyVersion()
@@ -242,17 +244,17 @@ applyVersion()
     ;;
 
     *.mk | *Makefile )
-      apply_commonCLikeComment $doc
+      apply_commonUnixComment $doc
       apply_mk_var_version $doc
     ;;
 
     *.sh | *.bash | *configure | *.bats )
-      apply_commonCLikeComment $doc
+      apply_commonUnixComment $doc
       apply_sh_var_version $doc
     ;;
 
     *.yaml | *.yml )
-      apply_commonCLikeComment $doc
+      apply_commonUnixComment $doc
       apply_yaml_version $doc
     ;;
 
@@ -261,22 +263,27 @@ applyVersion()
     ;;
 
     *.js )
+      apply_clike_line_comment_id $doc
       apply_js_var_version $doc
     ;;
 
     *.coffee )
-      apply_commonCLikeComment $doc
+      apply_commonUnixComment $doc
       apply_coffee_var_version $doc
     ;;
 
     *.properties )
-      apply_commonCLikeComment $doc
+      apply_commonUnixComment $doc
       apply_properties_version $doc
     ;;
 
     *build.xml )
       apply_xml_comment_id $doc
       apply_ant_var_version $doc
+    ;;
+
+    *.jade | *.styl | *.pde | *.ino )
+      apply_clike_line_comment_id $doc
     ;;
 
     * )

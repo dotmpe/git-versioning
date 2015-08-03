@@ -6,7 +6,6 @@ bin=git-versioning
 version=0.0.28-dev+20150716-2336 # git-versioning
 
 @test "no arguments prints application info" {
-  echo bin=${bin}
   run ${bin}
   [ $status -eq 0 ]
   [ $(expr "${lines[0]}" : "Application") -ne 0 ]

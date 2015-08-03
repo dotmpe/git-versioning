@@ -15,6 +15,10 @@ echo "Location: $V_SH_SHARE"
 P=$(echo $PREFIX | sed 's/\//\\\//g')
 sed_rewrite_tag 's/^PREFIX=.*/PREFIX='$P'/' install.sh
 
+[ "." != "$PREFIX" ] \
+  && sed_rewrite_tag 's/^bin=.*/bin=git-versioning/' test/git-versioning.bats \
+  || sed_rewrite_tag 's/^bin=.*/bin=bin\/cli-version.sh/' test/git-versioning.bats
+
 P=$(echo $V_SH_SHARE | sed 's/\//\\\//g')
 sed_rewrite_tag 's/^V_SH_SHARE=.*/V_SH_SHARE='$P'/' install.sh
 sed_rewrite_tag 's/^V_SH_SHARE=.*/V_SH_SHARE='$P'/' bin/cli-version.sh
@@ -61,8 +65,8 @@ echo "Reset .versioned-files.list"
 		cat <<HEREDOC
 test/example/rst_field_version.rst
 test/example/rst_field_id.rst
-test/example/clike_comment_id.sh
-test/example/clike_comment_version.sh
+test/example/unix_comment_id.sh
+test/example/unix_comment_version.sh
 test/example/mk_var_version.mk
 test/example/sh_var_version.sh
 test/example/yaml_version.yaml
@@ -71,6 +75,8 @@ test/example/js_var_version.js
 test/example/coffee_var_version.coffee
 test/example/properties_version.properties
 test/example/build.xml
+test/example/clike_line_comment_id.js
+test/example/clike_line_comment_id.jade
 HEREDOC
 	) >> .versioned-files.list
 	echo "Test files appended to .versioned-files.list"

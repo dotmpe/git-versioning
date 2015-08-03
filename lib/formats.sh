@@ -44,24 +44,24 @@ function get_rst_comment_id()
 }
 
 # C-like comments
-function apply_clike_comment_id()
+function apply_unix_comment_id()
 {
   ID_LINE="# Id: $APP_ID\/$VER_STR "$(echo $1 | sed 's/\//\\\//g')
   P=$V_TOP_PATH/$1
   sed_rewrite_tag 's/^# Id: '$APP_ID'.*/'"$ID_LINE"'/' $P
 }
-function get_clike_comment_id()
+function get_unix_comment_id()
 {
   sed -n 's/^# Id: [^\/]*\/\([^\ ]*\).*/\1/p' $1
 }
 
-function apply_clike_comment_version()
+function apply_unix_comment_version()
 {
   VER_LINE="# version: $VER_STR $APP_ID"
   P=$V_TOP_PATH/$1
   sed_rewrite_tag 's/^# version: .* '$APP_ID'/'"$VER_LINE"'/' $P
 }
-function get_clike_comment_version()
+function get_unix_comment_version()
 {
   sed -n 's/^# version: [^\/]*\/\([^\ ]*\).*/\1/p' $1
 }
@@ -166,3 +166,16 @@ function apply_xml_comment_id()
   $sed_rewrite 's/<!--\ Id: '$APP_ID'\/.*\ -->/<!--\ Id:\ '$APP_ID'\/'$VER_STR'\ '$(echo $1 | sed 's/\//\\\//g')'\ -->/g' $P > $P.out
   sed_post $P
 }
+
+function apply_clike_line_comment_id()
+{
+  ID_LINE="\/\/ Id: $APP_ID\/$VER_STR "$(echo $1 | sed 's/\//\\\//g')
+  sed_rewrite_tag 's/^\/\/ Id: '$APP_ID'.*/'"$ID_LINE"'/' $1
+}
+function get_clike_line_comment_id()
+{
+  DOC=$(echo $1 | sed 's/\//\\\//g')
+  grep '^\/\/ Id:\ '$APP_ID $1 | \
+    sed 's/^.. Id: [^\/]*\/\([^\ ]*\).*$/\1/'
+}
+
