@@ -1,1 +1,1 @@
-var version = '0.0.28-dev+20150716-2336'; // git-versioning
+var version = '0.0.28-dev+20150803-2202'; // git-versioning
