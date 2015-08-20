@@ -69,11 +69,12 @@ can fail if a commit/push would make a semver violation.
 
 Semver makes a plead for stable, well-defined states of software that at
 any point have a sensible patch- or upgrade-path. Stable in the sense of
-version, not of application stability.
+code version, not of application stability per se.
 
-Stable also implies its state is well-defined: something documented maybe 
-by use cases, requirements, test scenarios or implicit in automatic tests
-scripts, deployment environments etc. But that is an entirely different scope.
+Stable implies its state is well-defined: something documented, maybe 
+by use cases, requirements, test scenarios, or implicit in automatic tests
+scripts, deployment environments etc. But that has become an entirely different 
+scope. There is still a section on GIT hooks below.
 
 
 Semver summary
