@@ -15,7 +15,7 @@ TAR_SRC += \
 			ReadMe.rst \
 			lib/git-versioning.sh \
 			lib/formats.sh \
-			bin/ tools/
+			bin tools
 
 ifeq ($(ENV),development)
 TAR_SRC += \
@@ -42,7 +42,7 @@ $(PROJECT)-$(VERSION).tar: $(TAR_SRC) $(filter-out %.tar,$(TRGT))
 TRGT += TODO.list
 CLN += TODO.list
 TODO.list: $(SRC)
-	-grep -srI 'TODO\|FIXME\|XXX' $^ | grep -v 'grep..srI..TODO' | grep -v 'TODO.list' > $@
+	-grep -nsrI 'TODO\|FIXME\|XXX' $^ | grep -v 'grep..srI..TODO' | grep -v 'TODO.list' > $@
 
 
 # not sure where to keep these.. DEPs, build..

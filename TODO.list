@@ -1,12 +1,10 @@
-ReadMe.rst:| TODO: use complete semver and variations for testing.
-ReadMe.rst:| TODO: some integration with GIT frontend? Some ideas:
-ReadMe.rst:- XXX: Tags using project name (``app-name/0.0.1``) are nice when dealing with
-lib/git-versioning.sh:# XXX External script to verify version
-lib/git-versioning.sh:  # XXX Expect rSt MAIN_DOC
-lib/formats.sh:# FIXME function mk_var_id()
-tools//cmd/version-check.sh:  # FIXME: scan all [id|version]...[app-name] lines, fail on version mismatch
-tools//cmd/version-check.sh:  # XXX: should want to know if any mismatches, regardless wether one matches
-tools//git-hooks/post-commit-old.sh:# FIXME
-tools//git-hooks/pre-commit.sh:# FIXME source $V_TOP_PATH/lib/git-versioning.sh
-tools//git-hooks/pre-commit.sh:# XXX again rSt hardcoded
-Makefile.default-goals:# FIXME: set production to install from tar
+ReadMe.rst:176:| TODO: use complete semver and variations for testing.
+ReadMe.rst:177:| TODO: some integration with GIT frontend? Some ideas:
+ReadMe.rst:189:- XXX: Tags using project name (``app-name/0.0.1``) are nice when dealing with
+lib/git-versioning.sh:33:# XXX External script to verify version
+lib/git-versioning.sh:496:# XXX get/update specific versions from a file?
+lib/formats.sh:96:# FIXME function apply_mk_var_id()
+tools/cmd/test-for-clean-branch.sh:5:# TODO: test wether V_MAIN_DOC version for pre-release tag
+tools/cmd/version-check.sh:15:  # FIXME: scan all [id|version]...[app-name] lines, fail on version mismatch
+tools/cmd/version-check.sh:17:  # XXX: should want to know if any mismatches, regardless wether one matches
+Makefile.default-goals:2:# FIXME: set production to install from tar
