@@ -18,8 +18,8 @@ test -n "$PREFIX" || {
   exit 1
 }
 
-test -d $SRC_PREFIX || mkdir -vp $SRC_PREFIX
-test -d $PREFIX || mkdir -vp $PREFIX
+test -d $SRC_PREFIX || sudo mkdir -vp $SRC_PREFIX
+test -d $PREFIX || sudo mkdir -vp $PREFIX
 
 
 install_bats()
