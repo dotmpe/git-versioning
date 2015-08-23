@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+sudo=sudo
+
 test -n "$SRC_PREFIX" || {
 SRC_PREFIX=$HOME
 }
@@ -18,8 +20,8 @@ test -n "$PREFIX" || {
   exit 1
 }
 
-test -d $SRC_PREFIX || sudo mkdir -vp $SRC_PREFIX
-test -d $PREFIX || sudo mkdir -vp $PREFIX
+test -d $SRC_PREFIX || ${sudo} mkdir -vp $SRC_PREFIX
+test -d $PREFIX || ${sudo} mkdir -vp $PREFIX
 
 
 install_bats()
@@ -28,7 +30,7 @@ install_bats()
   pushd $SRC_PREFIX
   git clone https://github.com/sstephenson/bats.git
   cd bats
-  ./install.sh $PREFIX
+  ${sudo} ./install.sh $PREFIX
   popd
 }
 
