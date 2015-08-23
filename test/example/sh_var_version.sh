@@ -1,2 +1,2 @@
-version=0.0.28-dev+20150803-2202 # git-versioning
+version=0.0.28-dev+20150823-1641 # git-versioning
 echo $version
