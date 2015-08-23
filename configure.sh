@@ -36,8 +36,6 @@ bin/cli-version.sh
 lib/git-versioning.sh
 lib/util.sh
 lib/formats.sh
-tools/git-hooks/pre-commit-old.sh
-tools/git-hooks/post-commit-old.sh
 tools/git-hooks/prepare-commit-msg.sh
 tools/git-hooks/pre-commit.sh
 tools/git-hooks/pre-push.sh
