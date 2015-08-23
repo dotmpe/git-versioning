@@ -1,1 +1,1 @@
-VERSION := 0.0.28-dev+20150823-1641# git-versioning
+VERSION := 0.0.28-test+20150823-1648# git-versioning
