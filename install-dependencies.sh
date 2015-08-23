@@ -1,11 +1,13 @@
 #!/usr/bin/env bash
 
+test -n "$PREFIX" || PREFIX=$HOME
+
 # Check for BATS shell test runner or install
 test -x "$(which bats)" && {
   bats --version
 } || {
   echo "Installing bats"
-  pushd $HOME
+  pushd $PREFIX
   git clone https://github.com/sstephenson/bats.git
   cd bats
   sudo ./install.sh /usr/local
