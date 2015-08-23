@@ -1,6 +1,9 @@
 
 install: ./install-dependencies.sh
 
+before_script:
+  - "export PATH=$PATH:~/usr/bin"
+
 script: ./configure.sh /usr/local && sudo ENV=$ENV ./install.sh && make test
 
 branches:
