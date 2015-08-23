@@ -2,11 +2,10 @@
 
 load helpers
 
-bin=git-versioning
-version=0.0.28-test # git-versioning
+bin=bin/cli-version.sh
+version=0.0.28-dev+20150823-1641 # git-versioning
 
 @test "no arguments prints application info" {
-  echo bin=${bin}
   run ${bin}
   [ $status -eq 0 ]
   [ $(expr "${lines[0]}" : "Application") -ne 0 ]

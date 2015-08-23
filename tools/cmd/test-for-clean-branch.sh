@@ -1,5 +1,5 @@
 #!/bin/bash
-# Id: git-versioning/0.0.28-test tools/cmd/test-for-clean-branch.sh
+# Id: git-versioning/0.0.28-dev+20150823-1641 tools/cmd/test-for-clean-branch.sh
 # 1:branchref 2:branchcommitsha1
 
 # TODO: test wether V_MAIN_DOC version for pre-release tag

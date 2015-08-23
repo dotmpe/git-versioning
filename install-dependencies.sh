@@ -1,9 +1,13 @@
 #!/usr/bin/env bash
 
+test -n "$SRC_PREFIX" || SRC_PREFIX=$HOME
+
+# Check for BATS shell test runner or install
 test -x "$(which bats)" && {
   bats --version
 } || {
-  pushd $HOME
+  echo "Installing bats"
+  pushd $SRC_PREFIX
   git clone https://github.com/sstephenson/bats.git
   cd bats
   sudo ./install.sh /usr/local
