@@ -50,7 +50,7 @@ version=0.0.28-test+20150823-1648 # git-versioning
 }
 
 
-APP_ID=
+test -z "$APP_ID" && APP_ID=
 VER_STR=
 VER_MIN=
 
@@ -92,7 +92,7 @@ load_app_id()
   done
   [ -n "$APP_ID" ] || {
     APP_ID=$(basename $PWD)
-    echo "Warning: using directory basename for APP_ID. " 1>&2
+    echo "Warning: using directory basename for project name (APP_ID/.app-id) . " 1>&2
   }
 }
 
