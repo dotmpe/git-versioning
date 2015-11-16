@@ -287,6 +287,8 @@ applyVersion()
     ;;
 
     * )
+      # FIXME: git-versioning could just replace if tag is detailed enough (ie.
+      # snapshot), or if forced to (or if there's no need to watch other embedded versions).
       echo "$0: Unable to version $doc"
       exit 2
     ;;
