@@ -8,10 +8,10 @@ routes:
 params:
   rst2html:
     stylesheets: 
-      - ~/htdocs/media/style/dotmpe-com/style.css
-      - ~/htdocs/media/style/dotmpe-com/docutils-layout.css
-      - ~/htdocs/media/style/dotmpe-com/dotmpe.css
-      - ~/htdocs/media/style/dotmpe-com/docutils-layout-fixed.css
+#      - ~/htdocs/media/style/dotmpe-com/style.css
+#      - ~/htdocs/media/style/dotmpe-com/docutils-layout.css
+#      - ~/htdocs/media/style/dotmpe-com/dotmpe.css
+#      - ~/htdocs/media/style/dotmpe-com/docutils-layout-fixed.css
 
       #- ~/htdocs/media/style/default.css
       #- /srv/project-mpe/docutils-ext/var/media/style/docutils-html.css

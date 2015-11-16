@@ -51,8 +51,10 @@ GIT Versioning Hooks
      echo ReadMe.rst > .versioned-files.list
      echo package.json >> .versioned-files.lst
      echo test.sh >> .versioned-files.lst
-     git-versioning check
+     git-versioning dev
+     git-versioning snapshot
      git-versioning update
+     git-versioning check
 
 
 .. contents::
