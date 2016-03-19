@@ -24,7 +24,7 @@ function get_rst_field_main_version()
 {
   grep '^'$RST_VER_TOKEN'.*' $1 | awk '{print $2}'
 }
-# 
+#
 function apply_rst_field_id()
 {
   ID_LINE=":Id: $APP_ID\/$VER_STR "$(echo $1 | sed 's/\//\\\//g')
@@ -151,6 +151,13 @@ function apply_properties_version()
   P=$V_TOP_PATH/$1
   $sed_rewrite 's/^'$APP_ID'\.version=.*/'$APP_ID'.version='$VER_STR'/' $P > $P.out
   sed_post $P
+}
+
+function get_properties_version()
+{
+  test -n "$2" || set -- "$1" "${APP_ID}.version"
+  P=$V_TOP_PATH/$1
+  grep '^'$2'=.*' $P
 }
 
 function apply_ant_var_version()

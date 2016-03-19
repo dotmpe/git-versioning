@@ -65,10 +65,14 @@ module_meta_list() # $one
 
 load_app_id()
 {
-  [ -e .app-id ] && {
+  test ! -e .app-id || {
     APP_ID=$(cat .app-id)
     echo "Loaded APP_ID=$APP_ID from ./.app-id " 1>&2
     return
+  }
+  test ! -e .version-attributes || {
+    APP_ID=$(get_mime_header "$doc" "App-Id")
+    test -n "$APP_ID" && return
   }
   META_FILES=$(module_meta_list)
   for META_FILE in $META_FILES
@@ -103,7 +107,7 @@ parse_version()
 
   sed_ext="sed -r"
   [ "$(uname -s)" = "Darwin" ] && sed_ext="sed -E"
- 
+
   VER_MAJ=$(echo $STR | $sed_ext 's/^([^\.]+).*$/\1/' )
   VER_MIN=$(echo $STR | $sed_ext 's/^[^\.]*\.([^\.]+).*$/\1/' )
   VER_PAT=$(echo $STR | $sed_ext 's/^[^\.]*\.[^\.]*\.([^+-]+).*$/\1/' )
@@ -121,10 +125,17 @@ parse_version()
 loadVersion()
 {
   doc=$1
+  getVersion "$doc"
+
   case $doc in
 
+    *.properties )
+      STR=`get_properties_version $doc `
+      parse_version "$STR"
+    ;;
+
     *.rst )
-      STR=`get_rst_field_main_version $doc`
+      STR=`get_rst_field_main_version $doc $key`
       parse_version "$STR"
     ;;
 
