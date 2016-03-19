@@ -124,6 +124,7 @@ parse_version()
 
 loadVersion()
 {
+  test -n "$1" || return 1
   doc=$1
   getVersion "$doc"
 
@@ -140,7 +141,7 @@ loadVersion()
     ;;
 
     * )
-      echo "$0: Unable load version from $doc"
+      echo "$0: Unable load version from '$doc'"
       exit 2
     ;;
 
@@ -169,6 +170,16 @@ load()
 
   V_PATH_LIST=$(cat $V_DOC_LIST)
   V_MAIN_DOC=$(head -n 1 $V_DOC_LIST)
+
+  test -n "$V_MAIN_DOC" || {
+    echo "$0: Cannot get main document. "
+    exit 3
+  }
+
+  test -e "$V_TOP_PATH/$V_MAIN_DOC" || {
+    echo "$0: Main document does not exist. "
+    exit 3
+  }
 
   loadVersion $V_TOP_PATH/$V_MAIN_DOC
 
