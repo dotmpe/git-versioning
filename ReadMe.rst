@@ -40,6 +40,13 @@ GIT Versioning Hooks
 
      $ make install
 
+   or::
+
+     @ENV=production ./configure.sh /usr/local
+     @ENV=production sudo ./install.sh uninstall
+
+   See also Travis CI test build script.
+
    Use::
 
      cd myproject
