@@ -125,7 +125,7 @@ parse_version()
 loadVersion()
 {
   test -n "$1" || return 1
-  doc=$1
+  doc="$1"
   getVersion "$doc"
 
   case $doc in
