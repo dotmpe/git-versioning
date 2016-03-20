@@ -4,8 +4,8 @@
 
 set -e
 
-PREFIX=/usr/local
-V_SH_SHARE=/usr/local/share/git-versioning
+PREFIX=.
+V_SH_SHARE=.
 
 [ "$PREFIX" != "." ] || {
 	echo "Cannot install, see configure. "

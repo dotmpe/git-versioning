@@ -12,11 +12,13 @@ gitAddAll()
 
 trueish()
 {
-  [ "$1" = "true" ] && {
-    return 0
-  } || {
-    return 1
-  }
+  test -n "$1" || return 1
+  case "$1" in
+    on|true|yes|1)
+      return 0;;
+    * )
+      return 1;;
+  esac
 }
 
 sed_rewrite="sed "
@@ -42,21 +44,82 @@ function sed_post()
 
 
 # stdio/stderr/exit util
+err()
+{
+  log "$1" 1>&2
+  [ -z "$2" ] || exit $2
+}
+
+# 1:fd 2:str 3:exit
 log()
 {
 	[ -n "$(echo $*)" ] || return 1;
 	echo "[$scriptname.sh:$cmd] $1"
 }
+
+stderr()
+{
+  case "$(echo $1 | tr 'A-Z' 'a-z')" in
+
+    * )
+      ;;
+
+  esac
+
+  err "$2" $3
+}
+
+# std-v <level>
+# if verbosity is defined, return non-zero if <level> is below verbosity treshold
+std_v()
+{
+  test -z "$verbosity" && return || {
+    test $verbosity -ge $1 && return || return 1
+  }
+}
+
+std_exit()
+{
+  test "$1" != "0" -a -z "$1" && return 1 || exit $1
+}
+
+warn()
+{
+  std_v 4 || std_exit $2 || return 0
+  stderr "Warning" "$1" $2
+}
 note()
 {
-	[ -n "$(echo $*)" ] || return 1;
-	echo "[$scriptname.sh:note] $1" 1>&2
+  std_v 5 || std_exit $2 || return 0
+  stderr "Notice" "$1" $2
 }
-err()
+info()
 {
-	[ -n "$(echo $*)" ] || return 1;
-	echo "$1 [$scriptname.sh:$cmd]" 1>&2
-	[ -n "$2" ] && exit $2
+  std_v 6 || std_exit $2 || return 0
+  stderr "Info" "$1" $2
 }
+debug()
+{
+  std_v 7 || std_exit $2 || return 0
+  stderr "Debug" "$1" $2
+}
+
+# demonstrate log levels
+std_demo()
+{
+  scriptname=std cmd=demo
+  log "Log line"
+  error "Foo bar"
+  warn "Foo bar"
+  note "Foo bar"
+  info "Foo bar"
+  debug "Foo bar"
+
+  for x in error warn note info debug
+    do
+      $x "testing $x out"
+    done
+}
+
 
 
