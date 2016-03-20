@@ -181,7 +181,7 @@ load()
     exit 3
   }
 
-  loadVersion $V_TOP_PATH/$V_MAIN_DOC
+  loadVersion "$V_TOP_PATH/$V_MAIN_DOC"
 
   buildVER
   #echo "Version set to $VER_STR"
