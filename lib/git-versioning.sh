@@ -70,7 +70,7 @@ load_app_id()
 {
   test ! -e .app-id || {
     APP_ID=$(cat .app-id)
-    echo "Loaded APP_ID=$APP_ID from ./.app-id " 1>&2
+    note "Loaded APP_ID=$APP_ID from ./.app-id "
     return
   }
   test ! -e .version-attributes || {
@@ -86,20 +86,20 @@ load_app_id()
       [ -n "$APP_ID" ] && {
         break;
       } || {
-        echo "Module with $META_FILE does not contain 'main:' entry,"  1>&2
+        err "Module with $META_FILE does not contain 'main:' entry,"
       }
     else if [ "${META_FILE:-5}" = ".json" ]
     then
       # assume first "name": key is package name, not some nested object
       APP_ID=$(grep '"name":' $META_FILE | sed 's/.*"name"[^"]*"\(.*\)".*/\1/')
       [ -n "$APP_ID" ] && {
-        echo "$0: Unable to get APP_ID from $META_FILE 'name': key" 1>&2
+        err "$0: Unable to get APP_ID from $META_FILE 'name': key"
       }
     fi; fi
   done
   [ -n "$APP_ID" ] || {
     APP_ID=$(basename $PWD)
-    echo "Warning: using directory basename for project name (APP_ID/.app-id) . " 1>&2
+    err "Warning: using directory basename for project name (APP_ID/.app-id) . "
   }
 }
 
@@ -121,17 +121,18 @@ parse_version()
 
   VER=`concatVersion`
   [ "$VER" = "$STR" ] || {
-    echo "Expected VER=$VER to equal STR=$STR" >&2
+    err "Expected VER=$VER to equal STR=$STR"
   }
 }
 
 loadVersion()
 {
   test -n "$1" || return 1
-  doc="$1"
-  getVersion "$doc"
+  local doc="$1"
 
-  case $doc in
+  getVersion "$doc" || return
+
+  case "$doc" in
 
     *.properties )
       STR=`get_properties_version $doc `
@@ -144,12 +145,11 @@ loadVersion()
     ;;
 
     * )
-      echo "$0: Unable load version from '$doc'"
-      exit 2
+      err "$0: Unable load version from '$1'" 2
     ;;
 
   esac
-  #echo "Loaded version from $doc: $VER_STR"
+
   unset doc
 }
 
@@ -167,34 +167,30 @@ load()
   load_app_id || return
 
   [ -n "$APP_ID" ] || {
-    echo "$0: Cannot get APP_ID from any metadata file. Aborting git-versioning. " 1>&2
-    exit 3
+    err "Cannot get APP_ID from any metadata file. Aborting git-versioning. " 3
   }
 
   V_PATH_LIST=$(cat $V_DOC_LIST)
   V_MAIN_DOC=$(head -n 1 $V_DOC_LIST)
 
-  test -n "$V_MAIN_DOC" || {
-    echo "$0: Cannot get main document. "
-    exit 3
-  }
+  test -n "$V_MAIN_DOC" || \
+    err "Cannot get main document. " 3
 
-  test -e "$V_TOP_PATH/$V_MAIN_DOC" || {
-    echo "$0: Main document does not exist. "
-    exit 3
-  }
+  test -e "$V_TOP_PATH/$V_MAIN_DOC" || \
+    err "Main document does not exist. " 3
 
   loadVersion "$V_TOP_PATH/$V_MAIN_DOC"
 
   buildVER
-  #echo "Version set to $VER_STR"
+
+  log "Loaded version from $V_TOP_PATH/$V_MAIN_DOC: $VER_STR"
 }
 
 source $LIB/formats.sh
 
 getVersion()
 {
-  case $1 in
+  case "$1" in
 
     *.rst )
 
@@ -234,8 +230,6 @@ getVersion()
     ;;
 
   esac
-
-  unset doc
 }
 
 function apply_commonUnixComment()
@@ -246,8 +240,8 @@ function apply_commonUnixComment()
 
 applyVersion()
 {
-  doc=$1
-  case $doc in
+  local doc="$1"
+  case "$doc" in
 
     *.rst )
       if [ "$doc" = "$V_MAIN_DOC" ]
@@ -327,9 +321,10 @@ applyVersion()
 
 applyVersions()
 {
+  local doc
   for doc in $V_PATH_LIST
   do
-    applyVersion $doc
+    applyVersion "$doc"
   done
   unset doc
 }

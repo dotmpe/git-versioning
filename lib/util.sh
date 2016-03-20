@@ -47,6 +47,11 @@ log()
 	[ -n "$(echo $*)" ] || return 1;
 	echo "[$scriptname.sh:$cmd] $1"
 }
+note()
+{
+	[ -n "$(echo $*)" ] || return 1;
+	echo "[$scriptname.sh:note] $1" 1>&2
+}
 err()
 {
 	[ -n "$(echo $*)" ] || return 1;
