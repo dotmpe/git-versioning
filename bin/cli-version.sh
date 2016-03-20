@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 # Globals
 
 V_SH_SHARE=.
@@ -14,6 +16,7 @@ V_TOP_PATH=.
 source $LIB/git-versioning.sh
 
 scriptname=git-versioning
+
 
 usage()
 {
@@ -46,6 +49,8 @@ if [ -n "$0" ] && [ $0 != "-bash" ]; then
   case "$base" in
 
     $scriptname | cli-version )
+
+      test -n "$verbosity" || verbosity=3
 
       # function name first as argument,
       cmd=$1

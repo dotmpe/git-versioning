@@ -130,7 +130,7 @@ loadVersion()
   test -n "$1" || return 1
   local doc="$1"
 
-  getVersion "$doc" || return
+  verbosity=0 getVersion "$doc" >/dev/null || return
 
   case "$doc" in
 

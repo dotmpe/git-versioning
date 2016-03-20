@@ -53,6 +53,7 @@ err()
 # 1:fd 2:str 3:exit
 log()
 {
+  test -n "$verbosity" && std_v 1 || return 0
 	[ -n "$(echo $*)" ] || return 1;
 	echo "[$scriptname.sh:$cmd] $1"
 }
@@ -96,6 +97,7 @@ note()
 info()
 {
   std_v 6 || std_exit $2 || return 0
+  echo verbosity=$verbosity
   stderr "Info" "$1" $2
 }
 debug()
@@ -109,13 +111,12 @@ std_demo()
 {
   scriptname=std cmd=demo
   log "Log line"
-  error "Foo bar"
   warn "Foo bar"
   note "Foo bar"
   info "Foo bar"
   debug "Foo bar"
 
-  for x in error warn note info debug
+  for x in warn note info debug
     do
       $x "testing $x out"
     done
