@@ -3,6 +3,9 @@ V_SH_SOURCED=$_
 V_SH_MAIN=$0
 V_SH_LIB=$BASH_SOURCE
 
+set -e
+
+
 # Id: git-versioning/0.0.28-dev+20150823-1641 lib/git-versioning.sh
 # version: 0.0.28-dev+20150823-1641 git-versioning lib/git-versioning.sh
 
@@ -161,7 +164,7 @@ load()
     exit 2
   }
 
-  load_app_id
+  load_app_id || return
 
   [ -n "$APP_ID" ] || {
     echo "$0: Cannot get APP_ID from any metadata file. Aborting git-versioning. " 1>&2
