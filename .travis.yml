@@ -6,9 +6,9 @@ before_script:
 
 script:
 - echo PREFIX=$PREFIX
-- case "$ENV" in \
-     production ) ./configure.sh /usr/local && sudo ENV=$ENV ./install.sh && make test ;; \
-     * ) ./configure.sh $PREFIX && ENV=$ENV ./install.sh && make test ;; \
+- case "$ENV" in
+     production ) ./configure.sh /usr/local && sudo ENV=$ENV ./install.sh && make test ;;
+     * ) ./configure.sh $PREFIX && ENV=$ENV ./install.sh && make test ;;
   esac
 
 branches:
