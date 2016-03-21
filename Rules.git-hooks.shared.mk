@@ -1,4 +1,4 @@
-# Id: git-versioning/0.0.28-test+20150823-1648 Rules.git-hooks.shared.mk
+# Id: git-versioning/0.0.28-dev+20160321-0534 Rules.git-hooks.shared.mk
 
 # http://git-scm.com/docs/githooks
 

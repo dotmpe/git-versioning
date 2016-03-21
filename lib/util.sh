@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Id: git-versioning/0.0.28-test+20150823-1648 lib/util.sh
+# Id: git-versioning/0.0.28-dev+20160321-0534 lib/util.sh
 
 gitAddAll()
 {
@@ -8,15 +8,6 @@ gitAddAll()
   do
     git add $V_TOP_PATH/$doc
   done
-}
-
-trueish()
-{
-  [ "$1" = "true" ] && {
-    return 0
-  } || {
-    return 1
-  }
 }
 
 sed_rewrite="sed "
@@ -42,16 +33,97 @@ function sed_post()
 
 
 # stdio/stderr/exit util
-log()
-{
-	[ -n "$(echo $*)" ] || return 1;
-	echo "[$scriptname.sh:$cmd] $1"
-}
+# 1:msg 2:exit
 err()
 {
-	[ -n "$(echo $*)" ] || return 1;
-	echo "$1 [$scriptname.sh:$cmd]" 1>&2
-	[ -n "$2" ] && exit $2
+  log "$1" 1>&2
+  [ -z "$2" ] || exit $2
 }
+
+# 1:msg 2:exit
+log()
+{
+  test -n "$verbosity" && std_v 1 || return 0
+	[ -n "$(echo $*)" ] || return 1;
+  key=$scriptname.sh
+  test -n "$cmd" && key=${key}${bb}:${bk}${subcmd}
+  echo "[$key] $1"
+}
+
+stderr()
+{
+  case "$(echo $1 | tr 'A-Z' 'a-z')" in
+
+    * )
+      ;;
+
+  esac
+
+  err "$2" $3
+}
+
+# std-v <level>
+# if verbosity is defined, return non-zero if <level> is below verbosity treshold
+std_v()
+{
+  test -z "$verbosity" && return || {
+    test $verbosity -ge $1 && return || return 1
+  }
+}
+
+std_exit()
+{
+  test "$1" != "0" -a -z "$1" && return 1 || exit $1
+}
+
+warn()
+{
+  std_v 4 || std_exit $2 || return 0
+  stderr "Warning" "$1" $2
+}
+note()
+{
+  std_v 5 || std_exit $2 || return 0
+  stderr "Notice" "$1" $2
+}
+info()
+{
+  std_v 6 || std_exit $2 || return 0
+  stderr "Info" "$1" $2
+}
+debug()
+{
+  std_v 7 || std_exit $2 || return 0
+  stderr "Debug" "$1" $2
+}
+
+# demonstrate log levels
+std_demo()
+{
+  scriptname=std cmd=demo
+  log "Log line"
+  err "Log line"
+  warn "Foo bar"
+  note "Foo bar"
+  info "Foo bar"
+  debug "Foo bar"
+
+  for x in warn note info debug
+    do
+      $x "testing $x out"
+    done
+}
+
+trueish()
+{
+  test -n "$1" || return 1
+  case "$1" in
+    on|true|yes|1)
+      return 0;;
+    * )
+      return 1;;
+  esac
+}
+
 
 

@@ -1,7 +1,7 @@
 GIT Versioning Hooks
 ====================
 :Created: 2015-04-19
-:Version: 0.0.28-test+20150823-1648
+:Version: 0.0.28-test+20160321-0534
 :Status: Dev
 :project:
 
@@ -39,6 +39,13 @@ GIT Versioning Hooks
    Install ::
 
      $ make install
+
+   or::
+
+     @ENV=production ./configure.sh /usr/local
+     @ENV=production sudo ./install.sh uninstall
+
+   See also Travis CI test build script.
 
    Use::
 
@@ -230,7 +237,7 @@ possible to include a comment on the line (ie. JSON).
 
 
 .. rSt example:
-.. Id: git-versioning/0.0.28-test+20150823-1648 ReadMe.rst
+.. Id: git-versioning/0.0.28-dev+20160321-0534 ReadMe.rst
 
 
 
@@ -411,4 +418,4 @@ Makefile
 .. _semver: http://semver.org/
 .. _sitefile: http://github.com/dotmpe/node-sitefile
 
-.. Id: git-versioning/0.0.28-test+20150823-1648 ReadMe.rst
+.. Id: git-versioning/0.0.28-dev+20160321-0534 ReadMe.rst

@@ -4,7 +4,9 @@ install: ./install-dependencies.sh
 before_script:
   - "export PATH=$PATH:$PREFIX/bin"
 
-script: ./configure.sh /usr/local && sudo ENV=$ENV ./install.sh && make test
+script:
+- case "$ENV" in production ) ./configure.sh /usr/local && sudo ENV=$ENV ./install.sh && make test ;; esac
+- case "$ENV" in user-dev ) ./configure.sh $HOME/.local && ENV=$ENV ./install.sh && make test ;; esac
 
 branches:
   only:
@@ -13,6 +15,7 @@ branches:
 
 env:
 - ENV=
+- ENV=user-dev
 #- ENV=testing
 #- ENV=production
 
@@ -25,3 +28,4 @@ deploy:
     repo: dotmpe/git-versioning
     tags: true
     condition: $ENV = production
+

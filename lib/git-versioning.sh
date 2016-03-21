@@ -3,12 +3,15 @@ V_SH_SOURCED=$_
 V_SH_MAIN=$0
 V_SH_LIB=$BASH_SOURCE
 
-# Id: git-versioning/0.0.28-test+20150823-1648 lib/git-versioning.sh
-# version: 0.0.28-test+20150823-1648 git-versioning lib/git-versioning.sh
+set -e
+
+
+# Id: git-versioning/0.0.28-dev+20160321-0534 lib/git-versioning.sh
+# version: 0.0.28-dev+20160321-0534 git-versioning lib/git-versioning.sh
 
 source $LIB/util.sh
 
-version=0.0.28-test+20150823-1648 # git-versioning
+version=0.0.28-dev+20160321-0534 # git-versioning
 
 [ -n "$V_SH_SHARE" ] || {
   [ -n "$PREFIX" ] || {
@@ -50,7 +53,7 @@ version=0.0.28-test+20150823-1648 # git-versioning
 }
 
 
-test -z "$APP_ID" && APP_ID=
+test -n "$APP_ID" || APP_ID=
 VER_STR=
 VER_MIN=
 
@@ -65,10 +68,14 @@ module_meta_list() # $one
 
 load_app_id()
 {
-  [ -e .app-id ] && {
+  test ! -e .app-id || {
     APP_ID=$(cat .app-id)
-    echo "Loaded APP_ID=$APP_ID from ./.app-id " 1>&2
+    note "Loaded APP_ID=$APP_ID from ./.app-id "
     return
+  }
+  test ! -e .version-attributes || {
+    APP_ID=$(get_mime_header "$doc" "App-Id")
+    test -n "$APP_ID" && return
   }
   META_FILES=$(module_meta_list)
   for META_FILE in $META_FILES
@@ -79,20 +86,20 @@ load_app_id()
       [ -n "$APP_ID" ] && {
         break;
       } || {
-        echo "Module with $META_FILE does not contain 'main:' entry,"  1>&2
+        err "Module with $META_FILE does not contain 'main:' entry,"
       }
     else if [ "${META_FILE:-5}" = ".json" ]
     then
       # assume first "name": key is package name, not some nested object
       APP_ID=$(grep '"name":' $META_FILE | sed 's/.*"name"[^"]*"\(.*\)".*/\1/')
       [ -n "$APP_ID" ] && {
-        echo "$0: Unable to get APP_ID from $META_FILE 'name': key" 1>&2
+        err "$0: Unable to get APP_ID from $META_FILE 'name': key"
       }
     fi; fi
   done
   [ -n "$APP_ID" ] || {
     APP_ID=$(basename $PWD)
-    echo "Warning: using directory basename for project name (APP_ID/.app-id) . " 1>&2
+    err "Warning: using directory basename for project name (APP_ID/.app-id) . "
   }
 }
 
@@ -103,7 +110,7 @@ parse_version()
 
   sed_ext="sed -r"
   [ "$(uname -s)" = "Darwin" ] && sed_ext="sed -E"
- 
+
   VER_MAJ=$(echo $STR | $sed_ext 's/^([^\.]+).*$/\1/' )
   VER_MIN=$(echo $STR | $sed_ext 's/^[^\.]*\.([^\.]+).*$/\1/' )
   VER_PAT=$(echo $STR | $sed_ext 's/^[^\.]*\.[^\.]*\.([^+-]+).*$/\1/' )
@@ -114,27 +121,35 @@ parse_version()
 
   VER=`concatVersion`
   [ "$VER" = "$STR" ] || {
-    echo "Expected VER=$VER to equal STR=$STR" >&2
+    err "Expected VER=$VER to equal STR=$STR"
   }
 }
 
 loadVersion()
 {
-  doc=$1
-  case $doc in
+  test -n "$1" || return 1
+  local doc="$1"
+
+  verbosity=0 getVersion "$doc" >/dev/null || return
+
+  case "$doc" in
+
+    *.properties )
+      STR=`get_properties_version $doc `
+      parse_version "$STR"
+    ;;
 
     *.rst )
-      STR=`get_rst_field_main_version $doc`
+      STR=`get_rst_field_main_version $doc $key`
       parse_version "$STR"
     ;;
 
     * )
-      echo "$0: Unable load version from $doc"
-      exit 2
+      err "$0: Unable load version from '$1'" 2
     ;;
 
   esac
-  #echo "Loaded version from $doc: $VER_STR"
+
   unset doc
 }
 
@@ -149,27 +164,33 @@ load()
     exit 2
   }
 
-  load_app_id
+  load_app_id || return
 
   [ -n "$APP_ID" ] || {
-    echo "$0: Cannot get APP_ID from any metadata file. Aborting git-versioning. " 1>&2
-    exit 3
+    err "Cannot get APP_ID from any metadata file. Aborting git-versioning. " 3
   }
 
   V_PATH_LIST=$(cat $V_DOC_LIST)
   V_MAIN_DOC=$(head -n 1 $V_DOC_LIST)
 
-  loadVersion $V_TOP_PATH/$V_MAIN_DOC
+  test -n "$V_MAIN_DOC" || \
+    err "Cannot get main document. " 3
+
+  test -e "$V_TOP_PATH/$V_MAIN_DOC" || \
+    err "Main document does not exist. " 3
+
+  loadVersion "$V_TOP_PATH/$V_MAIN_DOC"
 
   buildVER
-  #echo "Version set to $VER_STR"
+
+  log "Loaded version from $V_TOP_PATH/$V_MAIN_DOC: $VER_STR"
 }
 
 source $LIB/formats.sh
 
 getVersion()
 {
-  case $1 in
+  case "$1" in
 
     *.rst )
 
@@ -209,8 +230,6 @@ getVersion()
     ;;
 
   esac
-
-  unset doc
 }
 
 function apply_commonUnixComment()
@@ -221,8 +240,8 @@ function apply_commonUnixComment()
 
 applyVersion()
 {
-  doc=$1
-  case $doc in
+  local doc="$1"
+  case "$doc" in
 
     *.rst )
       if [ "$doc" = "$V_MAIN_DOC" ]
@@ -302,9 +321,10 @@ applyVersion()
 
 applyVersions()
 {
+  local doc
   for doc in $V_PATH_LIST
   do
-    applyVersion $doc
+    applyVersion "$doc"
   done
   unset doc
 }
@@ -363,8 +383,9 @@ cmd_check()
   log "Checking all files for $VER_STR"
   log "Using $V_CHECK"
   # check without build meta
-  $V_CHECK $V_DOC_LIST $(echo $VER_STR | awk -F+ '{print $1}')
-  E=$?
+  . $V_CHECK $V_DOC_LIST $(echo $VER_STR | awk -F+ '{print $1}')
+  E="$?"
+  echo E=$E
   [ "$E" -eq "0" ] || return $(( 1 + $? ))
 }
 
