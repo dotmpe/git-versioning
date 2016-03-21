@@ -92,10 +92,10 @@ uninstall::
 	@ENV=production sudo ./install.sh uninstall
 
 test-run::
-	test -n "$PREFIX" && ./bin/cli-version.sh || git-versioning
+	test -n "$$PREFIX" && ./bin/cli-version.sh || git-versioning
 
 test-tags::
-	test -n "$PREFIX" && ./bin/cli-version.sh check || git-versioning check
+	test -n "$$PREFIX" && ./bin/cli-version.sh check || git-versioning check
 
 test-specs::
 	./test/git-versioning.bats
