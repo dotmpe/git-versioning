@@ -17,9 +17,10 @@ do
 
   # XXX: should want to know if any mismatches, regardless wether one matches
 
-  test "$doc" = "$V_MAIN_DOC" && {
-    continue
-  } || {
+  case "$doc" in "$V_MAIN_DOC" | *.json )
+      continue;;
+  esac
+
     ( grep -i 'version.*\<'$2'\>.*'$APP_ID $doc \
         || grep -i '[Ii]d[:=].*\<'$2'\>.*'$APPID $doc ) >> /dev/null && {
       echo "Version match in $doc"
@@ -27,7 +28,7 @@ do
       echo "Version mismatch in $doc" 1>&2
       e=$(( $e + 1 ))
     }
-  }
+
 done
 
 exit $e
