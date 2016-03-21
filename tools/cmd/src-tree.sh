@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Id: git-versioning/0.0.30 tools/cmd/src-tree.sh
+# Id: git-versioning/0.0.31-dev+20160321-0713 tools/cmd/src-tree.sh
 
 # Seed code for 'src-tree' command. Formats indented tree with (versioned) src files.
 
