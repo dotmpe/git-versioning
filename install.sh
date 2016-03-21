@@ -35,7 +35,7 @@ c_install()
 	echo "Running install"
 	test -n "$V_SH_SHARE"
 	test ! -e "$V_SH_SHARE"
-	mkdir -p $V_SH_SHARE
+	mkdir -vp $V_SH_SHARE $PREFIX/bin
 	cp -vr bin/ $V_SH_SHARE/bin
 	cp -vr lib/ $V_SH_SHARE/lib
 	cp -vr tools/ $V_SH_SHARE/tools
