@@ -3,7 +3,7 @@
 test -n "$sudo" || sudo=
 
 test -n "$SRC_PREFIX" || {
-SRC_PREFIX=$HOME
+SRC_PREFIX=/src/
 }
 
 test -n "$PREFIX" || {
@@ -37,7 +37,6 @@ install_bats()
 # Check for BATS shell test runner or install
 test -x "$(which bats)" || {
   install_bats
-  export PATH=$PATH:$PREFIX/bin
 }
 
 

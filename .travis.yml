@@ -1,10 +1,10 @@
 
 install: 
-- ./install-dependencies.sh
+- test -z "$PREFIX" && ( export sudo=sudo ./install-dependencies.sh ) || ( PREFIX=$HOME./local SRC_PREFIX=$HOME/build ./install-dependencies.sh )
 - chown -R $username /home/$username/.local
 
 before_script:
-  - "export PATH=$PATH:$PREFIX/bin"
+- test -z "$PREFIX" || export PATH=$PATH:$PREFIX/bin
 
 script:
 - echo PREFIX=$PREFIX
