@@ -1,7 +1,7 @@
 GIT Versioning Hooks
 ====================
 :Created: 2015-04-19
-:Version: 0.0.28
+:Version: 0.0.29-dev+20160321-0635
 :Status: Dev
 :project:
 
@@ -237,7 +237,7 @@ possible to include a comment on the line (ie. JSON).
 
 
 .. rSt example:
-.. Id: git-versioning/0.0.28 ReadMe.rst
+.. Id: git-versioning/0.0.29-dev+20160321-0635 ReadMe.rst
 
 
 
@@ -418,4 +418,4 @@ Makefile
 .. _semver: http://semver.org/
 .. _sitefile: http://github.com/dotmpe/node-sitefile
 
-.. Id: git-versioning/0.0.28 ReadMe.rst
+.. Id: git-versioning/0.0.29-dev+20160321-0635 ReadMe.rst
