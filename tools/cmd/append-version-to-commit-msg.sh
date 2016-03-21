@@ -1,5 +1,5 @@
 #!/bin/bash
-# Id: git-versioning/0.0.30-dev+20160321-0641 tools/cmd/append-version-to-commit-msg.sh
+# Id: git-versioning/0.0.30 tools/cmd/append-version-to-commit-msg.sh
 # 1:commit-msg-file 2:commit-msg-src 3:commit-updates-sha1
 APP_ID=$(git-versioning app-id)
 cp $1 $1.tmp

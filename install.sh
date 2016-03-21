@@ -5,7 +5,7 @@
 set -e
 
 PREFIX=.
-V_SH_SHARE=$PREFIX
+V_SH_SHARE=.
 
 [ "$PREFIX" != "." ] || {
 	echo "Cannot install, see configure. "
