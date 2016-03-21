@@ -2,7 +2,7 @@
 
 load helpers
 
-bin=bin/cli-version.sh
+bin=git-versioning
 version=0.0.30-dev+20160321-0641 # git-versioning
 
 @test "no arguments prints application info" {

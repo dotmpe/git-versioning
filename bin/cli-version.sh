@@ -4,7 +4,7 @@ set -e
 
 # Globals
 
-V_SH_SHARE=.
+V_SH_SHARE=/usr/local/share/git-versioning
 LIB=$V_SH_SHARE/lib
 TOOLS=$V_SH_SHARE/tools
 

@@ -422,7 +422,7 @@ release()
   parse_version "$STR" | read VER_STR
   echo VER_STR:$VER_STR
   #cmd_version
-  #applyVersions
+  applyVersions
 }
 
 build()
