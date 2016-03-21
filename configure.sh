@@ -8,7 +8,7 @@ echo "Environment: $ENV"
 [ -n "$1" ] && PREFIX=$1
 [ -n "$PREFIX" ] || PREFIX=.
 echo "Prefix: $PREFIX"
-	
+
 [ "." != "$PREFIX" ] && V_SH_SHARE=$PREFIX/share/git-versioning || V_SH_SHARE=$PREFIX
 echo "Location: $V_SH_SHARE"
 
@@ -81,4 +81,3 @@ HEREDOC
 }
 
 # Id: git-versioning/0.0.27-master configure.sh
-
