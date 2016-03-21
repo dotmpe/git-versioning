@@ -5,10 +5,11 @@ before_script:
   - "export PATH=$PATH:$PREFIX/bin"
 
 script:
+- echo PREFIX=$PREFIX
 - case "$ENV" in \
-             production ) ./configure.sh /usr/local && sudo ENV=$ENV ./install.sh && make test ;; \
-             dev* | test* ) ./configure.sh && ENV=$ENV ./install.sh && make test ;; esac
-             user-dev ) ./configure.sh $HOME/.local && ENV=$ENV ./install.sh && make test ;; esac
+     production ) ./configure.sh /usr/local && sudo ENV=$ENV ./install.sh && make test ;; \
+     * ) ./configure.sh $PREFIX && ENV=$ENV ./install.sh && make test ;; \
+  esac
 
 branches:
   only:
@@ -17,7 +18,7 @@ branches:
 
 env:
 - ENV=production
-- ENV=user-dev
+- ENV=user-dev PREFIX=$HOME/.local
 - ENV=testing
 - ENV=
 
