@@ -6,12 +6,12 @@ V_SH_LIB=$BASH_SOURCE
 set -e
 
 
-# Id: git-versioning/0.0.28-dev+20150823-1641 lib/git-versioning.sh
-# version: 0.0.28-dev+20150823-1641 git-versioning lib/git-versioning.sh
+# Id: git-versioning/0.0.28-dev+20160321-0517 lib/git-versioning.sh
+# version: 0.0.28-dev+20160321-0517 git-versioning lib/git-versioning.sh
 
 source $LIB/util.sh
 
-version=0.0.28-dev+20150823-1641 # git-versioning
+version=0.0.28-dev+20160321-0517 # git-versioning
 
 [ -n "$V_SH_SHARE" ] || {
   [ -n "$PREFIX" ] || {
@@ -383,8 +383,9 @@ cmd_check()
   log "Checking all files for $VER_STR"
   log "Using $V_CHECK"
   # check without build meta
-  $V_CHECK $V_DOC_LIST $(echo $VER_STR | awk -F+ '{print $1}')
-  E=$?
+  . $V_CHECK $V_DOC_LIST $(echo $VER_STR | awk -F+ '{print $1}')
+  E="$?"
+  echo E=$E
   [ "$E" -eq "0" ] || return $(( 1 + $? ))
 }
 

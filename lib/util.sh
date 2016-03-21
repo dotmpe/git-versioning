@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Id: git-versioning/0.0.28-dev+20150823-1641 lib/util.sh
+# Id: git-versioning/0.0.28-dev+20160321-0517 lib/util.sh
 
 gitAddAll()
 {
@@ -8,17 +8,6 @@ gitAddAll()
   do
     git add $V_TOP_PATH/$doc
   done
-}
-
-trueish()
-{
-  test -n "$1" || return 1
-  case "$1" in
-    on|true|yes|1)
-      return 0;;
-    * )
-      return 1;;
-  esac
 }
 
 sed_rewrite="sed "
@@ -44,18 +33,21 @@ function sed_post()
 
 
 # stdio/stderr/exit util
+# 1:msg 2:exit
 err()
 {
   log "$1" 1>&2
   [ -z "$2" ] || exit $2
 }
 
-# 1:fd 2:str 3:exit
+# 1:msg 2:exit
 log()
 {
   test -n "$verbosity" && std_v 1 || return 0
 	[ -n "$(echo $*)" ] || return 1;
-	echo "[$scriptname.sh:$cmd] $1"
+  key=$scriptname.sh
+  test -n "$cmd" && key=${key}${bb}:${bk}${subcmd}
+  echo "[$key] $1"
 }
 
 stderr()
@@ -97,7 +89,6 @@ note()
 info()
 {
   std_v 6 || std_exit $2 || return 0
-  echo verbosity=$verbosity
   stderr "Info" "$1" $2
 }
 debug()
@@ -111,6 +102,7 @@ std_demo()
 {
   scriptname=std cmd=demo
   log "Log line"
+  err "Log line"
   warn "Foo bar"
   note "Foo bar"
   info "Foo bar"
@@ -120,6 +112,17 @@ std_demo()
     do
       $x "testing $x out"
     done
+}
+
+trueish()
+{
+  test -n "$1" || return 1
+  case "$1" in
+    on|true|yes|1)
+      return 0;;
+    * )
+      return 1;;
+  esac
 }
 
 
