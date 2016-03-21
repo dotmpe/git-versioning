@@ -7,6 +7,7 @@ before_script:
 - test -z "$PREFIX" || export PATH=$PATH:$PREFIX/bin
 
 script:
+- echo ENV=$ENV PREFIX=$PREFIX SRC_PREFIX=$SRC_PREFIX
 - case "$ENV" in
      production ) ./configure.sh /usr/local && sudo ENV=$ENV ./install.sh && make test build ;;
      test* | dev* ) ./configure.sh && make build test ;;
