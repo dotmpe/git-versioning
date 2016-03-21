@@ -14,7 +14,7 @@ branches:
   - '/^[0-9]*\.[0-9]*\.[0-9]*/'
 
 env:
-- ENV=
+- ENV=production
 - ENV=user-dev
 #- ENV=testing
 #- ENV=production
