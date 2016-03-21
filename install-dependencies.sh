@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-sudo=sudo
+test -n "$sudo" || sudo=
 
 test -n "$SRC_PREFIX" || {
 SRC_PREFIX=$HOME
@@ -39,6 +39,7 @@ test -x "$(which bats)" || {
   install_bats
   export PATH=$PATH:$PREFIX/bin
 }
+
 
 bats --version
 

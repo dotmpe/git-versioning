@@ -1,5 +1,7 @@
 
-install: ./install-dependencies.sh
+install: 
+- ./install-dependencies.sh
+- chown -R $username /home/$username/.local
 
 before_script:
   - "export PATH=$PATH:$PREFIX/bin"
@@ -9,7 +11,7 @@ script:
 - case "$ENV" in
      production ) ./configure.sh /usr/local && sudo ENV=$ENV ./install.sh && make test ;;
      test* | dev* ) ./configure.sh && make test ;;
-     * ) ./configure.sh $PREFIX && ENV=$ENV ./install.sh && make test ;;
+     * ) ( test -n "$PREFIX" && ( ./configure.sh $PREFIX && ENV=$ENV ./install.sh ) || printf "" ) && make test ;;
   esac
 
 branches:
@@ -18,10 +20,13 @@ branches:
   - '/^[0-9]*\.[0-9]*\.[0-9]*/'
 
 env:
-- ENV=production
-- ENV=user-dev PREFIX=$HOME/.local
-- ENV=testing
-- ENV=
+  global:
+  - username=travis
+  matrix:
+  - ENV=production
+  - ENV=user-dev PREFIX=$HOME/.local
+  - ENV=testing
+  - ENV=
 
 deploy:
   provider: releases
