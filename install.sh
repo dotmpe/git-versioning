@@ -36,7 +36,7 @@ c_install()
 	test -n "$V_SH_SHARE"
 	test ! -e "$V_SH_SHARE"
 	mkdir -vp $V_SH_SHARE $PREFIX/bin || {
-    stat $V_SH_SHARE $PREFIX/bin
+    stat $PREFIX $PREFIX/share $PREFIX/bin
     exit 41
   }
 	cp -vr bin/ $V_SH_SHARE/bin
