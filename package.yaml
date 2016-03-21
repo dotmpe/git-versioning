@@ -1,13 +1,13 @@
 # git-versioning main: git-versioning
 
-# Id: git-versioning/0.0.28-test+20160321-0534 package.yaml
+# Id: git-versioning/0.0.28 package.yaml
 # Start
 
 - type: application/x-project-mpe
   id: git-versioning
-  version: 0.0.28-test+20160321-0534 # git-versioning
+  version: 0.0.28 # git-versioning
   environments: [ 'development' ]
 
 # End
-# Id: git-versioning/0.0.28-test+20160321-0534 package.yaml
+# Id: git-versioning/0.0.28 package.yaml
 
