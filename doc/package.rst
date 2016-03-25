@@ -61,3 +61,5 @@ Makefile
     See also configure script and .travis.yml config.
 
 
+.. _sitefile: http://github.com/dotmpe/node-sitefile
+
