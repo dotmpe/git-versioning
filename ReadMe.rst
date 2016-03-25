@@ -1,5 +1,5 @@
-GIT Versioning Hooks
-====================
+GIT Versioning
+==============
 :Created: 2015-04-19
 :Updated: 2016-03-25
 :Version: 0.0.31-dev+20160321-0713
