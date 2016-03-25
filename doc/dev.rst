@@ -6,12 +6,16 @@ Other version format?
     $ git describe --long --tags --dirty --always
     0.0.26-60-g265df19-dirty
 
+  For a more complete solution see https://github.com/GitTools/GitVersion
+
   https://blog.mozilla.org/warner/2012/01/31/version-string-management-in-python-introducing-python-versioneer/
   XXX: article on issues with embedded versions introduces python setup tool 'Versioneer'; this uses the git describe version, and placeholder expansion in _version.py upon moving code to dist (git archive). This git describe version thing is not really suited for embedded versions since its always about the last commit.
   But maybe interesting in other formats.
 
   Also, version comparisons supported by various packagers may be worth to look
   at [ie. Py PEP440 etc].
+
+
 
 Project flows
   TODO: development, stabilization, release. Can some scripts help? Looking at the tools and issues.
