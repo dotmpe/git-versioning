@@ -68,15 +68,27 @@ module_meta_list() # $one
 
 load_app_id()
 {
+  # TODO: Deprecate: app-id dotfile
   test ! -e .app-id || {
     APP_ID=$(cat .app-id)
-    note "Loaded APP_ID=$APP_ID from ./.app-id "
+    note "Deprecated: Loaded APP_ID=$APP_ID from ./.app-id "
     return
   }
-  test ! -e .version-attributes || {
-    APP_ID=$(get_mime_header "$doc" "App-Id")
-    test -n "$APP_ID" && return
-  }
+
+  # XXX: would need some mime header parser.
+  # probably keep using first row from doc list
+  # or mark table entry
+  #test ! -e .version-attributes || {
+  #  APP_ID=$(get_mime_header "$doc" "App-Id")
+  #  V_MAIN_DOC=$(get_mime_header "$doc" "Main-File")
+  #  test -n "$APP_ID" && return
+  #}
+
+  # Second option: use common metadata file (ie. bower.json, package.json, or a
+  # generic YAML metadata package).
+  # For YAML, expect a comment sentinel with '# git-versioning main: <app-id>'
+  # XXX: Why not use comment on the line?
+  # XXX: For JSON, take any "name" key.
   META_FILES=$(module_meta_list)
   for META_FILE in $META_FILES
   do
@@ -97,6 +109,8 @@ load_app_id()
       }
     fi; fi
   done
+
+  # Last resort, try to use the basename of the checkout directory
   [ -n "$APP_ID" ] || {
     APP_ID=$(basename $PWD)
     err "Warning: using directory basename for project name (APP_ID/.app-id) . "
@@ -164,14 +178,15 @@ load()
     exit 2
   }
 
-  load_app_id || return
+  [ -n "$APP_ID" ] || {
+    load_app_id || return
+  }
 
   [ -n "$APP_ID" ] || {
     err "Cannot get APP_ID from any metadata file. Aborting git-versioning. " 3
   }
 
-  V_PATH_LIST=$(cat $V_DOC_LIST)
-  V_MAIN_DOC=$(head -n 1 $V_DOC_LIST)
+  test -n "$V_MAIN_DOC" || V_MAIN_DOC=$(head -n 1 $V_DOC_LIST)
 
   test -n "$V_MAIN_DOC" || \
     err "Cannot get main document. " 3
@@ -184,6 +199,28 @@ load()
   buildVER
 
   log "Loaded version from $V_TOP_PATH/$V_MAIN_DOC: $VER_STR"
+}
+
+read_doc_version()
+{
+  test -e "$path" || return 1
+}
+
+read_doc_list()
+{
+  read_nix_style_file $V_DOC_LIST | while read path key
+  do
+    is_glob "$path" && {
+      for _path in $path
+      do
+        echo $_path
+        # TODO: read_doc_version $_path $key || err "doc version" 1
+      done
+    } || {
+      echo $path
+      # read_doc_version $path $key || err "doc version" 1
+    }
+  done
 }
 
 source $LIB/formats.sh
@@ -322,7 +359,7 @@ applyVersion()
 applyVersions()
 {
   local doc
-  for doc in $V_PATH_LIST
+  read_doc_list | while read doc
   do
     applyVersion "$doc"
   done

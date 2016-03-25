@@ -125,5 +125,15 @@ trueish()
   esac
 }
 
+# Read file filtering octotorphe comments, like this one and empty lines
+# XXX: this one support leading whitespace but others in ~/bin/*.sh do not
+read_nix_style_file()
+{
+  cat $1 | grep -Ev '^\s*(#.*|\s*)$'
+}
 
+is_glob()
+{
+  echo "$1" | grep '.*[][\*].*'
+}
 
