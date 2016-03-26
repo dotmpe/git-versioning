@@ -15,4 +15,9 @@ Change Log
     Immediate dev plans: clean-up docs, start on branches for better
     configuration, more flexible parser.
 
+(0.0.31)
+  - Renamed test git-versioning to git-versioning-spec
+  - Documentation restructured. Fixes, updates.
+    Added reference to project GitVersion.
+  - Removed V_PATH_LIST. Started read_nix_style_file.
 
