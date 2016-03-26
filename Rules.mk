@@ -5,7 +5,7 @@
 
 git-pre-commit::
 	@git-versioning check
-	@./test/git-versioning.bats
+	@./test/git-versioning-spec.bats
 
 
 git-prepare-commit-msg::

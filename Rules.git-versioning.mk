@@ -98,7 +98,7 @@ test-tags::
 	test -z "$$PREFIX" && ./bin/cli-version.sh check || git-versioning check
 
 test-specs::
-	./test/git-versioning.bats
+	./test/git-versioning-spec.bats
 	#./test/git-versioning-spec.rst
 
 TEST := test-run test-tags test-specs

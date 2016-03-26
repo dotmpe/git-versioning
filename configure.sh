@@ -16,8 +16,8 @@ P=$(echo $PREFIX | sed 's/\//\\\//g')
 sed_rewrite_tag 's/^PREFIX=.*/PREFIX='$P'/' install.sh
 
 [ "." != "$PREFIX" ] \
-  && sed_rewrite_tag 's/^bin=.*/bin=git-versioning/' test/git-versioning.bats \
-  || sed_rewrite_tag 's/^bin=.*/bin=bin\/cli-version.sh/' test/git-versioning.bats
+  && sed_rewrite_tag 's/^bin=.*/bin=git-versioning/' test/git-versioning-spec.bats \
+  || sed_rewrite_tag 's/^bin=.*/bin=bin\/cli-version.sh/' test/git-versioning-spec.bats
 
 P=$(echo $V_SH_SHARE | sed 's/\//\\\//g')
 sed_rewrite_tag 's/^V_SH_SHARE=.*/V_SH_SHARE='$P'/' install.sh
@@ -50,7 +50,7 @@ Rules.mk
 Rules.git-versioning.mk
 Rules.git-versioning.shared.mk
 Rules.git-hooks.shared.mk
-test/git-versioning.bats
+test/git-versioning-spec.bats
 test/helpers.bash
 HEREDOC
 ) > .versioned-files.list
