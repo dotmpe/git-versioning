@@ -1,6 +1,7 @@
 #!/bin/sh
 
 case "$ENV" in
+
    production )
       ./configure.sh /usr/local && sudo ENV=$ENV ./install.sh && make test build
       DESCRIBE="$(git describe --tags)"
