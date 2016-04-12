@@ -1,10 +1,13 @@
-ReadMe.rst:176:| TODO: use complete semver and variations for testing.
-ReadMe.rst:177:| TODO: some integration with GIT frontend? Some ideas:
-ReadMe.rst:189:- XXX: Tags using project name (``app-name/0.0.1``) are nice when dealing with
-lib/git-versioning.sh:33:# XXX External script to verify version
-lib/git-versioning.sh:496:# XXX get/update specific versions from a file?
+lib/git-versioning.sh:36:# XXX External script to verify version
+lib/git-versioning.sh:68:  # TODO: Deprecate: app-id dotfile
+lib/git-versioning.sh:75:  # XXX: would need some mime header parser.
+lib/git-versioning.sh:87:  # XXX: Why not use comment on the line?
+lib/git-versioning.sh:88:  # XXX: For JSON, take any "name" key.
+lib/git-versioning.sh:223:        # TODO: read_doc_version $_path $key || err "doc version" 1
+lib/git-versioning.sh:352:      # FIXME: git-versioning could just replace if tag is detailed enough (ie.
+lib/git-versioning.sh:561:# XXX get/update specific versions from a file?
 lib/formats.sh:96:# FIXME function apply_mk_var_id()
 tools/cmd/test-for-clean-branch.sh:5:# TODO: test wether V_MAIN_DOC version for pre-release tag
-tools/cmd/version-check.sh:15:  # FIXME: scan all [id|version]...[app-name] lines, fail on version mismatch
-tools/cmd/version-check.sh:17:  # XXX: should want to know if any mismatches, regardless wether one matches
+tools/cmd/version-check.sh:19:  # FIXME: scan all [id|version]...[app-name] lines, fail on version mismatch
+tools/cmd/version-check.sh:21:  # XXX: should want to know if any mismatches, regardless wether one matches
 Makefile.default-goals:2:# FIXME: set production to install from tar
