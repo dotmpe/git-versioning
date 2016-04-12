@@ -15,14 +15,21 @@ Change Log
     Immediate dev plans: clean-up docs, start on branches for better
     configuration, more flexible parser.
 
-(0.0.31)
-  - Renamed test git-versioning to git-versioning-spec
+0.0.31
+  - Renamed test ``git-versioning`` to ``git-versioning-spec`` to follow name
+    convention.
   - Documentation restructured. Fixes, updates.
     Added reference to project GitVersion.
-  - Removed V_PATH_LIST. Started read_nix_style_file.
-  - Added modus without versioned-files.list (and main document with version).
-    VER_STR must be provided in the environment, the files to be checked are
-    read from standard-input::
+  - Removed ``V_PATH_LIST``. Started read_nix_style_file.
+  - Added modus without ``versioned-files.list`` (and main document with version).
+    ``VER_STR`` must be provided in the environment, the files to be checked are
+    read from standard-input.
 
-      VER_STR=1.2.3-alpha git-versioning check
+    For example to go without ``.app-id`` and ``.versioned-files.list`` or main
+    document::
+
+      cat my-file.list | APP_ID=myproject VER_STR=1.2.3-alpha git-versioning check
+
+    For this the parameters of the ``V_CHECK`` script (``tools/cmd/version-check.sh``)
+    have been changed and are incompatible with previous.
 
