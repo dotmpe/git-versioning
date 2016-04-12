@@ -1,17 +1,20 @@
 #!/bin/bash
 
-# Id: git-versioning/0.0.31-dev+20160321-0713 tools/cmd/version-check.sh
+set -e
 
-# External hook for git-vesioning.
+# Id: git-versioning/0.0.31-dev+20160412-1532 tools/cmd/version-check.sh
+
+# External hook for git-versioning.
 # See V_CHECK=$V_TOP_PATH/tools/version-check.sh
 
 test -n "$APP_ID" || exit 42
-
-V_PATH_LIST=$(cat $1)
-VER_STR=$2
+test -n "$VER_STR" || VER_STR=$1
+test -n "$VER_STR" || exit 43
+test -z "$2" || exit 44
 
 e=0
-for doc in $V_PATH_LIST
+
+while read doc
 do
   # FIXME: scan all [id|version]...[app-name] lines, fail on version mismatch
 
@@ -21,8 +24,8 @@ do
       continue;;
   esac
 
-    ( grep -i 'version.*\<'$2'\>.*'$APP_ID $doc \
-        || grep -i '[Ii]d[:=].*\<'$2'\>.*'$APPID $doc ) >> /dev/null && {
+    ( grep -i 'version.*\<'$VER_STR'\>.*'$APP_ID $doc \
+        || grep -i '[Ii]d[:=].*\<'$VER_STR'\>.*'$APPID $doc ) >> /dev/null && {
       echo "Version match in $doc"
     } || {
       echo "Version mismatch in $doc" 1>&2

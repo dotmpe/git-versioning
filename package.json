@@ -1,6 +1,6 @@
 {
   "name": "git-versioning",
-  "version": "0.0.31-dev+20160321-0713",
+  "version": "0.0.31-dev+20160412-1532",
   "description": "Shell hooks and util for GIT versioning",
   "homepage": "https://github.com/dotmpe/git-versioning",
   "author": "B. van Berkum",

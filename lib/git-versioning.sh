@@ -6,12 +6,12 @@ V_SH_LIB=$BASH_SOURCE
 set -e
 
 
-# Id: git-versioning/0.0.31-dev+20160321-0713 lib/git-versioning.sh
-# version: 0.0.31-dev+20160321-0713 git-versioning lib/git-versioning.sh
+# Id: git-versioning/0.0.31-dev+20160412-1532 lib/git-versioning.sh
+# version: 0.0.31-dev+20160412-1532 git-versioning lib/git-versioning.sh
 
 source $LIB/util.sh
 
-version=0.0.31-dev+20160321-0713 # git-versioning
+version=0.0.31-dev+20160412-1532 # git-versioning
 
 [ -n "$V_SH_SHARE" ] || {
   [ -n "$PREFIX" ] || {
@@ -53,9 +53,6 @@ version=0.0.31-dev+20160321-0713 # git-versioning
 }
 
 
-test -n "$APP_ID" || APP_ID=
-VER_STR=
-VER_MIN=
 
 # Determine package metafile
 module_meta_list() # $one
@@ -186,19 +183,28 @@ load()
     err "Cannot get APP_ID from any metadata file. Aborting git-versioning. " 3
   }
 
-  test -n "$V_MAIN_DOC" || V_MAIN_DOC=$(head -n 1 $V_DOC_LIST)
+  test -n "$VER_STR" && {
+    log "Using provided version: $VER_STR"
+    test -e "$V_DOC_LIST" || {
+      log "No V_DOC_LIST ($V_DOC_LIST), using stdin "
+      V_DOC_LIST="-"
+    }
+  } || {
+    # Load version from main document
+    test -n "$V_MAIN_DOC" || V_MAIN_DOC=$(head -n 1 $V_DOC_LIST)
 
-  test -n "$V_MAIN_DOC" || \
-    err "Cannot get main document. " 3
+    test -n "$V_MAIN_DOC" || \
+      err "Cannot get main document. " 3
 
-  test -e "$V_TOP_PATH/$V_MAIN_DOC" || \
-    err "Main document does not exist. " 3
+    test -e "$V_TOP_PATH/$V_MAIN_DOC" || \
+      err "Main document does not exist. " 3
 
-  loadVersion "$V_TOP_PATH/$V_MAIN_DOC"
+    loadVersion "$V_TOP_PATH/$V_MAIN_DOC"
 
-  buildVER
+    buildVER
 
-  log "Loaded version from $V_TOP_PATH/$V_MAIN_DOC: $VER_STR"
+    log "Loaded version from $V_TOP_PATH/$V_MAIN_DOC: $VER_STR"
+  }
 }
 
 read_doc_version()
@@ -420,10 +426,9 @@ cmd_check()
   log "Checking all files for $VER_STR"
   log "Using $V_CHECK"
   # check without build meta
-  . $V_CHECK $V_DOC_LIST $(echo $VER_STR | awk -F+ '{print $1}')
-  E="$?"
-  echo E=$E
-  [ "$E" -eq "0" ] || return $(( 1 + $? ))
+  cat $V_DOC_LIST | . $V_CHECK $(echo $VER_STR | awk -F+ '{print $1}') || {
+    return $(( 1 + $? ))
+  }
 }
 
 cmd_update()
