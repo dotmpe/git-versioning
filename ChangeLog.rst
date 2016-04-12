@@ -38,3 +38,7 @@ Change Log
 0.0.32
   - Testing packaging with Travis.
 
+0.1.0
+  - Incrementing minor because of V_CHECK change. And running production package
+    release again just for the heck of it.
+

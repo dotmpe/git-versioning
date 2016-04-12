@@ -1,4 +1,4 @@
-# Id: git-versioning/0.0.32 Rules.git-versioning.mk
+# Id: git-versioning/0.1.0 Rules.git-versioning.mk
 
 
 empty :=
@@ -65,8 +65,14 @@ do-release::
 do-release:: M=Release
 do-release:: cli-version-check
 	[ -n "$(VERSION)" ] || exit 1
-	git ci -m "$(M) $(VERSION)"
-	git tag $(VERSION)
+	grep '^'$(VERSION)'$$' ChangeLog.rst || { \
+		echo "Please fix version or the ChangeLog"; \
+		exit 2; }
+	ENV=testing ./configure.sh \
+			&& ./bin/cli-version.sh check \
+			&& git checkout .versioned-files.list 
+	git commit -m "$(M) $(VERSION)"
+	git tag -a -m "$(M) $(VERSION)" $(VERSION)
 	git push origin
 	git push --tags
 	./bin/cli-version.sh increment $(min) $(maj)
