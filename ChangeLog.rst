@@ -33,3 +33,8 @@ Change Log
     For this the parameters of the ``V_CHECK`` script (``tools/cmd/version-check.sh``)
     have been changed and are incompatible with previous.
 
+  - Proper production release failed, see next version.
+
+0.0.32
+  - Testing packaging with Travis.
+

@@ -2,7 +2,7 @@
 
 set -e
 
-# Id: git-versioning/0.0.31-dev+20160412-1532 tools/cmd/version-check.sh
+# Id: git-versioning/0.0.32 tools/cmd/version-check.sh
 
 # External hook for git-versioning.
 # See V_CHECK=$V_TOP_PATH/tools/version-check.sh

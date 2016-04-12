@@ -2,7 +2,7 @@ GIT Versioning
 ==============
 :Created: 2015-04-19
 :Updated: 2016-04-12
-:Version: 0.0.31
+:Version: 0.0.32
 :Status: Dev
 :project:
 
@@ -84,7 +84,7 @@ Exact specs of variable rewrites may differ per format since its not always
 possible to include a comment on the line (ie. JSON).
 
 .. rSt example:
-.. Id: git-versioning/0.0.31-dev+20160412-1532 ReadMe.rst
+.. Id: git-versioning/0.0.32 ReadMe.rst
 
 
 Other documents
@@ -99,4 +99,4 @@ Other documents
 
 .. _sitefile: http://github.com/dotmpe/node-sitefile
 
-.. Id: git-versioning/0.0.31-dev+20160412-1532 ReadMe.rst
+.. Id: git-versioning/0.0.32 ReadMe.rst
