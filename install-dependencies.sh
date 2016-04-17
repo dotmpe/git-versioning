@@ -60,11 +60,19 @@ install_git_hooks()
 install_bats()
 {
   echo "Installing bats"
-  pushd $SRC_PREFIX
+  local pwd=$(pwd)
+  mkdir -vp $SRC_PREFIX
+  cd $SRC_PREFIX
   git clone https://github.com/sstephenson/bats.git
   cd bats
-  ${sudo} ./install.sh $PREFIX
-  popd
+  ${sudo} ./install.sh $HOME/.local
+  cd $pwd
+
+  bats --version && {
+    log "BATS install OK"
+  } || {
+    err "BATS installation invalid" 1
+  }
 }
 
 
@@ -96,7 +104,7 @@ main_entry()
 				}
 			}
 			test -e .package.sh || jsotk.py yaml2sh .package.yaml [id=invidia]
-			source .package.sh
+			. .package.sh
     ;; esac
 
   case "$1" in '*'|project|git )
