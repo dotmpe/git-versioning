@@ -12,7 +12,6 @@
     test: "vchk bats-specs bats"
     git-hooks:
       pre-commit: ./script/scm/pre-commit.sh
-    init: ./install-dependencies.sh git
 
 # git-versioning main: git-versioning
 
