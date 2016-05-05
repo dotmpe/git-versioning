@@ -1,3 +1,4 @@
 # List intentionally untracked files.
 # Local ignore rules should be given in .git/local/exclude
 .htdignore
+.package.json

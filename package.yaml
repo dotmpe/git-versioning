@@ -1,13 +1,19 @@
-# git-versioning main: git-versioning
-
 # Id: git-versioning/0.1.0 package.yaml
 # Start
 
 - type: application/x-project-mpe
+  main: git-versioning
   id: git-versioning
   version: 0.1.0 # git-versioning
   environments: [ 'development' ]
 
-# End
-# Id: git-versioning/0.1.0 package.yaml
+  pd-meta:
+    check: "vchk bats-specs"
+    test: "vchk bats-specs bats"
+    git-hooks:
+      pre-commit: ./script/scm/pre-commit.sh
+    init: ./install-dependencies.sh git
 
+# git-versioning main: git-versioning
+
+# End
