@@ -1,6 +1,6 @@
 
 install: 
-- test -z "$PREFIX" && ( sudo=sudo ./install-dependencies.sh ) || ( PREFIX=$HOME/.local SRC_PREFIX=$HOME/build ./install-dependencies.sh )
+- test -z "$PREFIX" && ( ./install-dependencies.sh ) || ( PREFIX=$HOME/.local SRC_PREFIX=$HOME/build ./install-dependencies.sh )
 - chown -R $username /home/$username/.local
 
 before_script:
