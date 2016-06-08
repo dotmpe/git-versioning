@@ -1,5 +1,12 @@
 Development Documentation
 -------------------------
+TODO: kw expansion with git attributes
+  was not aware of GIT keyword expansion at time of writing git-versioning.
+  https://git-scm.com/book/en/v2/Customizing-Git-Git-Attributes#Keyword-Expansion
+  This may make things more easy. It does not ever store the Id's, but
+  updates on checkout and cleans before staging.
+
+
 Other version format?
   XXX: not directly a semver, but git describe also offers a version tag for the current commit (last tag, number of commits since, abbrev commit sha and dirty flag)::
 
