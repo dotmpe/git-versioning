@@ -7,6 +7,10 @@ TODO: kw expansion with git attributes
   updates on checkout and cleans before staging.
 
 
+TODO: basherpm/basher seems like a nice easy way to install. Resolve some path
+issue though.
+
+
 Other version format?
   XXX: not directly a semver, but git describe also offers a version tag for the current commit (last tag, number of commits since, abbrev commit sha and dirty flag)::
 

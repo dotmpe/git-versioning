@@ -1,7 +1,7 @@
 GIT Versioning
 ==============
 :Created: 2015-04-19
-:Updated: 2016-04-12
+:Updated: 2016-06-16
 :Version: 0.1.0
 :Status: Dev
 :project:
