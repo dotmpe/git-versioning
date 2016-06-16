@@ -8,7 +8,8 @@
   environments: [ 'development' ]
 
   pd-meta:
-    check: ":make:git-pre-commit"
+    #check: ":make:git-pre-commit"
+    check: ":vchk :bats-specs :bats:test/git-versioning-spec"
     test: ":vchk :bats-specs :bats"
     git-hooks:
       pre-commit: ./tools/git-hooks/pre-commit.sh
