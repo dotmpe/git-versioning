@@ -1,4 +1,4 @@
-# Id: git-versioning/0.1.2 tools/git-hooks/pre-push.sh
+# Id: git-versioning/0.1.3-dev tools/git-hooks/pre-push.sh
 while read LOCAL_REF LOCAL_SHA1 REMOTE_REF REMOTE_SHA1
 do
   make git-pre-push \

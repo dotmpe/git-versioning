@@ -7,4 +7,4 @@ package_pd_meta_git_hooks_pre_commit=./tools/git-hooks/pre-commit.sh
 package_pd_meta_init="./install-dependencies.sh git"
 package_pd_meta_test=":vchk :bats-specs :bats"
 package_type=application/x-project-mpe
-package_version=0.1.2-dev
+package_version=0.1.2
