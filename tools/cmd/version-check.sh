@@ -2,7 +2,7 @@
 
 set -e
 
-# Id: git-versioning/0.1.3-dev tools/cmd/version-check.sh
+# Id: git-versioning/0.1.3 tools/cmd/version-check.sh
 
 # External hook for git-versioning.
 # See V_CHECK=$V_TOP_PATH/tools/version-check.sh
