@@ -46,7 +46,8 @@ Change Log
   - Minor bits for apply version.
     Added .py support for version and __version__ attributes.
 
-0.1.2
+(0.1.2)
   - Fixed `load()` and sub-cmd `check` to read `.versioned-files.list`
     (``V_MAIN_DOC``) as a \*nix alike file.
+  - Fixes for `make do-release`.
 

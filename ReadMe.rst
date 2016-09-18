@@ -3,7 +3,7 @@ GIT Versioning
 :Created: 2015-04-19
 :Updated: 2016-06-16
 :Version: 0.1.3-dev
-:Status: Release
+:Status: Development
 :project:
 
   .. image:: https://secure.travis-ci.org/dotmpe/git-versioning.png
