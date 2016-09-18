@@ -1,4 +1,4 @@
-# Id: git-versioning/0.1.2-dev tools/git-hooks/pre-commit.sh
+# Id: git-versioning/0.1.2 tools/git-hooks/pre-commit.sh
 #make git-pre-commit
 #pd check :make:git-pre-commit
 #pd check

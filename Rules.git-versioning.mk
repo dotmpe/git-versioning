@@ -1,4 +1,4 @@
-# Id: git-versioning/0.1.2-dev Rules.git-versioning.mk
+# Id: git-versioning/0.1.2 Rules.git-versioning.mk
 
 
 empty :=
@@ -70,7 +70,7 @@ do-release:: cli-version-check
 		echo "Please fix version or the ChangeLog"; \
 		exit 2; }
 	ENV=testing ./configure.sh \
-			&& pd tcheck \
+			&& pd check \
 			&& git checkout .versioned-files.list 
 	grep Status..Release ReadMe.rst
 	git commit -m "$(M) $(VERSION)"
