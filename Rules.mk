@@ -1,6 +1,6 @@
 # created local Rules to configure and test git-versioning hooks
 
-# Id: git-versioning/0.1.1-dev Rules.mk
+# Id: git-versioning/0.1.1 Rules.mk
 
 
 git-pre-commit::

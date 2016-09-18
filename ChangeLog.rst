@@ -42,6 +42,7 @@ Change Log
   - Incrementing minor because of V_CHECK change. And running production package
     release again just for the heck of it.
 
-(0.1.1) dev
+0.1.1
   - Minor bits for apply version.
     Added .py support for version and __version__ attributes.
+

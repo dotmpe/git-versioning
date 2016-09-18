@@ -6,12 +6,12 @@ V_SH_LIB=$BASH_SOURCE
 set -e
 
 
-# Id: git-versioning/0.1.1-dev lib/git-versioning.sh
-# version: 0.1.1-dev git-versioning lib/git-versioning.sh
+# Id: git-versioning/0.1.1 lib/git-versioning.sh
+# version: 0.1.1 git-versioning lib/git-versioning.sh
 
 source $LIB/util.sh
 
-version=0.1.1-dev # git-versioning
+version=0.1.1 # git-versioning
 
 [ -n "$V_SH_SHARE" ] || {
   [ -n "$PREFIX" ] || {

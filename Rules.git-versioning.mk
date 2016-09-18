@@ -1,4 +1,4 @@
-# Id: git-versioning/0.1.1-dev Rules.git-versioning.mk
+# Id: git-versioning/0.1.1 Rules.git-versioning.mk
 
 
 empty :=
@@ -58,6 +58,7 @@ cli-version-check::
 	./bin/cli-version.sh check
 
 
+# Release current version. Need to prepare source first.
 STRGT += do-release
 do-release:: min := 
 do-release:: maj := 
@@ -69,14 +70,18 @@ do-release:: cli-version-check
 		echo "Please fix version or the ChangeLog"; \
 		exit 2; }
 	ENV=testing ./configure.sh \
-			&& ./bin/cli-version.sh check \
+			&& pd check \
 			&& git checkout .versioned-files.list 
+	grep Status..Release ReadMe.rst
 	git commit -m "$(M) $(VERSION)"
 	git tag -a -m "$(M) $(VERSION)" $(VERSION)
 	git push origin
 	git push --tags
-	./bin/cli-version.sh increment $(min) $(maj)
-	./tools/cmd/prep-version.sh
+	@# Increment and tag
+	@./bin/cli-version.sh increment $(min) $(maj)
+	@#./tools/cmd/prep-version.sh
+	@./bin/cli-version.sh pre-release dev
+	@# Stage changes
 	@git add $$(echo $$(cat .versioned-files.list))
 
 # install/uninstall
