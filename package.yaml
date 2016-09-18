@@ -1,15 +1,15 @@
-# Id: git-versioning/0.1.0 package.yaml
+# Id: git-versioning/0.1.1-dev package.yaml
 # Start
 
 - type: application/x-project-mpe
   main: git-versioning
   id: git-versioning
-  version: 0.1.0 # git-versioning
+  version: 0.1.1-dev # git-versioning
   environments: [ 'development' ]
 
   pd-meta:
     #check: ":make:git-pre-commit"
-    check: ":vchk :bats-specs :bats:test/git-versioning-spec"
+    check: ":vchk :bats-specs :bats:test/git-versioning-spec.bats"
     test: ":vchk :bats-specs :bats"
     git-hooks:
       pre-commit: ./tools/git-hooks/pre-commit.sh

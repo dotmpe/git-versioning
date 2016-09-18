@@ -6,12 +6,12 @@ V_SH_LIB=$BASH_SOURCE
 set -e
 
 
-# Id: git-versioning/0.1.0 lib/git-versioning.sh
-# version: 0.1.0 git-versioning lib/git-versioning.sh
+# Id: git-versioning/0.1.1-dev lib/git-versioning.sh
+# version: 0.1.1-dev git-versioning lib/git-versioning.sh
 
 source $LIB/util.sh
 
-version=0.1.0 # git-versioning
+version=0.1.1-dev # git-versioning
 
 [ -n "$V_SH_SHARE" ] || {
   [ -n "$PREFIX" ] || {
@@ -332,6 +332,12 @@ applyVersion()
     *.coffee )
       apply_commonUnixComment $doc
       apply_coffee_var_version $doc
+    ;;
+
+    *.py )
+      apply_commonUnixComment $doc
+      version_quotes=1 apply_var_version $doc
+      version_quotes=1 version_varname=__version__ apply_var_version $doc
     ;;
 
     *.properties )

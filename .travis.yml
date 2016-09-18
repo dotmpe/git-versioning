@@ -8,7 +8,7 @@ before_script:
 
 script:
 - echo ENV=$ENV PREFIX=$PREFIX SRC_PREFIX=$SRC_PREFIX
-- ./ci-build.sh
+- ./tools/ci/build.sh
 
 branches:
   only:

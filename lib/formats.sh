@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Id: git-versioning/0.1.0 lib/formats.sh
+# Id: git-versioning/0.1.1-dev lib/formats.sh
 
 # reStructureText
 RST_VER_TOKEN=':\([Vv]\)ersion:'
@@ -100,12 +100,24 @@ function get_mk_var_version()
 #  sed_rewrite_tag 's/^ID\(\ *[?:]*\)=.*'$APP_ID'.*/'$VER_LINE'/' $P
 #}
 
+
+# Generic var
+function apply_var_version()
+{
+  test -n "$version_varname" || version_varname=version
+  test -n "$version_quotes" && {
+    VER_LINE="$version_varname\\1=\\1\'$VER_STR\'\ #\ $APP_ID"
+  } || {
+    VER_LINE="$version_varname\\1=\\1$VER_STR\ #\ $APP_ID"
+  }
+  P=$V_TOP_PATH/$1
+  sed_rewrite_tag 's/^'$version_varname'\(\ *\)=.* # '$APP_ID'/'"$VER_LINE"'/' $P
+}
+
 # Shell script
 function apply_sh_var_version()
 {
-  VER_LINE="version=$VER_STR\ #\ $APP_ID"
-  P=$V_TOP_PATH/$1
-  sed_rewrite_tag 's/^version=.* # '$APP_ID'/'"$VER_LINE"'/' $P
+  apply_var_version $1
 }
 
 function get_sh_var_version()
