@@ -1,4 +1,4 @@
-# Id: git-versioning/0.1.0 Rules.git-versioning.mk
+# Id: git-versioning/0.1.1-dev Rules.git-versioning.mk
 
 
 empty :=

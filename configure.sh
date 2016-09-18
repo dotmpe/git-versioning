@@ -75,6 +75,7 @@ test/example/properties_version.properties
 test/example/build.xml
 test/example/clike_line_comment_id.js
 test/example/clike_line_comment_id.jade
+test/example/py_mod.py
 HEREDOC
 	) >> .versioned-files.list
 	echo "Test files appended to .versioned-files.list"
