@@ -1,1 +1,1 @@
-VERSION := 0.1.2# git-versioning
+VERSION := 0.1.3-dev# git-versioning
