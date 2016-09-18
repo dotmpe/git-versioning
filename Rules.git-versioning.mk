@@ -80,9 +80,11 @@ do-release:: cli-version-check
 	@# Increment and tag
 	@./bin/cli-version.sh increment $(min) $(maj)
 	@#./tools/cmd/prep-version.sh
-	@./bin/cli-version.sh pre-release dev
+	@ENV= ./configure.sh \
+		&& ./bin/cli-version.sh pre-release dev
 	@# Stage changes
 	@git add $$(echo $$(cat .versioned-files.list))
+	@git checkout .versioned-files.list
 
 # install/uninstall
 V_SH_SHARE := /usr/local/share/git-versioning
