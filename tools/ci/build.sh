@@ -1,6 +1,6 @@
 #!/bin/sh
 
-version=0.1.1-dev # git-versioning
+version=0.1.2-dev # git-versioning
 
 case "$ENV" in
 
