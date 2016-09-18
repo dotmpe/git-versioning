@@ -38,5 +38,5 @@ output_lists_versioned_files()
   rm $TMPF
 }
 
-# Id: git-versioning/0.1.3 test/helpers.bash
+# Id: git-versioning/0.1.4-dev test/helpers.bash
 

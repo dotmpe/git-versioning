@@ -2,8 +2,8 @@ GIT Versioning
 ==============
 :Created: 2015-04-19
 :Updated: 2016-09-18
-:Version: 0.1.3
-:Status: Release
+:Version: 0.1.4-dev
+:Status: Development
 :project:
 
   .. image:: https://secure.travis-ci.org/dotmpe/git-versioning.png
@@ -84,7 +84,7 @@ Exact specs of variable rewrites may differ per format since its not always
 possible to include a comment on the line (ie. JSON).
 
 .. rSt example:
-.. Id: git-versioning/0.1.3 ReadMe.rst
+.. Id: git-versioning/0.1.4-dev ReadMe.rst
 
 
 Other documents
@@ -99,4 +99,4 @@ Other documents
 
 .. _sitefile: http://github.com/dotmpe/node-sitefile
 
-.. Id: git-versioning/0.1.3 ReadMe.rst
+.. Id: git-versioning/0.1.4-dev ReadMe.rst
