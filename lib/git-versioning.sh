@@ -164,6 +164,11 @@ loadVersion()
   unset doc
 }
 
+main_doc()
+{
+  read_nix_style_file $1 | head -n 1
+}
+
 # Set git-versioning vars
 load()
 {
@@ -191,7 +196,7 @@ load()
     }
   } || {
     # Load version from main document
-    test -n "$V_MAIN_DOC" || V_MAIN_DOC=$(head -n 1 $V_DOC_LIST)
+    test -n "$V_MAIN_DOC" || V_MAIN_DOC=$(main_doc $V_DOC_LIST)
 
     test -n "$V_MAIN_DOC" || \
       err "Cannot get main document. " 3
@@ -432,8 +437,9 @@ cmd_check()
   log "Checking all files for $VER_STR"
   log "Using $V_CHECK"
   # check without build meta
-  cat $V_DOC_LIST | . $V_CHECK $(echo $VER_STR | awk -F+ '{print $1}') || {
-    return $(( 1 + $? ))
+  cat $V_DOC_LIST | grep -v '^#' \
+    | . $V_CHECK $(echo $VER_STR | awk -F+ '{print $1}') || {
+      return $(( 1 + $? ))
   }
 }
 

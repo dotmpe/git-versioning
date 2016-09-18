@@ -30,12 +30,14 @@ echo "Rewrote installer and bin/cli-version include paths"
 (
 cat <<HEREDOC
 ReadMe.rst
+# Edit configure.sh to change this list!
 package.json
 package.yaml
 bin/cli-version.sh
 lib/git-versioning.sh
 lib/util.sh
 lib/formats.sh
+tools/ci/build.sh
 tools/git-hooks/prepare-commit-msg.sh
 tools/git-hooks/pre-commit.sh
 tools/git-hooks/pre-push.sh

@@ -1,4 +1,5 @@
 ReadMe.rst
+# Edit configure.sh to change this list!
 package.json
 package.yaml
 bin/cli-version.sh
