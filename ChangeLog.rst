@@ -46,3 +46,6 @@ Change Log
   - Minor bits for apply version.
     Added .py support for version and __version__ attributes.
 
+(0.1.2)
+  ..
+
