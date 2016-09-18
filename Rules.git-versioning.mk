@@ -83,6 +83,7 @@ do-release:: cli-version-check
 	@./bin/cli-version.sh pre-release dev
 	@# Stage changes
 	@git add $$(echo $$(cat .versioned-files.list))
+	@sed -i.bak 's/:Status:.*/:Status: Development/' ReadMe.rst
 
 # install/uninstall
 V_SH_SHARE := /usr/local/share/git-versioning
