@@ -1,3 +1,4 @@
+
 package_environments__0=development
 package_id=git-versioning
 package_main=git-versioning
