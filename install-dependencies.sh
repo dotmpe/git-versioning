@@ -4,7 +4,38 @@ set -e
 
 test -z "$Build_Debug" || set -x
 
+test -z "$Build_Deps_Default_Paths" || {
+
+  test -n "$SRC_PREFIX" || {
+    test -w /src/ \
+      && SRC_PREFIX=/src/ \
+      || SRC_PREFIX=$HOME/build
+  }
+
+  test -n "$PREFIX" || {
+    test -w /usr/local/ \
+      && PREFIX=/usr/local/ \
+      || PREFIX=$HOME/.local
+  }
+}
+
 test -n "$sudo" || sudo=
+test -z "$sudo" || pref="sudo $pref"
+test -z "$dry_run" || pref="echo $pref"
+
+test -n "$SRC_PREFIX" || {
+  echo "Not sure where checkout"
+  exit 1
+}
+
+test -n "$PREFIX" || {
+  echo "Not sure where to install"
+  exit 1
+}
+
+test -d $SRC_PREFIX || ${sudo} mkdir -vp $SRC_PREFIX
+test -d $PREFIX || ${sudo} mkdir -vp $PREFIX
+
 
 test -n "$GIT_HOOK_NAMES" || GIT_HOOK_NAMES="apply-patch commit-msg post-update pre-applypatch pre-commit pre-push pre-rebase prepare-commit-msg update"
 
@@ -78,7 +109,7 @@ install_bats()
 
 main_entry()
 {
-  test -n "$1" || set -- '*'
+  test -n "$1" || set -- '-'
 
   case "$1" in build )
 			test -n "$SRC_PREFIX" || {
@@ -96,7 +127,7 @@ main_entry()
 		;;
 	esac
 
-  case "$1" in '*'|project|git )
+  case "$1" in '-'|project|git )
       git --version >/dev/null || { echo "GIT required"; exit 1; }
 			test -x $(which jsotk.py 2>/dev/null) || {
 				test -e .package.sh || {
@@ -107,12 +138,12 @@ main_entry()
 			. .package.sh
     ;; esac
 
-  case "$1" in '*'|project|git )
+  case "$1" in '-'|project|git )
   		generate_git_hooks || return $?
   		install_git_hooks || return $?
     ;; esac
 
-  case "$1" in '*'|build|test|sh-test|bats )
+  case "$1" in '-'|build|test|sh-test|bats )
       test -x "$(which bats)" || install_bats || return $?
     ;; esac
 
@@ -120,7 +151,11 @@ main_entry()
 }
 
 test "$(basename $0)" = "install-dependencies.sh" && {
-  main_entry $@ || exit $?
-}
+  while test -n "$1"
+  do
+    main_entry "$1" || exit $?
+    shift
+  done
+} || printf ""
 
 # Id: git-versioning/0.0.27-test install-dependencies.sh
