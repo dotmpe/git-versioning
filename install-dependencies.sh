@@ -23,6 +23,11 @@ test -n "$sudo" || sudo=
 test -z "$sudo" || pref="sudo $pref"
 test -z "$dry_run" || pref="echo $pref"
 
+test -w /usr/local || {
+  test -n "$sudo" || pip_flags=--user
+}
+
+
 test -n "$SRC_PREFIX" || {
   echo "Not sure where checkout"
   exit 1
@@ -92,11 +97,17 @@ install_bats()
 {
   echo "Installing bats"
   local pwd=$(pwd)
+  test -n "$BATS_BRANCH" || BATS_BRANCH=master
   mkdir -vp $SRC_PREFIX
   cd $SRC_PREFIX
-  git clone https://github.com/sstephenson/bats.git
+  test -n "$BATS_REPO" || BATS_REPO=https://github.com/sstephenson/bats.git
+  test -n "$BATS_BRANCH" || BATS_BRANCH=master
+  test -d bats || {
+    git clone $BATS_REPO bats || return $?
+  }
   cd bats
-  ${sudo} ./install.sh $HOME/.local
+  git checkout $BATS_BRANCH
+  ${pref} ./install.sh $PREFIX
   cd $pwd
 
   bats --version && {
