@@ -76,7 +76,7 @@ test/example/coffee_var_version.coffee
 test/example/properties_version.properties
 test/example/build.xml
 test/example/clike_line_comment_id.js
-test/example/clike_line_comment_id.jade
+test/example/clike_line_comment_id.pug
 test/example/py_mod.py
 HEREDOC
 	) >> .versioned-files.list

@@ -355,7 +355,7 @@ applyVersion()
       apply_ant_var_version $doc
     ;;
 
-    *.jade | *.styl | *.pde | *.ino )
+    *.pug | *.styl | *.pde | *.ino | *.c | *.cpp | *.h )
       apply_clike_line_comment_id $doc
     ;;
 
