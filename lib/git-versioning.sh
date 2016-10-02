@@ -189,9 +189,9 @@ load()
   }
 
   test -n "$VER_STR" && {
-    log "Using provided version: $VER_STR"
+    note "Using provided version: $VER_STR"
     test -e "$V_DOC_LIST" || {
-      log "No V_DOC_LIST ($V_DOC_LIST), using stdin "
+      warn "No V_DOC_LIST ($V_DOC_LIST), using stdin "
       V_DOC_LIST="-"
     }
   } || {
@@ -208,7 +208,7 @@ load()
 
     buildVER
 
-    log "Loaded version from $V_TOP_PATH/$V_MAIN_DOC: $VER_STR"
+    info "Loaded version from $V_TOP_PATH/$V_MAIN_DOC: $VER_STR"
   }
 }
 
@@ -434,8 +434,8 @@ incrVPAT()
 cmd_check()
 {
   cmd_validate >> /dev/null || return 1
-  log "Checking all files for $VER_STR"
-  log "Using $V_CHECK"
+  note "Checking all files for $VER_STR"
+  info "Using $V_CHECK"
   # check without build meta
   cat $V_DOC_LIST | grep -v '^#' \
     | . $V_CHECK $(echo $VER_STR | awk -F+ '{print $1}') || {
@@ -581,7 +581,7 @@ V_GREP_PAT='^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*)?(\+[0-9A-Z
 cmd_validate()
 {
   echo $VER_STR | grep -E $V_GREP_PAT >> /dev/null \
-    && log "$VER_STR ok" \
+    && note "$VER_STR ok" \
     || err "Not a valid semver: '$VER_STR'"
 }
 
