@@ -100,7 +100,7 @@ install_bats()
   test -n "$BATS_BRANCH" || BATS_BRANCH=master
   mkdir -vp $SRC_PREFIX
   cd $SRC_PREFIX
-  test -n "$BATS_REPO" || BATS_REPO=https://github.com/sstephenson/bats.git
+  test -n "$BATS_REPO" || BATS_REPO=https://github.com/dotmpe/bats.git
   test -n "$BATS_BRANCH" || BATS_BRANCH=master
   test -d bats || {
     git clone $BATS_REPO bats || return $?
