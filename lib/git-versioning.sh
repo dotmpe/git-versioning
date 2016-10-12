@@ -65,10 +65,8 @@ module_meta_list() # $one
 
 load_app_id()
 {
-  # TODO: Deprecate: app-id dotfile
   test ! -e .app-id || {
     APP_ID=$(cat .app-id)
-    note "Deprecated: Loaded APP_ID=$APP_ID from ./.app-id "
     return
   }
 
