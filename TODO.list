@@ -11,3 +11,6 @@ tools/cmd/test-for-clean-branch.sh:5:# TODO: test wether V_MAIN_DOC version for 
 tools/cmd/version-check.sh:19:  # FIXME: scan all [id|version]...[app-name] lines, fail on version mismatch
 tools/cmd/version-check.sh:21:  # XXX: should want to know if any mismatches, regardless wether one matches
 Makefile.default-goals:2:# FIXME: set production to install from tar
+
+FIXME: not compatible with DOS formatted documents 
+

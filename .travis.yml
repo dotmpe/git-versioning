@@ -10,12 +10,6 @@ script:
 - echo ENV=$ENV PREFIX=$PREFIX SRC_PREFIX=$SRC_PREFIX
 - ./tools/ci/build.sh
 
-branches:
-  only:
-  - master
-  - test
-  - '/^[0-9]*\.[0-9]*\.[0-9]*/'
-
 env:
   global:
   - username=travis
@@ -26,6 +20,16 @@ env:
   - ENV=user-dev PREFIX=$HOME/.local
   - ENV=testing
   - ENV=
+
+branches:
+  only:
+  - master
+  - test
+  - '/^[0-9]*\.[0-9]*\.[0-9]*/'
+
+notifications:
+  email:
+    on_success: never
 
 deploy:
   provider: releases
