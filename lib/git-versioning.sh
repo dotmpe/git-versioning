@@ -353,6 +353,10 @@ applyVersion()
       apply_ant_var_version $doc
     ;;
 
+    *.xml )
+      apply_xml_comment_id $doc
+    ;;
+
     *.pug | *.styl | *.pde | *.ino | *.c | *.cpp | *.h )
       apply_clike_line_comment_id $doc
     ;;
