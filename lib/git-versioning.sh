@@ -357,7 +357,7 @@ applyVersion()
       apply_xml_comment_id $doc
     ;;
 
-    *.pug | *.styl | *.pde | *.ino | *.c | *.cpp | *.h )
+    *.pug | *.styl | *.pde | *.ino | *.c | *.cpp | *.h | *.java | *.groovy )
       apply_clike_line_comment_id $doc
     ;;
 
