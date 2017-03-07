@@ -82,13 +82,16 @@ load_app_id()
   # Second option: use common metadata file (ie. bower.json, package.json, or a
   # generic YAML metadata package).
   # For YAML, expect a comment sentinel with '# git-versioning main: <app-id>'
-  # XXX: Why not use comment on the line?
-  # XXX: For JSON, take any "name" key.
+  # XXX: Might use comment on the same line as verison, but would need to review
+  # regexes for all formats.
+  # XXX: For JSON, take any "name" keyy. Works for package.json.
   META_FILES=$(module_meta_list)
   for META_FILE in $META_FILES
   do
     if [ "${META_FILE:0:9}" = "package.y" ] || [ "$META_FILE" = "module.meta" ]
     then
+      # Scan for the main project ID, the one that determines the principle
+      # version of the package.
       APP_ID=$(grep '^# git-versioning main:' $META_FILE | awk '{print $4}')
       [ -n "$APP_ID" ] && {
         break;
