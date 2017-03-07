@@ -17,6 +17,14 @@ GIT Versioning
     :alt: GIT
 
 
+.. note::
+
+   git-versioning is somewhat misnamed, because it has nothing to do with GIT.
+   But it growed out of a need to have GIT pre-commit checks for embedded
+   versions, and here it is, it will be some time before I feel like renaming
+   it.
+
+
 .. admonition:: Features
 
    - Update embedded semver strings and Ids in project files, increment and
