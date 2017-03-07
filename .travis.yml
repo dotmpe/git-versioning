@@ -1,4 +1,6 @@
 
+sudo: true
+
 install: 
 - ./install-dependencies.sh -
   # XXX: cleanup - chown -R $username /home/$username/.local
@@ -15,6 +17,7 @@ env:
   - username=travis
   - PATH=$PATH:$HOME/bin:$HOME/usr/bin:$HOME/.local/bin/
   - Build_Deps_Default_Paths=1
+  - sudo=sudo
   matrix:
   - ENV=production
   - ENV=user-dev PREFIX=$HOME/.local
