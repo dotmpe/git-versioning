@@ -3,7 +3,7 @@ sudo: true
 
 install: 
 - ./install-dependencies.sh -
-  # XXX: cleanup - chown -R $username /home/$username/.local
+# XXX: cleanup - chown -R $username /home/$username/.local
 
 before_script:
 - test -z "$PREFIX" || export PATH=$PATH:$PREFIX/bin
@@ -17,9 +17,8 @@ env:
   - username=travis
   - PATH=$PATH:$HOME/bin:$HOME/usr/bin:$HOME/.local/bin/
   - Build_Deps_Default_Paths=1
-  - sudo=sudo
   matrix:
-  - ENV=production
+  - ENV=production sudo=sudo
   - ENV=user-dev PREFIX=$HOME/.local
   - ENV=testing
   - ENV=
