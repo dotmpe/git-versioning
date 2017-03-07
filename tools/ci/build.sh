@@ -5,7 +5,8 @@ version=0.1.4-dev # git-versioning
 case "$ENV" in
 
    production )
-      $sudo test -n "$PREFIX" -a -w "$PREFIX" || {
+      test -n "$PREFIX" || PREFIX=/usr/local/
+      $sudo test -w "$PREFIX" || {
           echo "PREFIX must be writable: '$PREFIX'">&2
           exit 1
         }
