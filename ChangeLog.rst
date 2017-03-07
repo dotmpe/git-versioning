@@ -51,3 +51,11 @@ Change Log
     (``V_MAIN_DOC``) as a \*nix alike file.
   - Fixes for `make do-release`.
 
+(0.1.4)
+  - New formets: XML, C (and c++ and header files), Java, and Groovy. (Comment
+    support only)
+  - Renamed `jade` to `pug`.
+  - Updates for sh tooling and Travis build. Tavis build was not properly
+    testing production env, or failing b/c sudo error. Re-added sudo and fixed
+    build script.
+

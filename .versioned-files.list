@@ -1,6 +1,5 @@
 ReadMe.rst
 # Edit configure.sh to change this list!
-package.json
 package.yaml
 bin/cli-version.sh
 lib/git-versioning.sh
@@ -15,7 +14,6 @@ tools/cmd/prep-version.sh
 tools/cmd/src-files.sh
 tools/cmd/src-tree.sh
 tools/cmd/append-version-to-commit-msg.sh
-tools/cmd/test-for-clean-branch.sh
 Makefile
 Rules.mk
 Rules.git-versioning.mk

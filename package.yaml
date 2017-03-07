@@ -7,13 +7,23 @@
   version: 0.1.4-dev # git-versioning
   environments: [ 'development' ]
 
+  scripts:
+    init: 
+      - Build_Deps_Default_Paths=1 ./install-dependencies.sh all
+    check:
+      - git-versioning check
+      - bats -c test/*-spec.bats
+      - bats test/git-versioning-spec.bats
+    test:
+      - bats test/*-spec.bats
+
   pd-meta:
     #check: ":make:git-pre-commit"
     check: ":vchk :bats-specs :bats:test/git-versioning-spec.bats"
-    test: ":vchk :bats-specs :bats"
+    test: ":bats"
     git-hooks:
       pre-commit: ./tools/git-hooks/pre-commit.sh
-    init: "./install-dependencies.sh git"
+    init: "./install-dependencies.sh all"
 
 # git-versioning main: git-versioning
 

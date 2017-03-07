@@ -54,10 +54,10 @@ generate_git_hooks()
 
 	for script in $GIT_HOOK_NAMES
 	do
-		t=$(eval echo \$package_pd_meta_git_hooks_$(echo $script|tr '-' '_'))
+		t=$(eval echo \$package_pd_meta_git_hooks_$(echo $script|tr all '_'))
 		test -n "$t" || continue
     test -e "$t" || {
-      s=$(eval echo \$package_pd_meta_git_hooks_$(echo $script|tr '-' '_')_script)
+      s=$(eval echo \$package_pd_meta_git_hooks_$(echo $script|tr all '_')_script)
       test -n "$s" || {
         echo "No default git $script script. "
         return
@@ -75,7 +75,7 @@ install_git_hooks()
 {
 	for script in $GIT_HOOK_NAMES
 	do
-		t=$(eval echo \$package_pd_meta_git_hooks_$(echo $script|tr '-' '_'))
+		t=$(eval echo \$package_pd_meta_git_hooks_$(echo $script|tr all '_'))
 		test -n "$t" || continue
 		l=.git/hooks/$script
 		test ! -e "$l" || {
@@ -120,7 +120,7 @@ install_bats()
 
 main_entry()
 {
-  test -n "$1" || set -- '-'
+  test -n "$1" || set -- all
 
   case "$1" in build )
 			test -n "$SRC_PREFIX" || {
@@ -138,7 +138,7 @@ main_entry()
 		;;
 	esac
 
-  case "$1" in '-'|project|git )
+  case "$1" in all|project|git )
       git --version >/dev/null || { echo "GIT required"; exit 1; }
 			test -x $(which jsotk.py 2>/dev/null) || {
 				test -e .package.sh || {
@@ -149,12 +149,13 @@ main_entry()
 			. .package.sh
     ;; esac
 
-  case "$1" in '-'|project|git )
+  case "$1" in project|package|git|git-hooks )
+      # FIXME: last I checked this was broken. See tools/git-hooks
   		generate_git_hooks || return $?
   		install_git_hooks || return $?
     ;; esac
 
-  case "$1" in '-'|build|test|sh-test|bats )
+  case "$1" in all|build|test|sh-test|bats )
       test -x "$(which bats)" || install_bats || return $?
     ;; esac
 

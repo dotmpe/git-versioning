@@ -1,7 +1,7 @@
 GIT Versioning
 ==============
 :Created: 2015-04-19
-:Updated: 2016-09-26
+:Updated: 2017-03-07
 :Version: 0.1.4-dev
 :Status: Development
 :project:
@@ -93,6 +93,25 @@ Other documents
 - `Initial analysis (ReadMe) <doc/initial-analysis.rst>`_
 - `Change Log <ChangeLog.rst>`_
 - `Branche and Directory Docs <doc/package.rst>`_
+
+
+Builds
+------
+Latest releases are available at github__, stability of SCM editions can be
+examined at Travis__.
+
+FIXME: Building the tar distributable is left to a Mkdocs (Makefile) setup, but
+its use it not tested at all! (src may be out of date?) The package is
+prepared by Travis on tagged commits, from the 'production' build env.
+
+However, installations of a development, testing, and production flavoured
+configuration from SCM are tested.
+
+TODO: add & test basher install
+
+
+.. __: https://github.com/dotmpe/git-versioning/releases
+.. __: https://travis-ci.org/dotmpe/git-versioning/branches
 
 
 .. ----

@@ -82,9 +82,9 @@ load_app_id()
   # Second option: use common metadata file (ie. bower.json, package.json, or a
   # generic YAML metadata package).
   # For YAML, expect a comment sentinel with '# git-versioning main: <app-id>'
-  # XXX: Might use comment on the same line as verison, but would need to review
+  # XXX: Might use comment on the same line as version, but would need to review
   # regexes for all formats.
-  # XXX: For JSON, take any "name" keyy. Works for package.json.
+  # XXX: For JSON, take any "name" key. Works for package.json.
   META_FILES=$(module_meta_list)
   for META_FILE in $META_FILES
   do
@@ -360,13 +360,19 @@ applyVersion()
       apply_xml_comment_id $doc
     ;;
 
+    *.pde | *.ino | *.c | *.cpp | *.h )
+      apply_commonUnixComment $doc
+      apply_clike_line_comment_id $doc
+    ;;
+
     *.pug | *.styl | *.pde | *.ino | *.c | *.cpp | *.h | *.java | *.groovy )
       apply_clike_line_comment_id $doc
     ;;
 
     * )
-      # FIXME: git-versioning could just replace if tag is detailed enough (ie.
+      # NOTE: git-versioning could just replace if tag is detailed enough (ie.
       # snapshot), or if forced to (or if there's no need to watch other embedded versions).
+      # But it does not support this mode.
       echo "$0: Unable to version $doc"
       exit 2
     ;;

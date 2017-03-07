@@ -2,8 +2,7 @@
 sudo: true
 
 install: 
-- ./install-dependencies.sh -
-# XXX: cleanup - chown -R $username /home/$username/.local
+- ./install-dependencies.sh all
 
 before_script:
 - test -z "$PREFIX" || export PATH=$PATH:$PREFIX/bin

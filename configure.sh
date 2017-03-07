@@ -31,7 +31,6 @@ echo "Rewrote installer and bin/cli-version include paths"
 cat <<HEREDOC
 ReadMe.rst
 # Edit configure.sh to change this list!
-package.json
 package.yaml
 bin/cli-version.sh
 lib/git-versioning.sh
@@ -46,7 +45,6 @@ tools/cmd/prep-version.sh
 tools/cmd/src-files.sh
 tools/cmd/src-tree.sh
 tools/cmd/append-version-to-commit-msg.sh
-tools/cmd/test-for-clean-branch.sh
 Makefile
 Rules.mk
 Rules.git-versioning.mk
@@ -63,21 +61,21 @@ echo "Reset .versioned-files.list"
 [ "$ENV" == "production" ] || {
 	(
 		cat <<HEREDOC
-test/example/rst_field_version.rst
-test/example/rst_field_id.rst
-test/example/unix_comment_id.sh
-test/example/unix_comment_version.sh
-test/example/mk_var_version.mk
-test/example/sh_var_version.sh
-test/example/yaml_version.yaml
-test/example/json_version.json
-test/example/js_var_version.js
-test/example/coffee_var_version.coffee
-test/example/properties_version.properties
 test/example/build.xml
 test/example/clike_line_comment_id.js
 test/example/clike_line_comment_id.pug
+test/example/coffee_var_version.coffee
+test/example/js_var_version.js
+test/example/json_version.json
+test/example/mk_var_version.mk
+test/example/properties_version.properties
 test/example/py_mod.py
+test/example/rst_field_id.rst
+test/example/rst_field_version.rst
+test/example/sh_var_version.sh
+test/example/unix_comment_id.sh
+test/example/unix_comment_version.sh
+test/example/yaml_version.yaml
 HEREDOC
 	) >> .versioned-files.list
 	echo "Test files appended to .versioned-files.list"
