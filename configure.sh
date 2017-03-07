@@ -2,8 +2,8 @@
 
 source lib/util.sh
 
-[ -n "$ENV" ] || ENV=development
-echo "Environment: $ENV"
+[ -n "$ENV_NAME" ] || ENV_NAME=development
+echo "Environment: $ENV_NAME"
 
 [ -n "$1" ] && PREFIX=$1
 [ -n "$PREFIX" ] || PREFIX=.
@@ -58,7 +58,7 @@ echo "Reset .versioned-files.list"
 
 
 # for dev and test add test files
-[ "$ENV" == "production" ] || {
+[ "$ENV_NAME" == "production" ] || {
 	(
 		cat <<HEREDOC
 test/example/build.xml

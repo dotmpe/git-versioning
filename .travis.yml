@@ -8,7 +8,7 @@ before_script:
 - test -z "$PREFIX" || export PATH=$PATH:$PREFIX/bin
 
 script:
-- echo ENV=$ENV PREFIX=$PREFIX SRC_PREFIX=$SRC_PREFIX
+- echo ENV_NAME=$ENV_NAME PREFIX=$PREFIX SRC_PREFIX=$SRC_PREFIX
 - ./tools/ci/build.sh
 
 env:
@@ -17,10 +17,10 @@ env:
   - PATH=$PATH:$HOME/bin:$HOME/usr/bin:$HOME/.local/bin/
   - Build_Deps_Default_Paths=1
   matrix:
-  - ENV=production sudo=sudo
-  - ENV=user-dev PREFIX=$HOME/.local
-  - ENV=testing
-  - ENV=
+  - ENV_NAME=production sudo=sudo
+  - ENV_NAME=user-dev PREFIX=$HOME/.local
+  - ENV_NAME=testing
+  - ENV_NAME=
 
 branches:
   only:
@@ -39,5 +39,5 @@ deploy:
   on:
     repo: dotmpe/git-versioning
     tags: true
-    condition: $ENV = production
+    condition: $ENV_NAME = production
 

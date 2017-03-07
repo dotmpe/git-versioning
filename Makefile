@@ -4,7 +4,7 @@ BASE                := $(shell cd $(DIR);pwd)
 
 HOST                := $(shell hostname|tr '.' '-')
 
-ENV                 ?= $(shell [ -n "$$ENV" ] && echo $$ENV || echo development)
+ENV_NAME                 ?= $(shell [ -n "$$ENV_NAME" ] && echo $$ENV_NAME || echo development)
 
 
 # See GIT versioning project for more complete PROJECT heuristic

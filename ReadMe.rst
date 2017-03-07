@@ -51,8 +51,8 @@ GIT Versioning
 
    or::
 
-     @ENV=production ./configure.sh /usr/local
-     @ENV=production sudo ./install.sh uninstall
+     @ENV_NAME=production ./configure.sh /usr/local
+     @ENV_NAME=production sudo ./install.sh uninstall
 
    See also Travis CI test build script.
 

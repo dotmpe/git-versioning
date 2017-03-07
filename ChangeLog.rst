@@ -58,4 +58,5 @@ Change Log
   - Updates for sh tooling and Travis build. Tavis build was not properly
     testing production env, or failing b/c sudo error. Re-added sudo and fixed
     build script.
+  - No longer using ``ENV`` varname for environment name, changed to ``ENV_NAME``.
 

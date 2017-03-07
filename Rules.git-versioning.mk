@@ -17,7 +17,7 @@ TAR_SRC += \
 			lib/formats.sh \
 			bin tools
 
-ifeq ($(ENV),development)
+ifeq ($(ENV_NAME),development)
 TAR_SRC += \
 			Makefile Makefile.default-goals \
 			Rules.$(PROJECT).mk Rules.$(PROJECT).shared.mk .travis.yml \
@@ -29,7 +29,7 @@ endif
 
 SRC += $(TAR_SRC)
 
-ifneq ($(ENV),development)
+ifneq ($(ENV_NAME),development)
 CLN += $(PROJECT)-$(VERSION).tar
 TRGT += $(PROJECT)-$(VERSION).tar
 endif
@@ -69,7 +69,7 @@ do-release:: cli-version-check
 	grep '^'$(VERSION)'$$' ChangeLog.rst || { \
 		echo "Please fix version or the ChangeLog"; \
 		exit 2; }
-	ENV=testing ./configure.sh \
+	ENV_NAME=testing ./configure.sh \
 			&& pd check \
 			&& git checkout .versioned-files.list 
 	grep Status..Release ReadMe.rst
@@ -80,7 +80,7 @@ do-release:: cli-version-check
 	@# Increment and tag
 	@./bin/cli-version.sh increment $(min) $(maj)
 	@#./tools/cmd/prep-version.sh
-	@ENV= ./configure.sh \
+	@ENV_NAME= ./configure.sh \
 		&& ./bin/cli-version.sh pre-release dev
 	@# Stage changes
 	@git add $$(echo $$(cat .versioned-files.list))
@@ -95,15 +95,15 @@ INSTALL += $(V_SH_SHARE)
 STRGT += reset uninstall
 
 $(V_SH_SHARE):
-	@ENV=production ./configure.sh /usr/local
-	@ENV=production sudo ./install.sh install
+	@ENV_NAME=production ./configure.sh /usr/local
+	@ENV_NAME=production sudo ./install.sh install
 
 reset::
-	@ENV=production ./configure.sh
+	@ENV_NAME=production ./configure.sh
 
 uninstall::
-	@ENV=production ./configure.sh /usr/local
-	@ENV=production sudo ./install.sh uninstall
+	@ENV_NAME=production ./configure.sh /usr/local
+	@ENV_NAME=production sudo ./install.sh uninstall
 
 test-run::
 	test -z "$$PREFIX" && ./bin/cli-version.sh || git-versioning

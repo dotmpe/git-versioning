@@ -2,7 +2,7 @@
 
 version=0.1.4-dev # git-versioning
 
-case "$ENV" in
+case "$ENV_NAME" in
 
    production )
       test -n "$PREFIX" || PREFIX=/usr/local/
@@ -10,7 +10,7 @@ case "$ENV" in
           echo "PREFIX must be writable: '$PREFIX'">&2
           exit 1
         }
-      ./configure.sh /usr/local && $sudo ENV=$ENV ./install.sh && make test
+      ./configure.sh /usr/local && $sudo ENV_NAME=$ENV_NAME ./install.sh && make test
       # strip meta tags
       DESCRIBE="$(echo "$version" | awk -F+ '{print $1}')"
       grep '^'$DESCRIBE'$' ChangeLog.rst && {
@@ -25,7 +25,7 @@ case "$ENV" in
      ./configure.sh && make build test ;;
 
    * )
-     ( test -n "$PREFIX" && ( ./configure.sh $PREFIX && ENV=$ENV ./install.sh ) || printf "" ) && make test ;;
+     ( test -n "$PREFIX" && ( ./configure.sh $PREFIX && ENV_NAME=$ENV_NAME ./install.sh ) || printf "" ) && make test ;;
 
 esac
 
