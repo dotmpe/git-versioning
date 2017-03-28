@@ -145,7 +145,7 @@ Other version format?
   at [ie. Py PEP440 etc].
 
 
-See more in TODO.list
+More in TODO.list
 
 
 GIT config

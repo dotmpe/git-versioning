@@ -18,7 +18,7 @@ GIT Versioning
 
 
 .. image:: media/image/git-versioning-hook.png
-
+   :width: 40em
 
 .. admonition:: Features
 
@@ -92,6 +92,8 @@ possible to include a comment on the line (ie. JSON).
 
 Other documents
 ---------------
+For issues, see `dev docs <doc/dev.rst#issues>`__
+
 - `Change Log <ChangeLog.rst>`_
 - `Development documentation <doc/dev.rst>`_
 - `Initial analysis (ReadMe) <doc/initial-analysis.rst>`_
