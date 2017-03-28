@@ -18,7 +18,6 @@ GIT Versioning
 
 
 .. image:: media/image/git-versioning-hook.png
-   :width: 40em
 
 .. admonition:: Features
 
