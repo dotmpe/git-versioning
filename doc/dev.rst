@@ -1,3 +1,5 @@
+.. include:: ../.default.rst
+
 Development Documentation
 -------------------------
 
