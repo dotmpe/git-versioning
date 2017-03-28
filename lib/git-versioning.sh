@@ -311,12 +311,12 @@ applyVersion()
       apply_sf_version $doc
     ;;
 
-    *.mk | *Makefile* )
+    *.mk | */Makefile | Makefile )
       apply_commonUnixComment $doc
       apply_mk_var_version $doc
     ;;
 
-    *.sh | *.bash | *configure | *.bats )
+    *.sh | *.bash | configure | */configure | *.bats )
       apply_commonUnixComment $doc
       apply_sh_var_version $doc
     ;;
@@ -369,7 +369,7 @@ applyVersion()
       apply_clike_line_comment_id $doc
     ;;
 
-    Dockerfile|*/Dockerfile )
+    Dockerfile | */Dockerfile )
       apply_commonUnixComment $doc
     ;;
 

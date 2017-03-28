@@ -1,8 +1,14 @@
 
 Change Log
 ----------
+(0.0.1)
+  :date: Sun Apr 19. 2015
+
+  Initial checkin.
 
 0.0.30
+  :date: Mon Mar 21. 2016
+
   - Start keeping changelog.
 
     Currently supports literal paths in .versioned-files.list,
@@ -16,6 +22,8 @@ Change Log
     configuration, more flexible parser.
 
 0.0.31
+  :date: Tue Apr 12. 2016
+
   - Renamed test ``git-versioning`` to ``git-versioning-spec`` to follow name
     convention.
   - Documentation restructured. Fixes, updates.
@@ -36,27 +44,35 @@ Change Log
   - Proper production release failed, see next version.
 
 0.0.32
+  :date: Tue Apr 12. 2016
+
   - Testing packaging with Travis.
 
 0.1.0
+  :date: Tue Apr 12. 2016
+
   - Incrementing minor because of V_CHECK change. And running production package
     release again just for the heck of it.
 
 0.1.1
+  :date: Sun Sep 18. 2016
+
   - Minor bits for apply version.
     Added .py support for version and __version__ attributes.
 
 0.1.3
+  :date: Sun Sep 18. 2016
+
   - Fixed `load()` and sub-cmd `check` to read `.versioned-files.list`
     (``V_MAIN_DOC``) as a \*nix alike file.
   - Fixes for `make do-release`.
 
 (0.1.4)
-  - New formets: XML, C (and c++ and header files), Java, and Groovy. (Comment
-    support only)
+  - New formats: XML, C (and c++ and header files), Dockerfile, Java, and
+    Groovy. (Comment support only)
   - Renamed `jade` to `pug`.
-  - Updates for sh tooling and Travis build. Tavis build was not properly
+  - Updates for sh tooling and Travis build. Travis build was not properly
     testing production env, or failing b/c sudo error. Re-added sudo and fixed
     build script.
-  - No longer using ``ENV`` varname for environment name, changed to ``ENV_NAME``.
+  - No longer using ``ENV`` for environment name, changed to ``ENV_NAME``.
 

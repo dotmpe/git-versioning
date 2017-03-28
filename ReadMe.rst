@@ -1,7 +1,7 @@
 GIT Versioning
 ==============
 :Created: 2015-04-19
-:Updated: 2017-03-07
+:Updated: 2017-03-28
 :Version: 0.1.4-dev
 :Status: Development
 :project:
@@ -97,9 +97,9 @@ possible to include a comment on the line (ie. JSON).
 
 Other documents
 ---------------
+- `Change Log <ChangeLog.rst>`_
 - `Development documentation <doc/dev.rst>`_
 - `Initial analysis (ReadMe) <doc/initial-analysis.rst>`_
-- `Change Log <ChangeLog.rst>`_
 - `Branche and Directory Docs <doc/package.rst>`_
 
 
