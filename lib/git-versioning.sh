@@ -369,6 +369,10 @@ applyVersion()
       apply_clike_line_comment_id $doc
     ;;
 
+    Dockerfile|*/Dockerfile )
+      apply_commonUnixComment $doc
+    ;;
+
     * )
       # NOTE: git-versioning could just replace if tag is detailed enough (ie.
       # snapshot), or if forced to (or if there's no need to watch other embedded versions).
