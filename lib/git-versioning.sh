@@ -281,12 +281,18 @@ applyVersion()
 
 applyVersions()
 {
-  local doc
+  local doc fail
   read_doc_list | while read doc
   do
-    applyVersion "$doc"
+    applyVersion "$doc" && {
+      stderr info "Applied version to '$doc'"
+    } || {
+      stderr error "Failed applying version to '$doc'"
+      fail=1
+    }
   done
   unset doc
+  trueish "$fail" && return 1 || return 0
 }
 
 concatVersion()
@@ -353,7 +359,9 @@ cmd_update()
 {
   buildVER
   cmd_validate >> /dev/null || return 1
-  applyVersions
+  applyVersions &&
+    stderr note "Version succesfully applied" ||
+    stderr err "Error applying version" 1
 }
 
 cmd_increment()
