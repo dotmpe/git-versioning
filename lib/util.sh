@@ -137,3 +137,8 @@ is_glob()
   echo "$1" | grep '.*[][\*].*'
 }
 
+# Get from a properties file
+get_property()
+{
+  eval grep "'^$2\ *=\|:'" $1 | sed 's/^[^:=]*\ *[:=]\ *//'
+}

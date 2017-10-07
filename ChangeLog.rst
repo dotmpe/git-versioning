@@ -67,7 +67,7 @@ Change Log
     (``V_MAIN_DOC``) as a \*nix alike file.
   - Fixes for `make do-release`.
 
-(0.1.4)
+0.1.4
   - New formats: XML, C (and c++ and header files), Dockerfile, Java, and
     Groovy. (Comment support only)
   - Renamed `jade` to `pug`.
@@ -76,3 +76,8 @@ Change Log
     build script.
   - No longer using ``ENV`` for environment name, changed to ``ENV_NAME``.
 
+(0.2.0)
+  - Starting new beta release branch from master, to work on extending
+    git-versioning behaviour a bit.
+  - Made ``.version-attributes`` active. Intend to move or copy more of the
+    config and behaviour settings into there.

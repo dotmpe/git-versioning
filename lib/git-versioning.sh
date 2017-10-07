@@ -73,11 +73,11 @@ load_app_id()
   # XXX: would need some mime header parser.
   # probably keep using first row from doc list
   # or mark table entry
-  #test ! -e .version-attributes || {
-  #  APP_ID=$(get_mime_header "$doc" "App-Id")
-  #  V_MAIN_DOC=$(get_mime_header "$doc" "Main-File")
-  #  test -n "$APP_ID" && return
-  #}
+  test ! -e .version-attributes || {
+    APP_ID=$(get_property "$doc" "App-Id")
+    V_MAIN_DOC=$(get_property "$doc" "Main-File")
+    test -n "$APP_ID" && return
+  }
 
   # Second option: use common metadata file (ie. bower.json, package.json, or a
   # generic YAML metadata package).
