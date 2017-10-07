@@ -138,7 +138,8 @@ is_glob()
 }
 
 # Get from a properties file
-get_property()
+get_property() # Properties-File Key
 {
-  eval grep "'^$2\ *=\|:'" $1 | sed 's/^[^:=]*\ *[:=]\ *//'
+  test -e "$1" -a -n "$2" || stderr error "File Key expected" 1
+  grep '^'$2'\ *\(=\|:\).*$' $1 | sed 's/^[^:=]*\ *[:=]\ *//'
 }

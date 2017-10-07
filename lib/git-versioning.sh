@@ -74,8 +74,8 @@ load_app_id()
   # probably keep using first row from doc list
   # or mark table entry
   test ! -e .version-attributes || {
-    APP_ID=$(get_property "$doc" "App-Id")
-    V_MAIN_DOC=$(get_property "$doc" "Main-File")
+    APP_ID=$(get_property .version-attributes App-Id )
+    V_MAIN_DOC=$(get_property .version-attributes Main-File )
     test -n "$APP_ID" && return
   }
 
@@ -599,4 +599,3 @@ cmd_validate()
     && note "$VER_STR ok" \
     || err "Not a valid semver: '$VER_STR'"
 }
-
