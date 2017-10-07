@@ -333,7 +333,7 @@ applyVersion_lib()
       # snapshot), or if forced to (or if there's no need to watch other embedded versions).
       # But it does not support this mode.
       echo "$0: Unable to version $doc"
-      exit 2
+      return 1
     ;;
 
   esac
