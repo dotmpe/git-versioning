@@ -46,7 +46,7 @@ log()
   test -n "$verbosity" && std_v 1 || return 0
 	[ -n "$(echo $*)" ] || return 1;
   key=$scriptname.sh
-  test -n "$cmd" && key=${key}${bb}:${bk}${subcmd}
+  test -n "$cmd" && key=${key}${bb}:${bk}${cmd}
   echo "[$key] $1"
 }
 
