@@ -26,4 +26,3 @@ version=0.2.0-dev # git-versioning
   [ $? -eq 0 ]
   test -z "$(grep 'Version mismatch' $TMPF)"
 }
-

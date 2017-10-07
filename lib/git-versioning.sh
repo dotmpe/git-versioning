@@ -273,7 +273,7 @@ function apply_commonUnixComment()
 applyVersion()
 {
   func_exists applyVersion_local && {
-    applyVersion_local "$@" || return $?
+    applyVersion_local "$@"
   } || {
     applyVersion_lib "$@" || return $?
   }
@@ -353,7 +353,6 @@ cmd_update()
 {
   buildVER
   cmd_validate >> /dev/null || return 1
-  cmd_version
   applyVersions
 }
 
