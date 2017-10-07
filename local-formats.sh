@@ -4,16 +4,20 @@
 
 # Local formats: FIXME: for testing local extensions to lib/formats.sh
 
-#getVersion_local()
-#{
-#  case "$1" in
-#
-#    *.gitconfig )
-#        get_unix_comment_id $1 ...
-#      ;;
-#
-#  esac
-#}
+getVersion_local()
+{
+  case "$1" in
+
+    *.gitconfig )
+        get_unix_comment_id $1
+      ;;
+
+    * )
+        return 1
+      ;;
+
+  esac
+}
 
 applyVersion_local()
 {
@@ -21,6 +25,10 @@ applyVersion_local()
 
     *.gitconfig )
         apply_commonUnixComment $1
+      ;;
+
+    * )
+        return 1
       ;;
   esac
 }

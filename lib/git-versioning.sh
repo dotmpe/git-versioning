@@ -76,6 +76,7 @@ load_app_id()
   test ! -e .version-attributes || {
     APP_ID=$(get_property .version-attributes App-Id )
     V_MAIN_DOC=$(get_property .version-attributes Main-File )
+    VER_STR=$(get_property .version-attributes Version )
     test -n "$APP_ID" && return
   }
 
@@ -142,23 +143,25 @@ loadVersion()
   test -n "$1" || return 1
   local doc="$1"
 
-  verbosity=0 getVersion "$doc" >/dev/null || return
+  verbosity=0 getVersion "$doc" >/dev/null || {
+    error "Unable to load version from '$doc'" 1
+  }
 
   case "$doc" in
 
     *.properties )
-      STR=`get_properties_version $doc `
-      parse_version "$STR"
-    ;;
+        STR=`get_properties_version $doc `
+        parse_version "$STR"
+      ;;
 
     *.rst )
-      STR=`get_rst_field_main_version $doc $key`
-      parse_version "$STR"
-    ;;
+        STR=`get_rst_field_main_version $doc $key`
+        parse_version "$STR"
+      ;;
 
     * )
-      err "$0: Unable load version from '$1'" 2
-    ;;
+        err "$0: Unable load version from '$1'" 2
+      ;;
 
   esac
 
@@ -235,17 +238,27 @@ read_doc_list()
   done
 }
 
-source $LIB/formats.sh
+formats=$(get_property .version-attributes Formats)
+test -n "$formats" && {
+  test -e "$formats" && {
+    source $formats
+  } || {
+    stderr error "No formats file '$formats'" 1
+  }
+} || {
+  source $LIB/formats.sh
+}
 
 local_formats=$(get_property .version-attributes Local-Formats)
 test -n "$local_formats" -a -e "$local_formats" && {
+  stderr info "Including local formats from $local_formats"
   source $local_formats
 }
 
 getVersion()
 {
   func_exists getVersion_local && {
-    getVersion_local "$@" || return $?
+    getVersion_local "$@"
   } || {
     getVersion_lib "$@" || return $?
   }
@@ -264,104 +277,6 @@ applyVersion()
   } || {
     applyVersion_lib "$@" || return $?
   }
-
-  local doc="$1"
-  case "$doc" in
-
-    *.rst )
-      if [ "$doc" = "$V_MAIN_DOC" ]
-      then
-        apply_rst_field_main_version $doc
-      else
-        apply_rst_field_version $doc
-      fi
-      apply_rst_field_id $doc
-      apply_rst_comment_id $doc
-    ;;
-
-    *.sitefilerc )
-      apply_sfrc_version $doc
-    ;;
-
-    *Sitefile*.yaml | *Sitefile*.yml )
-      apply_sf_version $doc
-    ;;
-
-    *.mk | */Makefile | Makefile )
-      apply_commonUnixComment $doc
-      apply_mk_var_version $doc
-    ;;
-
-    *.sh | *.bash | configure | */configure | *.bats )
-      apply_commonUnixComment $doc
-      apply_sh_var_version $doc
-    ;;
-
-    *.yaml | *.yml )
-      apply_commonUnixComment $doc
-      apply_yaml_version $doc
-    ;;
-
-    *.json )
-      apply_json_version $doc
-    ;;
-
-    *.js )
-      apply_clike_line_comment_id $doc
-      apply_js_var_version $doc
-    ;;
-
-    *.coffee )
-      apply_commonUnixComment $doc
-      apply_coffee_var_version $doc
-    ;;
-
-    *.py )
-      apply_commonUnixComment $doc
-      version_quotes=1 apply_var_version $doc
-      version_quotes=1 version_varname=__version__ apply_var_version $doc
-    ;;
-
-    *.properties )
-      apply_commonUnixComment $doc
-      apply_properties_version $doc
-    ;;
-
-    *build.xml )
-      apply_xml_comment_id $doc
-      apply_ant_var_version $doc
-    ;;
-
-    *.xml )
-      apply_xml_comment_id $doc
-    ;;
-
-    *.pde | *.ino | *.c | *.cpp | *.h )
-      apply_commonUnixComment $doc
-      apply_clike_line_comment_id $doc
-    ;;
-
-    *.pug | *.styl | *.pde | *.ino | *.c | *.cpp | *.h | *.java | *.groovy )
-      apply_clike_line_comment_id $doc
-    ;;
-
-    Dockerfile | */Dockerfile )
-      apply_commonUnixComment $doc
-    ;;
-
-    * )
-      # NOTE: git-versioning could just replace if tag is detailed enough (ie.
-      # snapshot), or if forced to (or if there's no need to watch other embedded versions).
-      # But it does not support this mode.
-      echo "$0: Unable to version $doc"
-      exit 2
-    ;;
-
-  esac
-
-  echo "$doc @$VER_STR"
-
-  unset doc
 }
 
 applyVersions()

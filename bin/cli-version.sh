@@ -13,9 +13,9 @@ V_TOP_PATH=.
 
 # Id: git-versioning/0.2.0-dev bin/cli-version.sh
 
-source $LIB/git-versioning.sh
-
 scriptname=git-versioning
+
+source $LIB/git-versioning.sh
 
 usage()
 {
