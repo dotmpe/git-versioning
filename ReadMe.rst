@@ -1,8 +1,8 @@
 GIT Versioning
 ==============
 :Created: 2015-04-19
-:Updated: 2017-03-28
-:Version: 0.1.4-dev
+:Updated: 2017-10-07
+:Version: 0.2.0-dev
 :Status: Development
 :project:
 
@@ -86,7 +86,7 @@ Exact specs of variable rewrites may differ per format since its not always
 possible to include a comment on the line (ie. JSON).
 
 .. rSt example:
-.. Id: git-versioning/0.1.4-dev ReadMe.rst
+.. Id: git-versioning/0.2.0-dev ReadMe.rst
 
 
 Other documents
@@ -122,4 +122,4 @@ TODO: add & test basher install
 
 .. _sitefile: http://github.com/dotmpe/node-sitefile
 
-.. Id: git-versioning/0.1.4-dev ReadMe.rst
+.. Id: git-versioning/0.2.0-dev ReadMe.rst
