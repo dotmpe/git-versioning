@@ -237,48 +237,18 @@ read_doc_list()
 
 source $LIB/formats.sh
 
+local_formats=$(get_property .version-attributes Local-Formats)
+test -n "$local_formats" -a -e "$local_formats" && {
+  source $local_formats
+}
+
 getVersion()
 {
-  case "$1" in
-
-    *.rst )
-
-      if [ "$1" = "$V_MAIN_DOC" ]
-      then
-
-        get_rst_field_main_version $1 | while read STR
-        do echo "rSt Field Version (Main): $STR"; done
-
-      fi
-
-      get_rst_comment_id $1 | while read STR
-      do echo "rSt Comment Id: $STR"; done
-
-      get_rst_field_version $1 | while read STR
-      do echo "rSt Field Version: $STR"; done
-
-    ;;
-
-    *.mk | *Makefile* )
-      get_unix_comment_id $1 | while read STR;
-      do echo "C-Like Comment: $STR"; done
-      get_mk_var_version $1 | while read STR;
-      do echo "MK Var: $STR"; done
-    ;;
-
-    *.sh | *.bash | *configure | *.bats )
-      get_unix_comment_id $1 | while read STR;
-      do echo "C-Like Comment: $STR"; done
-      get_sh_var_version $1 | while read STR;
-      do echo "SH Var: $STR"; done
-    ;;
-
-    * )
-      echo "$0: Unable to retrieve version from $1"
-      exit 2
-    ;;
-
-  esac
+  func_exists getVersion_local && {
+    getVersion_local "$@" || return $?
+  } || {
+    getVersion_lib "$@" || return $?
+  }
 }
 
 function apply_commonUnixComment()
@@ -289,6 +259,12 @@ function apply_commonUnixComment()
 
 applyVersion()
 {
+  func_exists applyVersion_local && {
+    applyVersion_local "$@" || return $?
+  } || {
+    applyVersion_lib "$@" || return $?
+  }
+
   local doc="$1"
   case "$doc" in
 

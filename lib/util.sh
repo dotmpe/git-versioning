@@ -143,3 +143,10 @@ get_property() # Properties-File Key
   test -e "$1" -a -n "$2" || stderr error "File Key expected" 1
   grep '^'$2'\ *\(=\|:\).*$' $1 | sed 's/^[^:=]*\ *[:=]\ *//'
 }
+
+func_exists()
+{
+  type $1 2> /dev/null 1> /dev/null || return $?
+  # XXX bash/bsd-darwin: test "$(type -t $1)" = "function" && return
+  return 0
+}

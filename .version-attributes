@@ -1,3 +1,4 @@
 App-Id: git-versioning
 Main-File: ReadMe.rst
 # TODO: Main-File-Key: Version
+Local-Formats: local-formats.sh

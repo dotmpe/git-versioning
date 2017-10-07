@@ -198,3 +198,147 @@ function get_clike_line_comment_id()
     sed 's/^.. Id: [^\/]*\/\([^\ ]*\).*$/\1/'
 }
 
+getVersion_lib()
+{
+  case "$1" in
+
+    *.rst )
+
+      if [ "$1" = "$V_MAIN_DOC" ]
+      then
+
+        get_rst_field_main_version $1 | while read STR
+        do echo "rSt Field Version (Main): $STR"; done
+
+      fi
+
+      get_rst_comment_id $1 | while read STR
+      do echo "rSt Comment Id: $STR"; done
+
+      get_rst_field_version $1 | while read STR
+      do echo "rSt Field Version: $STR"; done
+
+    ;;
+
+    *.mk | *Makefile* )
+      get_unix_comment_id $1 | while read STR;
+      do echo "C-Like Comment: $STR"; done
+      get_mk_var_version $1 | while read STR;
+      do echo "MK Var: $STR"; done
+    ;;
+
+    *.sh | *.bash | *configure | *.bats )
+      get_unix_comment_id $1 | while read STR;
+      do echo "C-Like Comment: $STR"; done
+      get_sh_var_version $1 | while read STR;
+      do echo "SH Var: $STR"; done
+    ;;
+
+    * )
+      echo "$0: Unable to retrieve version from $1"
+      exit 2
+    ;;
+
+  esac
+}
+
+applyVersion_lib()
+{
+  local doc="$1"
+  case "$doc" in
+
+    *.rst )
+      if [ "$doc" = "$V_MAIN_DOC" ]
+      then
+        apply_rst_field_main_version $doc
+      else
+        apply_rst_field_version $doc
+      fi
+      apply_rst_field_id $doc
+      apply_rst_comment_id $doc
+    ;;
+
+    *.sitefilerc )
+      apply_sfrc_version $doc
+    ;;
+
+    *Sitefile*.yaml | *Sitefile*.yml )
+      apply_sf_version $doc
+    ;;
+
+    *.mk | */Makefile | Makefile )
+      apply_commonUnixComment $doc
+      apply_mk_var_version $doc
+    ;;
+
+    *.sh | *.bash | configure | */configure | *.bats )
+      apply_commonUnixComment $doc
+      apply_sh_var_version $doc
+    ;;
+
+    *.yaml | *.yml )
+      apply_commonUnixComment $doc
+      apply_yaml_version $doc
+    ;;
+
+    *.json )
+      apply_json_version $doc
+    ;;
+
+    *.js )
+      apply_clike_line_comment_id $doc
+      apply_js_var_version $doc
+    ;;
+
+    *.coffee )
+      apply_commonUnixComment $doc
+      apply_coffee_var_version $doc
+    ;;
+
+    *.py )
+      apply_commonUnixComment $doc
+      version_quotes=1 apply_var_version $doc
+      version_quotes=1 version_varname=__version__ apply_var_version $doc
+    ;;
+
+    *.properties )
+      apply_commonUnixComment $doc
+      apply_properties_version $doc
+    ;;
+
+    *build.xml )
+      apply_xml_comment_id $doc
+      apply_ant_var_version $doc
+    ;;
+
+    *.xml )
+      apply_xml_comment_id $doc
+    ;;
+
+    *.pde | *.ino | *.c | *.cpp | *.h )
+      apply_commonUnixComment $doc
+      apply_clike_line_comment_id $doc
+    ;;
+
+    *.pug | *.styl | *.pde | *.ino | *.c | *.cpp | *.h | *.java | *.groovy )
+      apply_clike_line_comment_id $doc
+    ;;
+
+    Dockerfile | */Dockerfile )
+      apply_commonUnixComment $doc
+    ;;
+
+    * )
+      # NOTE: git-versioning could just replace if tag is detailed enough (ie.
+      # snapshot), or if forced to (or if there's no need to watch other embedded versions).
+      # But it does not support this mode.
+      echo "$0: Unable to version $doc"
+      exit 2
+    ;;
+
+  esac
+
+  echo "$doc @$VER_STR"
+
+  unset doc
+}

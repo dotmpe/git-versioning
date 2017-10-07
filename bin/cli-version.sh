@@ -17,7 +17,6 @@ source $LIB/git-versioning.sh
 
 scriptname=git-versioning
 
-
 usage()
 {
 	cmd_help
