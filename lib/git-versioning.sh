@@ -238,7 +238,8 @@ read_doc_list()
   done
 }
 
-formats=$(get_property .version-attributes Formats)
+test ! -e .version-attributes ||
+  formats=$(get_property .version-attributes Formats)
 test -n "$formats" && {
   test -e "$formats" && {
     source $formats
@@ -249,7 +250,8 @@ test -n "$formats" && {
   source $LIB/formats.sh
 }
 
-local_formats=$(get_property .version-attributes Local-Formats)
+test ! -e .version-attributes ||
+  local_formats=$(get_property .version-attributes Local-Formats)
 test -n "$local_formats" -a -e "$local_formats" && {
   stderr info "Including local formats from $local_formats"
   source $local_formats
