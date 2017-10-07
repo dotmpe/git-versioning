@@ -50,42 +50,44 @@ if [ -n "$0" ] && [ $0 != "-bash" ]; then
 
     $scriptname | cli-version )
 
-      test -n "$verbosity" || verbosity=3
+        test -n "$verbosity" || verbosity=3
 
-      # function name first as argument,
-      cmd=$1
-      [ -n "$def_func" -a -z "$cmd" ] \
-        && func=$def_func \
-        || func=$(echo cmd_$cmd | tr '-' '_')
+        # function name first as argument,
+        cmd=$1
+        [ -n "$def_func" -a -z "$cmd" ] \
+          && func=$def_func \
+          || func=$(echo cmd_$cmd | tr '-' '_')
 
-      # load/exec if func exists
-      type $func &> /dev/null && {
-        func_exists=1
-        load
-        shift 1
-        $func $@
-      } || {
-        # handle non-zero return or print usage for non-existant func
-        e=$?
-        [ -z "$cmd" ] && {
+        # load/exec if func exists
+        type $func &> /dev/null && {
+          func_exists=1
           load
-          usage
-          err 'No command given, see "help"' 1
+          shift 1
+          $func $@
         } || {
-          [ "$e" = "1" -a -z "$func_exists" ] && {
+          # handle non-zero return or print usage for non-existant func
+          e=$?
+          [ -z "$cmd" ] && {
             load
             usage
-            err "No such command: $cmd" 1
+            err 'No command given, see "help"' 1
           } || {
-            err "Command $cmd returned $e" $e
+            [ "$e" = "1" -a -z "$func_exists" ] && {
+              load
+              usage
+              err "No such command: $cmd" 1
+            } || {
+              err "Command $cmd returned $e" $e
+            }
           }
         }
-      }
 
       ;;
 
     * )
-      echo No frontend for $base
+        echo No frontend for $base
+
+      ;;
 
   esac
 fi
