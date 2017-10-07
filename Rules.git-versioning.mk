@@ -90,7 +90,7 @@ do-release:: cli-version-check
 # install/uninstall
 V_SH_SHARE := /usr/local/share/git-versioning
 
-INSTALL += $(V_SH_SHARE)
+INSTALL += $(V_SH_SHARE) reset
 
 STRGT += reset uninstall
 
@@ -115,6 +115,4 @@ test-specs::
 	./test/git-versioning-spec.bats
 	#./test/git-versioning-spec.rst
 
-TEST := test-run test-tags test-specs
-
-
+TEST := test-run test-tags test-specs reset
