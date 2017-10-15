@@ -2,6 +2,33 @@
 
 # Id: git-versioning/0.2.0-dev lib/formats.sh
 
+# Markdown
+MD_VER_TOKEN='\([Vv]\)ersion:'
+# Main version line has no further qualifier
+function apply_md_field_main_version()
+{
+  VER_LINE="\1ersion:\ $VER_STR"
+  sed_rewrite_tag 's/^'$MD_VER_TOKEN'.*/'"$VER_LINE"'/' $1
+}
+function get_md_field_main_version()
+{
+  grep '^'$MD_VER_TOKEN'.*' $1 | awk '{print $2}'
+}
+# [comment]: #
+# Common Id line adapted to above variant of MD comments
+function apply_md_comment_id()
+{
+  ID_LINE="[comment]: # Id: $APP_ID\/$VER_STR "$(echo $1 | sed 's/\//\\\//g')
+  sed_rewrite_tag 's/^[comment]:\ #\ Id: '$APP_ID'.*/'"$ID_LINE"'/' $1
+}
+function get_md_comment_id()
+{
+  grep '^.comment.:\ #\ Id:\ '$APP_ID $1 | \
+    sed 's/^.comment.: # Id: [^\/]*\/\([^\ ]*\).*$/\1/'
+}
+
+
+
 # reStructureText
 RST_VER_TOKEN=':\([Vv]\)ersion:'
 function apply_rst_field_version()
@@ -38,7 +65,6 @@ function apply_rst_comment_id()
 }
 function get_rst_comment_id()
 {
-  DOC=$(echo $1 | sed 's/\//\\\//g')
   grep '^\.\. Id:\ '$APP_ID $1 | \
     sed 's/^.. Id: [^\/]*\/\([^\ ]*\).*$/\1/'
 }
@@ -202,9 +228,23 @@ getVersion_lib()
 {
   case "$1" in
 
+    *.md )
+
+        if [ "$1" = "$V_MAIN_DOC" -o "$1" = "./$V_MAIN_DOC" ]
+        then
+
+          get_md_field_main_version $1 | while read STR
+          do echo "Md Field Version (Main): $STR"; done
+
+        fi
+
+        get_md_comment_id $1 | while read STR
+        do echo "Md Comment Id: $STR"; done
+      ;;
+
     *.rst )
 
-        if [ "$1" = "$V_MAIN_DOC" ]
+        if [ "$1" = "$V_MAIN_DOC" -o "$1" = "./$V_MAIN_DOC" ]
         then
 
           get_rst_field_main_version $1 | while read STR
@@ -217,7 +257,6 @@ getVersion_lib()
 
         get_rst_field_version $1 | while read STR
         do echo "rSt Field Version: $STR"; done
-
       ;;
 
     *.mk | *Makefile* )

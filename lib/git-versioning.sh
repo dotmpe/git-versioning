@@ -143,10 +143,6 @@ loadVersion()
   test -n "$1" || return 1
   local doc="$1"
 
-  verbosity=0 getVersion "$doc" >/dev/null || {
-    error "Unable to load version from '$doc'" 1
-  }
-
   case "$doc" in
 
     *.properties )
@@ -156,6 +152,11 @@ loadVersion()
 
     *.rst )
         STR=`get_rst_field_main_version $doc $key`
+        parse_version "$STR"
+      ;;
+
+    *.md )
+        STR=`get_md_field_main_version $doc $key`
         parse_version "$STR"
       ;;
 
@@ -260,10 +261,9 @@ test -n "$local_formats" -a -e "$local_formats" && {
 getVersion()
 {
   func_exists getVersion_local && {
-    getVersion_local "$@"
-  } || {
-    getVersion_lib "$@" || return $?
+    getVersion_local "$@" && return 0
   }
+  getVersion_lib "$@"
 }
 
 function apply_commonUnixComment()
@@ -277,7 +277,7 @@ applyVersion()
   func_exists applyVersion_local && {
     applyVersion_local "$@"
   } || {
-    applyVersion_lib "$@" || return $?
+    applyVersion_lib "$@" && return || return $?
   }
 }
 

@@ -54,11 +54,15 @@ stderr()
 {
   case "$(echo $1 | tr 'A-Z' 'a-z')" in
 
-    * )
-      ;;
+    emer* ) std_v 1 || std_exit $3 || return 0 ;;
+    crit* ) std_v 2 || std_exit $3 || return 0 ;;
+    err* )  std_v 3 || std_exit $3 || return 0 ;;
+    warn* ) std_v 4 || std_exit $3 || return 0 ;;
+    note )  std_v 5 || std_exit $3 || return 0 ;;
+    info )  std_v 6 || std_exit $3 || return 0 ;;
+    debug ) std_v 7 || std_exit $3 || return 0 ;;
 
   esac
-
   err "$2" $3
 }
 
@@ -78,22 +82,18 @@ std_exit()
 
 warn()
 {
-  std_v 4 || std_exit $2 || return 0
   stderr "Warning" "$1" $2
 }
 note()
 {
-  std_v 5 || std_exit $2 || return 0
   stderr "Notice" "$1" $2
 }
 info()
 {
-  std_v 6 || std_exit $2 || return 0
   stderr "Info" "$1" $2
 }
 debug()
 {
-  std_v 7 || std_exit $2 || return 0
   stderr "Debug" "$1" $2
 }
 
