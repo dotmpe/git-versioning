@@ -53,6 +53,7 @@ Rules.git-versioning.shared.mk
 Rules.git-hooks.shared.mk
 test/git-versioning-spec.bats
 test/helpers.bash
+tools/sh/sync-lib.sh
 HEREDOC
 ) > .versioned-files.list
 echo "Reset .versioned-files.list"
