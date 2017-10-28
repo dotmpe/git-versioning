@@ -175,7 +175,7 @@ function apply_js_var_version()
   $sed_rewrite 's/^var version =.* \/\/ '$APP_ID'/'"$VER_LINE"'/' $P > $P.out
   sed_post $P
 }
-# JS/Coffee-Script
+# JS:Coffee-Script
 function apply_coffee_var_version()
 {
   P=$V_TOP_PATH/$1
@@ -328,7 +328,7 @@ applyVersion_lib()
         apply_js_var_version $doc
       ;;
 
-    *.coffee )
+    *.coffee | *.go )
         apply_commonUnixComment $doc
         apply_coffee_var_version $doc
       ;;

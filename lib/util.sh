@@ -144,6 +144,14 @@ get_property() # Properties-File Key
   grep '^'$2'\ *\(=\|:\).*$' $1 | sed 's/^[^:=]*\ *[:=]\ *//'
 }
 
+# Like get-property, but export to env-var, if non-empty.
+export_property()
+{
+  test -n "$3" || error "var-name expected" 1
+  local v="$(get_property "$1" "$2" )"
+  test -n "$v" && export $3="$v"
+}
+
 func_exists()
 {
   type $1 2> /dev/null 1> /dev/null || return $?

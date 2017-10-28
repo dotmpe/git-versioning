@@ -70,16 +70,6 @@ load_app_id()
     return
   }
 
-  # XXX: would need some mime header parser.
-  # probably keep using first row from doc list
-  # or mark table entry
-  test ! -e .version-attributes || {
-    APP_ID=$(get_property .version-attributes App-Id )
-    V_MAIN_DOC=$(get_property .version-attributes Main-File )
-    VER_STR=$(get_property .version-attributes Version )
-    test -n "$APP_ID" && return
-  }
-
   # Second option: use common metadata file (ie. bower.json, package.json, or a
   # generic YAML metadata package).
   # For YAML, expect a comment sentinel with '# git-versioning main: <app-id>'
@@ -185,32 +175,44 @@ load()
     exit 2
   }
 
-  [ -n "$APP_ID" ] || {
-    load_app_id || return
+  # Load/override settings from version-attributes
+  test ! -e .version-attributes || {
+
+    export_property .version-attributes File-List V_DOC_LIST
+    export_property .version-attributes App-Id APP_ID
+    export_property .version-attributes Main-File V_MAIN_DOC
+    export_property .version-attributes Other-Files V_DOC_LIST_FILES
+    export_property .version-attributes Version VER_STR
   }
 
-  [ -n "$APP_ID" ] || {
+  test -n "$APP_ID" || {
+    load_app_id || return $?
+  }
+
+  test -n "$APP_ID" || {
     err "Cannot get APP_ID from any metadata file. Aborting git-versioning. " 3
+  }
+
+  test -e "$V_DOC_LIST" || {
+    test -n "$V_DOC_LIST_FILES" && {
+      echo $V_MAIN_DOC $V_DOC_LIST_FILES | tr ' ' '\n' > $V_DOC_LIST
+    } || {
+
+      warn "No V_DOC_LIST ($V_DOC_LIST), using stdin "
+      V_DOC_LIST="-"
+    }
   }
 
   test -n "$VER_STR" && {
     note "Using provided version: $VER_STR"
-    test -e "$V_DOC_LIST" || {
-      warn "No V_DOC_LIST ($V_DOC_LIST), using stdin "
-      V_DOC_LIST="-"
-    }
   } || {
+
     # Load version from main document
     test -n "$V_MAIN_DOC" || V_MAIN_DOC=$(main_doc $V_DOC_LIST)
-
-    test -n "$V_MAIN_DOC" || \
-      err "Cannot get main document. " 3
-
-    test -e "$V_TOP_PATH/$V_MAIN_DOC" || \
-      err "Main document does not exist. " 3
+    test -n "$V_MAIN_DOC" || err "Cannot get main document. " 3
+    test -e "$V_TOP_PATH/$V_MAIN_DOC" || err "Main document does not exist. " 3
 
     loadVersion "$V_TOP_PATH/$V_MAIN_DOC"
-
     buildVER
 
     info "Loaded version from $V_TOP_PATH/$V_MAIN_DOC: $VER_STR"

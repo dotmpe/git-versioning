@@ -36,58 +36,7 @@ GIT Versioning
 
          version="1.0.0-alpha+exp.sha.5114f85"; # application-name
 
-
-.. admonition:: Quickstart
-
-   Install ::
-
-     $ make install
-
-   or::
-
-     @ENV_NAME=production ./configure.sh /usr/local
-     @ENV_NAME=production sudo ./install.sh uninstall
-
-   See also Travis CI test build script.
-
-   Use::
-
-     cd myproject
-     echo my-project > .app-id
-     echo :Version: 0.0.1  > ReadMe.rst
-     echo "# Id: my-project" > test.sh
-     echo 'version=0.0.1 # my-project' >> test.sh
-     echo -e '{\n"version":"0.0.1"\n}' > package.json
-     echo ReadMe.rst > .versioned-files.list
-     echo package.json >> .versioned-files.lst
-     echo test.sh >> .versioned-files.lst
-     git-versioning dev
-     git-versioning snapshot
-     git-versioning update
-     git-versioning check
-
-
-Syntax
-------
-For clike or hash-comment languages::
-
-  # Id: app-id/0.0.0 path/filename.ext
-  # version: 0.0.0 app-id path/filename.ext
-
-And while the exact format differs they follow the pattern::
-
-  version = 0.0.0 # app-id
-
-For some files exceptions are made. Refer to test/example files for syntax
-per format.
-
-The app-id is included to avoid any ambiguity.
-Exact specs of variable rewrites may differ per format since its not always
-possible to include a comment on the line (ie. JSON).
-
-.. rSt example:
-.. Id: git-versioning/0.2.0-dev ReadMe.rst
-
+See `manual <doc/manual.rst>`_.
 
 Other documents
 ---------------

@@ -9,7 +9,6 @@ test
 
 Package contents
 ----------------
-
 .versioned-files.list
   - A plain text list of paths that have version tags embedded.
   - The first path is the main file, that contains the canonical tags
@@ -62,4 +61,3 @@ Makefile
 
 
 .. _sitefile: http://github.com/dotmpe/node-sitefile
-
