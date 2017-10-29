@@ -88,5 +88,5 @@ Change Log
 .. [stack-25929225] https://stackoverflow.com/questions/25929225/how-to-deploy-to-github-with-file-pattern-on-travis
 .. _x-ci: //github.com/bvberkum/x-ci
 
-(0.2.7-dev)
+0.2.7
   Idem.

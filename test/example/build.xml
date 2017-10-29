@@ -1,6 +1,6 @@
 <project name="git-versioning">
 
-  <!-- Id: git-versioning/0.2.7-dev test/example/build.xml -->
+  <!-- Id: git-versioning/0.2.7 test/example/build.xml -->
   <var value="0.0.28-test+20160321-0534" name="git-versioning.version" />
 
 </project>
