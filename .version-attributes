@@ -1,3 +1,8 @@
 App-Id: git-versioning
+# Version:
 Main-File: ReadMe.rst
-Main-File-Key: Version
+# TODO: Main-File-Key: Version
+Local-Formats: local-formats.sh
+# TEST: Formats: lib/formats.sh
+# File-List: .versioned-files.list
+# Other-Files: 

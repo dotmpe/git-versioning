@@ -5,6 +5,7 @@ bin/cli-version.sh
 lib/git-versioning.sh
 lib/util.sh
 lib/formats.sh
+local-formats.sh
 tools/ci/build.sh
 tools/git-hooks/prepare-commit-msg.sh
 tools/git-hooks/pre-commit.sh
@@ -21,3 +22,19 @@ Rules.git-versioning.shared.mk
 Rules.git-hooks.shared.mk
 test/git-versioning-spec.bats
 test/helpers.bash
+tools/sh/sync-lib.sh
+test/example/build.xml
+test/example/clike_line_comment_id.js
+test/example/clike_line_comment_id.pug
+test/example/coffee_var_version.coffee
+test/example/js_var_version.js
+test/example/json_version.json
+test/example/mk_var_version.mk
+test/example/properties_version.properties
+test/example/py_mod.py
+test/example/rst_field_id.rst
+test/example/rst_field_version.rst
+test/example/sh_var_version.sh
+test/example/unix_comment_id.sh
+test/example/unix_comment_version.sh
+test/example/yaml_version.yaml
