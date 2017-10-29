@@ -1,5 +1,7 @@
 #!/bin/sh
 
+./bin/cli-version version &&
+version=$(./bin/cli-version version) ||
 version=0.2.1-dev # git-versioning
 
 case "$ENV_NAME" in
