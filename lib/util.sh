@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Id: git-versioning/0.1.4-dev lib/util.sh
+# Id: git-versioning/0.2.1-dev lib/util.sh
 
 gitAddAll()
 {
@@ -46,7 +46,7 @@ log()
   test -n "$verbosity" && std_v 1 || return 0
 	[ -n "$(echo $*)" ] || return 1;
   key=$scriptname.sh
-  test -n "$cmd" && key=${key}${bb}:${bk}${subcmd}
+  test -n "$cmd" && key=${key}${bb}:${bk}${cmd}
   echo "[$key] $1"
 }
 
@@ -54,11 +54,15 @@ stderr()
 {
   case "$(echo $1 | tr 'A-Z' 'a-z')" in
 
-    * )
-      ;;
+    emer* ) std_v 1 || std_exit $3 || return 0 ;;
+    crit* ) std_v 2 || std_exit $3 || return 0 ;;
+    err* )  std_v 3 || std_exit $3 || return 0 ;;
+    warn* ) std_v 4 || std_exit $3 || return 0 ;;
+    note )  std_v 5 || std_exit $3 || return 0 ;;
+    info )  std_v 6 || std_exit $3 || return 0 ;;
+    debug ) std_v 7 || std_exit $3 || return 0 ;;
 
   esac
-
   err "$2" $3
 }
 
@@ -78,22 +82,18 @@ std_exit()
 
 warn()
 {
-  std_v 4 || std_exit $2 || return 0
   stderr "Warning" "$1" $2
 }
 note()
 {
-  std_v 5 || std_exit $2 || return 0
   stderr "Notice" "$1" $2
 }
 info()
 {
-  std_v 6 || std_exit $2 || return 0
   stderr "Info" "$1" $2
 }
 debug()
 {
-  std_v 7 || std_exit $2 || return 0
   stderr "Debug" "$1" $2
 }
 
@@ -137,3 +137,24 @@ is_glob()
   echo "$1" | grep '.*[][\*].*'
 }
 
+# Get from a properties file
+get_property() # Properties-File Key
+{
+  test -e "$1" -a -n "$2" || stderr error "File Key expected" 1
+  grep '^'$2'\ *\(=\|:\).*$' $1 | sed 's/^[^:=]*\ *[:=]\ *//'
+}
+
+# Like get-property, but export to env-var, if non-empty.
+export_property()
+{
+  test -n "$3" || error "var-name expected" 1
+  local v="$(get_property "$1" "$2" )"
+  test -n "$v" && export $3="$v"
+}
+
+func_exists()
+{
+  type $1 2> /dev/null 1> /dev/null || return $?
+  # XXX bash/bsd-darwin: test "$(type -t $1)" = "function" && return
+  return 0
+}

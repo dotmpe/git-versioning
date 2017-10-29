@@ -3,7 +3,7 @@
 load helpers
 
 bin=bin/cli-version.sh
-version=0.1.4-dev # git-versioning
+version=0.2.1-dev # git-versioning
 
 @test "no arguments prints application info" {
   verbosity=3
@@ -26,4 +26,3 @@ version=0.1.4-dev # git-versioning
   [ $? -eq 0 ]
   test -z "$(grep 'Version mismatch' $TMPF)"
 }
-
