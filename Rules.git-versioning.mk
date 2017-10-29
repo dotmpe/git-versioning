@@ -1,4 +1,4 @@
-# Id: git-versioning/0.2.8-dev Rules.git-versioning.mk
+# Id: git-versioning/0.2.8 Rules.git-versioning.mk
 
 
 empty :=
@@ -63,6 +63,7 @@ STRGT += do-release
 do-release:: min := 
 do-release:: maj := 
 do-release::
+do-release:: VERSION=$(shell git-versioning version)
 do-release:: M=Release
 do-release:: cli-version-check
 	[ -n "$(VERSION)" ] || exit 1; \

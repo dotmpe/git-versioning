@@ -70,4 +70,4 @@ TODO: add & test basher install
 
 .. _sitefile: http://github.com/bvberkum/node-sitefile
 
-.. Id: git-versioning/0.2.8-dev ReadMe.rst
+.. Id: git-versioning/0.2.8 ReadMe.rst

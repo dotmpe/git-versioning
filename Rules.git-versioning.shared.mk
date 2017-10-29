@@ -1,4 +1,4 @@
-# Id: git-versioning/0.2.8-dev Rules.git-versioning.shared.mk
+# Id: git-versioning/0.2.8 Rules.git-versioning.shared.mk
 
 
 # print version from main file

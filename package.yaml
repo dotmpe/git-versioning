@@ -1,10 +1,10 @@
-# Id: git-versioning/0.2.8-dev package.yaml
+# Id: git-versioning/0.2.8 package.yaml
 # Start
 
 - type: application/x-project-mpe
   main: git-versioning
   id: git-versioning
-  version: 0.2.8-dev # git-versioning
+  version: 0.2.8 # git-versioning
   environments: [ 'development' ]
 
   scripts:
