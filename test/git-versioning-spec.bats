@@ -3,7 +3,7 @@
 load helpers
 
 bin=bin/cli-version.sh
-version=0.2.6 # git-versioning
+version=0.2.7-dev # git-versioning
 
 @test "no arguments prints application info" {
   verbosity=3
