@@ -46,7 +46,6 @@ For issues, see `dev docs <doc/dev.rst#issues>`__
 - `Initial analysis (ReadMe) <doc/initial-analysis.rst>`_
 - `Branche and Directory Docs <doc/package.rst>`_
 
-
 Builds
 ------
 Latest releases are available at github__, stability of SCM editions can be
