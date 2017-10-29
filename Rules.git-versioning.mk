@@ -65,18 +65,20 @@ do-release:: maj :=
 do-release::
 do-release:: M=Release
 do-release:: cli-version-check
-	[ -n "$(VERSION)" ] || exit 1
-	grep '^'$(VERSION)'$$' ChangeLog.rst || { \
+	VERSION="$$(./bin/cli-version.sh version)"; \
+	[ -n "$$VERSION" ] || exit 1
+	grep '^'$$VERSION'$$' ChangeLog.rst || { \
 		echo "Please fix version or the ChangeLog"; \
 		exit 2; }
 	ENV_NAME=testing ./configure.sh \
-			&& pd check \
+			&& htd run check \
 			&& git checkout .versioned-files.list 
 	grep Status..Release ReadMe.rst
-	git commit -m "$(M) $(VERSION)"
-	git tag -a -m "$(M) $(VERSION)" $(VERSION)
-	git push origin
-	git push --tags
+	VERSION="$$(./bin/cli-version.sh version)"; \
+	git commit -m "$(M) $$VERSION"; \
+	git tag -a -m "$(M) $$VERSION" $$VERSION
+	echo git push origin
+	echo git push --tags
 	@# Increment and tag
 	@./bin/cli-version.sh increment $(min) $(maj)
 	@#./tools/cmd/prep-version.sh

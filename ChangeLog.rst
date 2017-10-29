@@ -75,8 +75,8 @@ Change Log
     build script.
   - No longer using ``ENV`` for environment name, changed to ``ENV_NAME``.
 
-(0.2.0)
+0.2.0
   - Starting new beta release branch from master, to work on extending
     git-versioning behaviour a bit.
-  - Made ``.version-attributes`` active. Intend to move or copy more of the
-    config and behaviour settings into there.
+  - Made ``.version-attributes`` active. Moved some of the config and behaviour
+    settings into there.

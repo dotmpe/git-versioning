@@ -10,6 +10,7 @@ package_scripts_check__0="git-versioning check"
 package_scripts_check__1="bats -c test/*-spec.bats"
 package_scripts_check__2="bats test/git-versioning-spec.bats"
 package_scripts_init__0="Build_Deps_Default_Paths=1 ./install-dependencies.sh all"
+package_scripts_sync_lib__0=./tools/sh/sync-lib.sh
 package_scripts_test__0="bats test/*-spec.bats"
 package_type=application/x-project-mpe
-package_version=0.1.4-dev
+package_version=0.2.0-dev
