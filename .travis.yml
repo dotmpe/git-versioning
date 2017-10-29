@@ -1,7 +1,6 @@
-
 sudo: true
 
-install: 
+install:
 - ./install-dependencies.sh all
 
 before_script:
@@ -34,10 +33,10 @@ notifications:
 
 deploy:
   provider: releases
-  api_key: $GH_ACCESS_TOKEN
+  api_key:
+    secure: jmDiuKQx63OiPoWyWNslSW7L1Ld29PGEDO+rL94pFjgw1s26WJF3+JUcQEF3o4R7qJjTKpBta7HRqVoVkWcvhbuHD2tvapSN7KSI0Z/6HAGz7234yMALj8gG6W4djSyz4EDBmBc7qAnXmmrrioIqAhjUmaCnQIf6bTw7JkEgvM4=
   file: git-versioning-$TRAVIS_TAG.tar
   on:
     repo: bvberkum/git-versioning
     tags: true
     condition: $ENV_NAME = production
-

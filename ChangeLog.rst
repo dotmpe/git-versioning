@@ -84,7 +84,8 @@ Change Log
 0.2.1
 0.2.2
 0.2.3
-  - Testing release script
-
 0.2.4
+  - Testing release script. Fixed Travis CI setup.
+
+0.2.5
   Idem.

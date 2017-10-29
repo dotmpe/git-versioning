@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Id: git-versioning/0.2.4 lib/formats.sh
+# Id: git-versioning/0.2.5 lib/formats.sh
 
 # Markdown
 MD_VER_TOKEN='\([Vv]\)ersion:'
