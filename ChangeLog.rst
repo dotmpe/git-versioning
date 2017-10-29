@@ -81,11 +81,8 @@ Change Log
   - Made ``.version-attributes`` active. Moved some of the config and behaviour
     settings into there.
 
-0.2.1
-0.2.2
-0.2.3
-0.2.4
+0.2.1 0.2.2 0.2.3 0.2.4 0.2.5
   - Testing release script. Fixed Travis CI setup.
 
-0.2.5
+(0.2.6-dev)
   Idem.

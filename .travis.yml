@@ -7,6 +7,7 @@ before_script:
 - test -z "$PREFIX" || export PATH=$PATH:$PREFIX/bin
 
 script:
+- echo '---------' && env && echo '----------------'
 - echo ENV_NAME=$ENV_NAME PREFIX=$PREFIX SRC_PREFIX=$SRC_PREFIX
 - ./tools/ci/build.sh
 
@@ -35,7 +36,7 @@ deploy:
   provider: releases
   api_key:
     secure: jmDiuKQx63OiPoWyWNslSW7L1Ld29PGEDO+rL94pFjgw1s26WJF3+JUcQEF3o4R7qJjTKpBta7HRqVoVkWcvhbuHD2tvapSN7KSI0Z/6HAGz7234yMALj8gG6W4djSyz4EDBmBc7qAnXmmrrioIqAhjUmaCnQIf6bTw7JkEgvM4=
-  file: git-versioning-$TRAVIS_TAG.tar
+  file: git-versioning-${TRAVIS_TAG}.tar
   on:
     repo: bvberkum/git-versioning
     tags: true
