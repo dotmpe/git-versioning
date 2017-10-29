@@ -81,5 +81,8 @@ Change Log
   - Made ``.version-attributes`` active. Moved some of the config and behaviour
     settings into there.
 
-(0.2.1-dev)
+0.2.1
+  - Testing release script
+
+0.2.2
   ..
