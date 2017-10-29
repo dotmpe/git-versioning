@@ -1,4 +1,4 @@
-# Id: git-versioning/0.2.0-dev Rules.git-versioning.mk
+# Id: git-versioning/0.2.1-dev Rules.git-versioning.mk
 
 
 empty :=
@@ -77,17 +77,20 @@ do-release:: cli-version-check
 	VERSION="$$(./bin/cli-version.sh version)"; \
 	git commit -m "$(M) $$VERSION"; \
 	git tag -a -m "$(M) $$VERSION" $$VERSION
-	echo git push origin
-	echo git push --tags
+	git push origin
+	git push --tags
 	@# Increment and tag
 	@./bin/cli-version.sh increment $(min) $(maj)
 	@#./tools/cmd/prep-version.sh
 	@ENV_NAME= ./configure.sh \
 		&& ./bin/cli-version.sh pre-release dev
 	@# Stage changes
-	@git add $$(echo $$(cat .versioned-files.list))
+	@git reset .versioned-files.list
 	@git checkout .versioned-files.list
+	@git add -u
 	@sed -i.bak 's/:Status:.*/:Status: Development/' ReadMe.rst
+	@VERSION="$$(./bin/cli-version.sh version)"; \
+	echo "($$VERSION)" >> ChangeLog.rst
 
 # install/uninstall
 V_SH_SHARE := /usr/local/share/git-versioning
