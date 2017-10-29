@@ -16,7 +16,7 @@ PROJECT := $(notdir $(BASE))
 endif
 
 #VERSION             := $(./bin/cli-version version)
-VERSION             := 0.2.8# git-versioning
+VERSION             := 0.2.9-dev# git-versioning
 $(info Version: $(VERSION))
 #ID                  := git-versioning/0.0.16-master
 #VERSION             := $(patsubst $(PROJECT)/%,%,$(ID))

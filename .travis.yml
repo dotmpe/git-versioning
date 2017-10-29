@@ -39,6 +39,7 @@ before_deploy:
 #  - echo "deploying $RELEASE_PKG_FILE to GitHub releases"
 
 deploy:
+  skip_cleanup: true
   provider: releases
   api_key:
     secure: jmDiuKQx63OiPoWyWNslSW7L1Ld29PGEDO+rL94pFjgw1s26WJF3+JUcQEF3o4R7qJjTKpBta7HRqVoVkWcvhbuHD2tvapSN7KSI0Z/6HAGz7234yMALj8gG6W4djSyz4EDBmBc7qAnXmmrrioIqAhjUmaCnQIf6bTw7JkEgvM4=

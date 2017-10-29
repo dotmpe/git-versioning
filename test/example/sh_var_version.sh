@@ -1,2 +1,2 @@
-version=0.2.8 # git-versioning
+version=0.2.9-dev # git-versioning
 echo $version
