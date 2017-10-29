@@ -1,4 +1,4 @@
-# Id: git-versioning/0.2.3 Rules.git-versioning.mk
+# Id: git-versioning/0.2.4 Rules.git-versioning.mk
 
 
 empty :=
@@ -87,12 +87,12 @@ do-release:: cli-version-check
 	@# Stage changes
 	@git reset .versioned-files.list
 	@git checkout .versioned-files.list
-	@git add -u
 	@VERSION="$$(./bin/cli-version.sh version)"; \
 	[ -n "$$VERSION" ] || exit 1; \
 	{ echo "" ; \
 		echo "($$VERSION)" ;  \
 		echo "  .." ; } >> ChangeLog.rst
+	@git add -u
 
 # install/uninstall
 V_SH_SHARE := /usr/local/share/git-versioning

@@ -1,3 +1,3 @@
 
-# version: 0.2.3 git-versioning
+# version: 0.2.4 git-versioning
 

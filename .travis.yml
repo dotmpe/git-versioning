@@ -37,7 +37,7 @@ deploy:
   api_key: $GH_ACCESS_TOKEN
   file: git-versioning-$TRAVIS_TAG.tar
   on:
-    repo: dotmpe/git-versioning
+    repo: bvberkum/git-versioning
     tags: true
     condition: $ENV_NAME = production
 

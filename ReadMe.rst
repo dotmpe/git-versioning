@@ -2,17 +2,17 @@ GIT Versioning
 ==============
 :Created: 2015-04-19
 :Updated: 2017-10-29
-:Version: 0.2.3
+:Version: 0.2.4
 :project:
 
-  .. image:: https://secure.travis-ci.org/dotmpe/git-versioning.png
-    :target: https://travis-ci.org/dotmpe/git-versioning
+  .. image:: https://secure.travis-ci.org/bvberkum/git-versioning.png
+    :target: https://travis-ci.org/bvberkum/git-versioning
     :alt: Build
 
 :repository:
 
-  .. image:: https://badge.fury.io/gh/dotmpe%2Fgit-versioning.png
-    :target: http://badge.fury.io/gh/dotmpe%2Fgit-versioning
+  .. image:: https://badge.fury.io/gh/bvberkum%2Fgit-versioning.png
+    :target: http://badge.fury.io/gh/bvberkum%2Fgit-versioning
     :alt: GIT
 
 
@@ -62,12 +62,12 @@ configuration from SCM are tested.
 TODO: add & test basher install
 
 
-.. __: https://github.com/dotmpe/git-versioning/releases
-.. __: https://travis-ci.org/dotmpe/git-versioning/branches
+.. __: https://github.com/bvberkum/git-versioning/releases
+.. __: https://travis-ci.org/bvberkum/git-versioning/branches
 
 
 .. ----
 
-.. _sitefile: http://github.com/dotmpe/node-sitefile
+.. _sitefile: http://github.com/bvberkum/node-sitefile
 
-.. Id: git-versioning/0.2.3 ReadMe.rst
+.. Id: git-versioning/0.2.4 ReadMe.rst
