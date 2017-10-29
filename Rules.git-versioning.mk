@@ -1,4 +1,4 @@
-# Id: git-versioning/0.2.2-dev Rules.git-versioning.mk
+# Id: git-versioning/0.2.3 Rules.git-versioning.mk
 
 
 empty :=
@@ -73,6 +73,7 @@ do-release:: cli-version-check
 	ENV_NAME=testing ./configure.sh \
 		&& git-versioning update && htd run check
 	ENV_NAME=production ./configure.sh
+	git add -u
 	VERSION="$$(./bin/cli-version.sh version)"; \
 	git commit -m "$(M) $$VERSION"; \
 	git tag -a -m "$(M) $$VERSION" $$VERSION
