@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Id: git-versioning/0.2.9-dev local-formats.sh
+# Id: git-versioning/0.2.9 local-formats.sh
 
 # Local formats: FIXME: for testing local extensions to lib/formats.sh
 

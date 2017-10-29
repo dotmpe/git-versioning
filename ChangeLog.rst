@@ -81,15 +81,12 @@ Change Log
   - Made ``.version-attributes`` active. Moved some of the config and behaviour
     settings into there.
 
-0.2.1 0.2.2 0.2.3 0.2.4 0.2.5 0.2.6 0.2.7
+0.2.x
   - Testing release script. Fixed Travis CI setup. [stack-25929225]_
     I should really be doing this in x-ci_ or something.
 
 .. [stack-25929225] https://stackoverflow.com/questions/25929225/how-to-deploy-to-github-with-file-pattern-on-travis
 .. _x-ci: //github.com/bvberkum/x-ci
 
-0.2.8
+0.2.9
   Idem.
-
-(0.2.9-dev)
-  ..

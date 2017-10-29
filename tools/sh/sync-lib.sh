@@ -15,4 +15,4 @@ do
     done
   done
 done
-# Id: git-versioning/0.2.9-dev tools/sh/sync-lib.sh
+# Id: git-versioning/0.2.9 tools/sh/sync-lib.sh
