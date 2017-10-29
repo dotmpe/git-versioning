@@ -2,8 +2,8 @@ GIT Versioning
 ==============
 :Created: 2015-04-19
 :Updated: 2017-10-29
-:Version: 0.2.0
-:Status: Release
+:Version: 0.2.1-dev
+:Status: Development
 :project:
 
   .. image:: https://secure.travis-ci.org/dotmpe/git-versioning.png
@@ -71,4 +71,4 @@ TODO: add & test basher install
 
 .. _sitefile: http://github.com/dotmpe/node-sitefile
 
-.. Id: git-versioning/0.2.0-dev ReadMe.rst
+.. Id: git-versioning/0.2.1-dev ReadMe.rst

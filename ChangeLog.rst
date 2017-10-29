@@ -80,3 +80,6 @@ Change Log
     git-versioning behaviour a bit.
   - Made ``.version-attributes`` active. Moved some of the config and behaviour
     settings into there.
+
+(0.2.1-dev)
+  ..
