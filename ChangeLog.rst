@@ -82,7 +82,9 @@ Change Log
     settings into there.
 
 0.2.1 0.2.2 0.2.3 0.2.4 0.2.5
-  - Testing release script. Fixed Travis CI setup.
+  - Testing release script. Fixed Travis CI setup. [stack-25929225]_
 
-(0.2.6-dev)
+.. [stack-25929225] https://stackoverflow.com/questions/25929225/how-to-deploy-to-github-with-file-pattern-on-travis
+
+0.2.6
   Idem.

@@ -1,1 +1,1 @@
-var version = '0.2.6-dev'; // git-versioning
+var version = '0.2.6'; // git-versioning

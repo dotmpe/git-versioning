@@ -32,11 +32,17 @@ notifications:
   email:
     on_success: never
 
+before_deploy:
+  - export RELEASE_PKG_FILE=git-versioning-$TRAVIS_TAG.tar
+  - echo "deploying $RELEASE_PKG_FILE to GitHub releases"
+#  - export RELEASE_PKG_FILE=$(echo git-versioning-*.tar)
+#  - echo "deploying $RELEASE_PKG_FILE to GitHub releases"
+
 deploy:
   provider: releases
   api_key:
     secure: jmDiuKQx63OiPoWyWNslSW7L1Ld29PGEDO+rL94pFjgw1s26WJF3+JUcQEF3o4R7qJjTKpBta7HRqVoVkWcvhbuHD2tvapSN7KSI0Z/6HAGz7234yMALj8gG6W4djSyz4EDBmBc7qAnXmmrrioIqAhjUmaCnQIf6bTw7JkEgvM4=
-  file: git-versioning-${TRAVIS_TAG}.tar
+  file: "${RELEASE_PKG_FILE}"
   on:
     repo: bvberkum/git-versioning
     tags: true
