@@ -35,36 +35,19 @@ GIT Versioning
 
          version="1.0.0-alpha+exp.sha.5114f85"; # application-name
 
-See `manual <doc/manual.rst>`_.
-
-Other documents
----------------
-For issues, see `dev docs <doc/dev.rst#issues>`__
-
-- `Change Log <ChangeLog.rst>`_
-- `Development documentation <doc/dev.rst>`_
-- `Initial analysis (ReadMe) <doc/initial-analysis.rst>`_
-- `Branche and Directory Docs <doc/package.rst>`_
-
+See `manual <doc/manual.rst>`_ and `development documentation <doc/dev.rst>`_.
+For issues, see `dev docs <doc/dev.rst#issues>`__ too.
 
 Builds
 ------
 Latest releases are available at github__, stability of SCM editions can be
 examined at Travis__.
 
-FIXME: Building the tar distributable is left to a Mkdocs (Makefile) setup, but
-its use it not tested at all! (src may be out of date?) The package is
-prepared by Travis on tagged commits, from the 'production' build env.
-
-However, installations of a development, testing, and production flavoured
-configuration from SCM are tested.
-
 TODO: add & test basher install
 
 
 .. __: https://github.com/bvberkum/git-versioning/releases
 .. __: https://travis-ci.org/bvberkum/git-versioning/branches
-
 
 .. ----
 

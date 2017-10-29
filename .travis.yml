@@ -1,50 +1,54 @@
-sudo: true
+sudo: required
 
-install:
-- ./install-dependencies.sh all
+services:
+  - docker
 
-before_script:
-- test -z "$PREFIX" || export PATH=$PATH:$PREFIX/bin
-
-script:
-- echo '---------' && env && echo '----------------'
-- echo ENV_NAME=$ENV_NAME PREFIX=$PREFIX SRC_PREFIX=$SRC_PREFIX
-- ./tools/ci/build.sh
+language: go
 
 env:
   global:
-  - username=travis
-  - PATH=$PATH:$HOME/bin:$HOME/usr/bin:$HOME/.local/bin/
-  - Build_Deps_Default_Paths=1
+    - NS_NAME=bvberkum
+    - APP_ID=git-versioning
+    - BUILD_GOARCH="386 amd64 arm" 
+    - BUILD_GOOS="linux" 
   matrix:
-  - ENV_NAME=production sudo=sudo
-  - ENV_NAME=user-dev PREFIX=$HOME/.local
-  - ENV_NAME=testing
-  - ENV_NAME=
+    - ENV_NAME=
 
 branches:
   only:
   - master
   - test
   - '/^[0-9]*\.[0-9]*\.[0-9]*/'
+  - golang
+  - '/golang.*/'
 
 notifications:
   email:
     on_success: never
 
-before_deploy:
-  - export RELEASE_PKG_FILE=$(pwd -P)/git-versioning-$TRAVIS_TAG.tar
-  - echo "deploying $RELEASE_PKG_FILE to GitHub releases"
-#  - export RELEASE_PKG_FILE=$(echo git-versioning-*.tar)
-#  - echo "deploying $RELEASE_PKG_FILE to GitHub releases"
+before_script:
+- echo '---------' && env && echo '----------------'
+#- case "$TRAVIS_TAG" in v[0-9]* ) export RELEASE="$(printf -- "$TRAVIS_TAG" | cut -c2-)" ;; esac
+
+script:
+  - docker run --rm
+    -e CGO_ENABLED=true
+    -e COMPRESS_BINARY=true
+    -e BUILD_GOOS="$BUILD_GOOS"
+    -e BUILD_GOARCH="$BUILD_GOARCH"
+    -v "$(pwd -P):/src"
+    centurylink/golang-builder-cross
 
 deploy:
-  skip_cleanup: true
   provider: releases
   api_key:
     secure: jmDiuKQx63OiPoWyWNslSW7L1Ld29PGEDO+rL94pFjgw1s26WJF3+JUcQEF3o4R7qJjTKpBta7HRqVoVkWcvhbuHD2tvapSN7KSI0Z/6HAGz7234yMALj8gG6W4djSyz4EDBmBc7qAnXmmrrioIqAhjUmaCnQIf6bTw7JkEgvM4=
-  file: "${RELEASE_PKG_FILE}"
+  skip_cleanup: true
+  file:
+    - $APP_ID-linux-amd64
+    - $APP_ID-linux-386
+    - $APP_ID-linux-arm
   on:
-    repo: bvberkum/git-versioning
+    repo: $NS_NAME/$APP_ID
     tags: true
-    condition: $ENV_NAME = production
+    #condition: $ENV_NAME = production

@@ -1,0 +1,10 @@
+
+main_doc = "README.md"
+version = "0.3.0-dev+golang"
+
+# Always set ver from field in main doc
+update_mode = "main"
+
+# Always set ver to latest from documents
+#update = "latest"
+

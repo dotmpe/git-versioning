@@ -1,91 +1,63 @@
+Development Documentation
+=========================
 .. include:: ../.default.rst
 
-Development Documentation
--------------------------
 
-Project flows
-  TODO: development, stabilization, release. Can some scripts help? Looking at the tools and issues.
+r0.3 golang fork. Look at doing some gitflow-ish checks too.
 
-  GIT hooks analysis
-    - A `pre-commit` hook may add new files, but it has no way to get at GIT
-      arguments or the commit message?
+And use GIT smudge filters::
 
-      So it could be made to auto-increment or add tags, but not in response
-      to direct user input. Unless user input is setting a env or putting a file
-      somewhere..
+  git config --global filter.gitver.clean $(pwd)'/git-versioning filter clean'
+  git config --global filter.gitver.smudge $(pwd)'/git-versioning filter smudge'
 
-    - The `prepare-commit-msg` could update the message by embedding the
-      version, possibly by replacing some placeholder. The placeholder
-      might also be a command to increment path/min/maj or to add a tag.
+Status:
+  no filters yet.
+  .gitattributes allows to apply selectively, preventing issues where expansion
+  is unwanted. But also takes away filename from filter, so no per-format
+  considerations.
 
-      This script cannot update/add any files of the commit.
+  Should make things more simpler. Considering this for new config syntax::
 
-    - A `post-commit` hook could do the same commit message scan,
-      and if a trigger is found run some other GIT merge/tag script.
+    [[filter]]
+    match = ... # replace pattern
+    smudge = ... # replace subtitution
+    clean = ... # cleanup pattern, to revert replacement
 
-      Conceivably some CI system would start to run before the new particular version
-      would be approved and published to the official branch or repository.
+    # Emulating svn/vcs/rcs
 
-      But this might as well happen `pre-commit`, ie. forcing some state before code can
-      enter onto a certain branch perhaps.
+    [[filter]]
+    match = "$Id$"
+    smudge = "$Id: {commit} $"
+    clean = "$Id[^$]*$"
 
-    - A `post-merge` hook could force some increment and a push to a main repo
-      to sync versions directly? Or perhaps not increment but then some timestamp
-      build meta (snapshot).
-
-  In general, if the version is not incremented each commit, or a release-tag
-  is present in de code during development commits, then the
-  requirements of semver are *only* applicable to certain snapshots
-  of a repository.
-
-  This would mean that looking at any GIT reversion of the project,
-  for example the latest commit would not give honest version data! I prefer to
-  try to keep the code unambigious at the source. Semver allows release and
-  build tags (release tags are included in comparisons, build tags ignored).
-  Semver also says these may be incompatible or unstable w.r.t the numeric release.
-  The build tag in this case is associates with a development series, releasing
-  or tagging more often may help shipped code to be more easily identified, but
-  is not a requirement.
+    [[filter]]
+    match = "$Date$"
+    smudge = "$Date: {date} $"
+    clean = "$Date[^$]*$"
 
 
-  XXX: current Status field behaviour is undocumented, see pre-commit. there's release,
-  dev\* and mixin status. Status is the first word in the docfield field:
+    # My own fav.
 
-  - Release removes all tags, then checks the files and stages them. Ie. that
-    commit would contain the version without any tags, and must then be the
-    commit to tag with that release version.
-
-  - Dev\* sets the dev-<branch>+<timestamp> version, and checks+stages files.
-    To keep development branches somewhat informative, but see issues described
-    further on.
-
-  - Mixin sets release tag to mixin. Unused, but may want to look at use-case of
-    seed projects or boilerplates further.
+    [[filter]]
+    match = "Id: {app-id}"
+    smudge = "Id: {app-id}/{version} {file}"
+    clean = "Id: {app-id}.*"
 
 
-  Current Development flow
-    The current pre-commit is not used since it always updates the embedded version,
-    which is a pain during development. Moving code across a version requires a
-    lot of merging.
+    # Something new maybe, would replace all occurences of application name ID
 
-    XXX: After each version update, any downstream branch that has its own version (tags)
-    will give a conflict on every version line on the next upstream merge.
+    [[filter]]
+    match = "$App-Id$"
+    smudge = "{app-id}"
+    clean = "{app-id}"
 
-    This has to be dealt with manually: if the version commits upstream are clean otherwise,
-    it is a simple git merge -s ours on that commit, then a version update on the local branch to
-    reflect the proper version after merge, and finally a normal merge with the rest from the
-    upstream branch.
 
-    XXX: It should pay therefore to have tags pointing to these version-update commits.
-    However keeping all pre-release (development, features, testing and other derived) versions as tags in the repository will obviously not do.
-    A little housekeeping is needed, because once a proper release is made, all these branch version tags should be cleaned--after they are merged with the
-    release commit. This way certain branches like feature development or test or
-    demo branches are sure to be up-to-date, and each have a version with
-    [pre-]release tag to warn it is not a well-defined, but in-between or derived version.
-
-    But this requires not only a fancier make tag setup, but also a build system that performs the merges automatically.
-
-    This way using GIT tags and embedded versions, all project flow stays in the repository.
+Other documents
+---------------
+- `GIT hooks <git-hooks.rst>`_
+- `Initial analysis (ReadMe) <doc/initial-analysis.rst>`_
+- `Change Log <ChangeLog.rst>`_
+- `Branche and Directory Docs <doc/package.rst>`_
 
 
 Issues
@@ -117,19 +89,28 @@ GITVER-3 Enhancement: Command-Line Options
     Intialize files by adding comment lines (if no version match found). Add a new
     mode that appends the Id-comment and initializes the .versioned-files.list
 
+GITVER-7 New Feature: provide GIT smudge/clean filters, maybe help with setup
+  was not aware of GIT keyword expansion at time of writing git-versioning.
+  https://git-scm.com/book/en/v2/Customizing-Git-Git-Attributes#Keyword-Expansion
+
+  Note the manual acknowledges that SCN/CSV-style keyword expansion is not that
+  useful since it expans into the Blob SHA-1, not the final commit SHA1.
+  The placeholder format used is e.g. ``$Id$``. Or ``$Date$``.
+
+  GIT filters are simply stream editors, and put in global config (ie.
+  distribute seperately from repo)::
+
+    git config --global filter.indent.clean indent
+    git config --global filter.indent.smudge cat
+
+  And used per project in ``.gitattributes``::
+
+    *.c filter=indent
 
 TODO: maybe rename git-version{ing,}
 
-TODO: kw expansion with git attributes
-  was not aware of GIT keyword expansion at time of writing git-versioning.
-  https://git-scm.com/book/en/v2/Customizing-Git-Git-Attributes#Keyword-Expansion
-  This may make things more easy. It does not ever store the Id's, but
-  updates on checkout and cleans before staging.
-
-
 TODO: basherpm/basher seems like a nice easy way to install. Resolve some path
 issue though.
-
 
 Other version format?
   XXX: not directly a semver, but git describe also offers a version tag for the current commit (last tag, number of commits since, abbrev commit sha and dirty flag)::
@@ -148,12 +129,3 @@ Other version format?
 
 
 More in TODO.list
-
-
-GIT config
-----------
-Use GIT as frontend for make recipes. Commit new patch::
-
-  [alias]
-    patch = !make patch m="$1"
-
