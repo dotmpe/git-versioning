@@ -2,7 +2,7 @@ GIT Versioning
 ==============
 :Created: 2015-04-19
 :Updated: 2017-10-29
-:Version: 0.2.9
+:Version: 0.2.10-dev
 :project:
 
   .. image:: https://secure.travis-ci.org/bvberkum/git-versioning.png
@@ -70,4 +70,4 @@ TODO: add & test basher install
 
 .. _sitefile: http://github.com/bvberkum/node-sitefile
 
-.. Id: git-versioning/0.2.9 ReadMe.rst
+.. Id: git-versioning/0.2.10-dev ReadMe.rst
