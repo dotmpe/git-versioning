@@ -1,4 +1,4 @@
-# Id: git-versioning/0.2.7 Rules.git-versioning.mk
+# Id: git-versioning/0.2.8-dev Rules.git-versioning.mk
 
 
 empty :=
@@ -65,18 +65,16 @@ do-release:: maj :=
 do-release::
 do-release:: M=Release
 do-release:: cli-version-check
-	VERSION="$$(./bin/cli-version.sh version)"; \
-	[ -n "$$VERSION" ] || exit 1; \
-	grep '^'$$VERSION'$$' ChangeLog.rst || { \
-		echo "Please fix version or the ChangeLog: $$VERSION"; \
+	[ -n "$(VERSION)" ] || exit 1; \
+	grep '^'$(VERSION)'$$' ChangeLog.rst || { \
+		echo "Please fix version or the ChangeLog: $(VERSION)"; \
 		exit 2; }
 	ENV_NAME=testing ./configure.sh \
 		&& git-versioning update && htd run check
 	ENV_NAME=production ./configure.sh
 	git add -u
-	VERSION="$$(./bin/cli-version.sh version)"; \
-	git commit -m "$(M) $$VERSION"; \
-	git tag -a -m "$(M) $$VERSION" $$VERSION
+	git commit -m "$(M) $(VERSION)"
+	git tag -a -m "$(M) $(VERSION)" $(VERSION)
 	git push origin
 	git push --tags
 	@# Increment and tag
