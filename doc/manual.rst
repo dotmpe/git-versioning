@@ -157,23 +157,4 @@ or informative to look at a placeholder. And a build system with documentation
 distribution is not feasible for every project, some may want to try to get as
 much from the SCM system instead, including serving documentation.
 
-..
-
-  TODO: think about some manner of placeholders and match/substitute modes. Ideas::
-
-    # Id: git-versioning/!git-versioning version
-    <!-- Id: git-versioning/${git-versioning.version} doc/manual.rst -->
-    .. Id: git-versioning/{version} doc/manual.rst
-
-    .. {ver-marker}: {app-id}/{version} {path} {date}
-
-    var version = "{version}"; # {app-id} {date}
-    var lib_version = "{lib.version}"; # {app-id.lib}
-
-    {app-id}.version={version}
-
-..
-
-  TODO: see about ChangeLog type checks, to use before release
-
-..
+More on current issues in `dev doc <./dev.rst>`_.
