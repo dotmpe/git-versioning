@@ -2,37 +2,62 @@
 
 Development Documentation
 -------------------------
+Other tooling may offer other entry points, but for all parts these scripts
+are so dependent on GIT that they are named after that. But being shell scripts
+other integrations (NPM, Composer) are possible.
+
+Unfortunately GIT does not offer any help in distributing and installing GIT
+hooks. There is an assortment of helper in all sorts.
+
+This site on Hooks <https://githooks.com/> is the best starting point.
 
 Project flows
-  TODO: development, stabilization, release. Can some scripts help? Looking at the tools and issues.
+_____________
+Since we're on GIT this about summarizes the offer:
 
-  GIT hooks analysis
-    - A `pre-commit` hook may add new files, but it has no way to get at GIT
-      arguments or the commit message?
+- pre-commit: Check the commit message for spelling errors.
+- pre-receive (server): Enforce project coding standards.
+- post-commit: Email/SMS team members of a new commit.
+- post-receive (server): Push the code to production.
 
-      So it could be made to auto-increment or add tags, but not in response
-      to direct user input. Unless user input is setting a env or putting a file
-      somewhere..
+Where 'receive' phase scripts are executed post-push on the 'remote' side
+hence called server. However for for non-server phase scripting, special
+dependencies or significant resources may be required. Ie. static analysis
+takes a lot of memory, other tests result in high IO for disk, network and
+lots of cache request and rewindowing will happen because of the size of some
+regular CI scripting.
 
-    - The `prepare-commit-msg` could update the message by embedding the
-      version, possibly by replacing some placeholder. The placeholder
-      might also be a command to increment path/min/maj or to add a tag.
+Ie. to build the flow, two endpoints at least on two environments: dev and source hosting. Probably a user env, deployment and possibly CI, CD around that.
 
-      This script cannot update/add any files of the commit.
+GIT hooks analysis
+ - A `pre-commit` hook may add new files, but it has no way to get at GIT
+   arguments or the commit message?
 
-    - A `post-commit` hook could do the same commit message scan,
-      and if a trigger is found run some other GIT merge/tag script.
+   So it could be made to auto-increment or add tags, but not in response
+   to direct user input ie. args. Unless user input is setting a env or
+   putting up a file somewhere..
 
-      Conceivably some CI system would start to run before the new particular version
-      would be approved and published to the official branch or repository.
+ - The `prepare-commit-msg` could update the message by embedding some value
+   possibly version, possibly by replacing some placeholder. The placeholder
+   might also be a command to increment path/min/maj or to add a tag.
 
-      But this might as well happen `pre-commit`, ie. forcing some state before code can
-      enter onto a certain branch perhaps.
+   This script cannot update/add any files of the commit.
 
-    - A `post-merge` hook could force some increment and a push to a main repo
-      to sync versions directly? Or perhaps not increment but then some timestamp
-      build meta (snapshot).
+ - A `post-commit` hook could do the same commit message scan,
+   and if a trigger is found run some other GIT merge/tag script.
 
+   Conceivably some CI system would start to run before the new particular
+   edition would be approved and published as the new/latest version to
+   official branch or repository.
+
+   But this might as well happen `pre-commit`, ie. forcing some state before
+   code can move onto a certain branch perhaps.
+
+ - A `post-merge` hook could force some increment and a push to a main repo
+   to sync versions directly? Or perhaps not increment but then some timestamp
+   build meta (snapshot).
+
+GIT discussion
   In general, if the version is not incremented each commit, or a release-tag
   is present in de code during development commits, then the
   requirements of semver are *only* applicable to certain snapshots

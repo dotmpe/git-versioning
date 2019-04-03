@@ -1,24 +1,60 @@
 Change Log
 ----------
-(0.0.1)
-  :date: Sun Apr 19. 2015
 
-  Initial checkin.
+v0 prototype
+____________
 
-0.0.30
-  :date: Mon Mar 21. 2016
+0.2.x
+  - Testing release script. Fixed Travis CI setup. [stack-25929225]_
+    I should really be doing this in x-ci_ or something.
+  - [2019-01-26] Updating docs, tasks a bit. Pushing more onto docs with generic
+    GIT workflow. Made tasks on hook install/manage.
 
-  - Start keeping changelog.
+(0.2.10-dev)
+   ..
 
-    Currently supports literal paths in .versioned-files.list,
-    one main document in properties or reStructuredText format.
-    And just a handful of source documents: Shell script, Makefile, Javascript,
-    YAML, JSON, Coffee-Script, Ant build XML.
-    Any format supporting c-style line comments or unix octotrophe comments,
-    but needs to be hardcoded.
+.. [stack-25929225] https://stackoverflow.com/questions/25929225/how-to-deploy-to-github-with-file-pattern-on-travis
+.. _x-ci: //github.com/bvberkum/x-ci
 
-    Immediate dev plans: clean-up docs, start on branches for better
-    configuration, more flexible parser.
+0.2.0
+  - Starting new beta release branch from master, to work on extending
+    git-versioning behaviour a bit.
+  - Made ``.version-attributes`` active. Moved some of the config and behaviour
+    settings into there.
+
+0.1.4
+  - New formats: XML, C (and c++ and header files), Dockerfile, Java, and
+    Groovy. (Comment support only)
+  - Renamed `jade` to `pug`.
+  - Updates for sh tooling and Travis build. Travis build was not properly
+    testing production env, or failing b/c sudo error. Re-added sudo and fixed
+    build script.
+  - No longer using ``ENV`` for environment name, changed to ``ENV_NAME``.
+
+0.1.3
+  :date: Sun Sep 18. 2016
+
+  - Fixed `load()` and sub-cmd `check` to read `.versioned-files.list`
+    (``V_MAIN_DOC``) as a \*nix alike file.
+  - Fixes for `make do-release`.
+
+0.1.1
+  :date: Sun Sep 18. 2016
+
+  - Minor bits for apply version.
+    Added .py support for version and __version__ attributes.
+
+0.1.0
+  :date: Tue Apr 12. 2016
+
+  - Incrementing minor because of V_CHECK change. And running production package
+    release again just for the heck of it.
+
+
+0.0.32
+  :date: Tue Apr 12. 2016
+
+  - Testing packaging with Travis.
 
 0.0.31
   :date: Tue Apr 12. 2016
@@ -42,51 +78,22 @@ Change Log
 
   - Proper production release failed, see next version.
 
-0.0.32
-  :date: Tue Apr 12. 2016
+0.0.30
+  :date: Mon Mar 21. 2016
 
-  - Testing packaging with Travis.
+  - Start keeping changelog.
 
-0.1.0
-  :date: Tue Apr 12. 2016
+    Currently supports literal paths in .versioned-files.list,
+    one main document in properties or reStructuredText format.
+    And just a handful of source documents: Shell script, Makefile, Javascript,
+    YAML, JSON, Coffee-Script, Ant build XML.
+    Any format supporting c-style line comments or unix octotrophe comments,
+    but needs to be hardcoded.
 
-  - Incrementing minor because of V_CHECK change. And running production package
-    release again just for the heck of it.
+    Immediate dev plans: clean-up docs, start on branches for better
+    configuration, more flexible parser.
 
-0.1.1
-  :date: Sun Sep 18. 2016
+(0.0.1)
+  :date: Sun Apr 19. 2015
 
-  - Minor bits for apply version.
-    Added .py support for version and __version__ attributes.
-
-0.1.3
-  :date: Sun Sep 18. 2016
-
-  - Fixed `load()` and sub-cmd `check` to read `.versioned-files.list`
-    (``V_MAIN_DOC``) as a \*nix alike file.
-  - Fixes for `make do-release`.
-
-0.1.4
-  - New formats: XML, C (and c++ and header files), Dockerfile, Java, and
-    Groovy. (Comment support only)
-  - Renamed `jade` to `pug`.
-  - Updates for sh tooling and Travis build. Travis build was not properly
-    testing production env, or failing b/c sudo error. Re-added sudo and fixed
-    build script.
-  - No longer using ``ENV`` for environment name, changed to ``ENV_NAME``.
-
-0.2.0
-  - Starting new beta release branch from master, to work on extending
-    git-versioning behaviour a bit.
-  - Made ``.version-attributes`` active. Moved some of the config and behaviour
-    settings into there.
-
-0.2.x
-  - Testing release script. Fixed Travis CI setup. [stack-25929225]_
-    I should really be doing this in x-ci_ or something.
-
-.. [stack-25929225] https://stackoverflow.com/questions/25929225/how-to-deploy-to-github-with-file-pattern-on-travis
-.. _x-ci: //github.com/bvberkum/x-ci
-
-(0.2.10-dev)
-  ..
+  Initial checkin.

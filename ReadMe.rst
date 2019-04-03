@@ -59,8 +59,6 @@ prepared by Travis on tagged commits, from the 'production' build env.
 However, installations of a development, testing, and production flavoured
 configuration from SCM are tested.
 
-TODO: add & test basher install
-
 
 .. __: https://github.com/bvberkum/git-versioning/releases
 .. __: https://travis-ci.org/bvberkum/git-versioning/branches
