@@ -1,7 +1,7 @@
 # Id: git-versioning/0.2.10-dev package.yaml
 # Start
 
-- type: application/x-project-mpe
+- type: application/vnd.dotmpe.project
   main: git-versioning
   id: git-versioning
   version: 0.2.10-dev # git-versioning
