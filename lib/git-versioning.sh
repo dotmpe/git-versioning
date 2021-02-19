@@ -387,7 +387,6 @@ release()
   #cmd_update
   VER_PRE=$(echo $* | tr ' ' '.')
   echo "Setting pre-release to '$VER_PRE'"
-  #concatVersion
   buildVER
   #VER_STR=`parse_version "$STR"`
   parse_version "$STR" | read VER_STR
