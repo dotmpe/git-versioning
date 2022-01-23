@@ -3,11 +3,15 @@ Install ::
   $ make install
   $ make uninstall
 
-or::
+or diretly using ``install.sh``. Uninstall is only needed to remove existing... ::
 
-  @ENV_NAME=production ./configure.sh /usr/local
-  @ENV_NAME=production sudo ./install.sh uninstall
-  @ENV_NAME=production sudo ./install.sh install
+  ENV_NAME=production ./configure.sh ~/.local
+  ./install.sh uninstall
+  ./install.sh install
+
+  ENV_NAME=production ./configure.sh /usr/local
+  sudo ./install.sh uninstall
+  sudo ./install.sh install
 
 See also Travis CI test build script.
 
