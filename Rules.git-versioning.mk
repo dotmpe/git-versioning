@@ -1,4 +1,4 @@
-# Id: git-versioning/0.2.1-dev Rules.git-versioning.mk
+# Id: git-versioning/0.2.10-dev Rules.git-versioning.mk
 
 
 empty :=
@@ -62,21 +62,19 @@ cli-version-check::
 STRGT += do-release
 do-release:: min := 
 do-release:: maj := 
-do-release::
+do-release:: VERSION=$(shell git-versioning version)
 do-release:: M=Release
 do-release:: cli-version-check
-	VERSION="$$(./bin/cli-version.sh version)"; \
-	[ -n "$$VERSION" ] || exit 1
-	grep '^'$$VERSION'$$' ChangeLog.rst || { \
-		echo "Please fix version or the ChangeLog"; \
+	[ -n "$(VERSION)" ] || exit 1; \
+	grep '^'$(VERSION)'$$' ChangeLog.rst || { \
+		echo "Please fix version or the ChangeLog: $(VERSION)"; \
 		exit 2; }
 	ENV_NAME=testing ./configure.sh \
-			&& htd run check \
-			&& git checkout .versioned-files.list 
-	grep Status..Release ReadMe.rst
-	VERSION="$$(./bin/cli-version.sh version)"; \
-	git commit -m "$(M) $$VERSION"; \
-	git tag -a -m "$(M) $$VERSION" $$VERSION
+		&& git-versioning update && htd run check
+	ENV_NAME=production ./configure.sh
+	git add -u
+	git commit -m "$(M) $(VERSION)"
+	git tag -a -m "$(M) $(VERSION)" $(VERSION)
 	git push origin
 	git push --tags
 	@# Increment and tag
@@ -87,10 +85,12 @@ do-release:: cli-version-check
 	@# Stage changes
 	@git reset .versioned-files.list
 	@git checkout .versioned-files.list
-	@git add -u
-	@sed -i.bak 's/:Status:.*/:Status: Development/' ReadMe.rst
 	@VERSION="$$(./bin/cli-version.sh version)"; \
-	echo "($$VERSION)" >> ChangeLog.rst
+	[ -n "$$VERSION" ] || exit 1; \
+	{ echo "" ; \
+		echo "($$VERSION)" ;  \
+		echo "  .." ; } >> ChangeLog.rst
+	@git add -u
 
 # install/uninstall
 V_SH_SHARE := /usr/local/share/git-versioning

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Id: git-versioning/0.2.1-dev lib/util.sh
+# Id: git-versioning/0.2.10-dev lib/util.sh
 
 gitAddAll()
 {
@@ -140,9 +140,11 @@ is_glob()
 # Get from a properties file
 get_property() # Properties-File Key
 {
+  test $# -eq 2 || return 98
   test -e "$1" -a -n "$2" || stderr error "File Key expected" 1
   grep '^'$2'\ *\(=\|:\).*$' $1 | sed 's/^[^:=]*\ *[:=]\ *//'
 }
+# Sh-Copy: HT:tools/u-s/parts/m-get-property.inc.sh
 
 # Like get-property, but export to env-var, if non-empty.
 export_property()

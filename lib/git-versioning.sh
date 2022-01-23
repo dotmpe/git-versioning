@@ -6,12 +6,12 @@ V_SH_LIB=$BASH_SOURCE
 set -e
 
 
-# Id: git-versioning/0.2.1-dev lib/git-versioning.sh
-# version: 0.2.1-dev git-versioning lib/git-versioning.sh
+# Id: git-versioning/0.2.10-dev lib/git-versioning.sh
+# version: 0.2.10-dev git-versioning lib/git-versioning.sh
 
 source $LIB/util.sh
 
-version=0.2.1-dev # git-versioning
+version=0.2.10-dev # git-versioning
 
 [ -n "$V_SH_SHARE" ] || {
   [ -n "$PREFIX" ] || {
@@ -387,7 +387,6 @@ release()
   #cmd_update
   VER_PRE=$(echo $* | tr ' ' '.')
   echo "Setting pre-release to '$VER_PRE'"
-  #concatVersion
   buildVER
   #VER_STR=`parse_version "$STR"`
   parse_version "$STR" | read VER_STR

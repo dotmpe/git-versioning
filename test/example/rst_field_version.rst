@@ -1,5 +1,5 @@
 
-.. Id: git-versioning/0.2.1-dev test/example/rst_field_version.rst
+.. Id: git-versioning/0.2.10-dev test/example/rst_field_version.rst
 
-:Version: 0.2.1-dev (git-versioning)
+:Version: 0.2.10-dev (git-versioning)
 

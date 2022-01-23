@@ -48,20 +48,19 @@ c_install()
 	chmod +x $PREFIX/bin/git-versioning
 }
 
-func="c_$1"
-( test -n "$1" && type $func &> /dev/null ) && {
-
-	shift 1
-	$func $@
-	exit
-
-} || {
-
+c_update()
+{
 	# auto-remove for existing install
 	[ ! -e "$V_SH_SHARE" ] || c_uninstall
 	c_install
-	exit
-
 }
+
+test -n "$1" || set -- update
+func="c_$1"
+type $func &> /dev/null || {
+  echo "install:$1?" >&2
+  exit 64
+}
+$func
 
 # Id: git-versioning/0.0.27-master install.sh

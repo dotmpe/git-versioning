@@ -1,8 +1,14 @@
+# The app-id, extracted from the project checkout if not given
 App-Id: git-versioning
-# Version:
+# TEST: Version:
+# The main file contains the canonical version for the project
 Main-File: ReadMe.rst
 # TODO: Main-File-Key: Version
+# Define shell script to read/write from more formats
 Local-Formats: local-formats.sh
 # TEST: Formats: lib/formats.sh
-# File-List: .versioned-files.list
-# Other-Files: 
+# If not at the default location, this file should list each filename with
+# embedded versions, starting with Main-File. No patterns are allowed.
+#File-List: .versioned-files.list
+# If no File-List is specified, it is build from Main-File and a pattern given here
+#Other-Files: 

@@ -15,8 +15,9 @@ ifeq ($(PROJECT),)
 PROJECT := $(notdir $(BASE))
 endif
 
-VERSION             := $(./bin/cli-version version)
-VERSION             ?= 0.2.1-dev# git-versioning
+#VERSION             := $(./bin/cli-version version)
+VERSION             := 0.2.10-dev# git-versioning
+$(info Version: $(VERSION))
 #ID                  := git-versioning/0.0.16-master
 #VERSION             := $(patsubst $(PROJECT)/%,%,$(ID))
 

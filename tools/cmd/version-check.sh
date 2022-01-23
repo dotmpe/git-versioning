@@ -2,7 +2,7 @@
 
 set -e
 
-# Id: git-versioning/0.2.1-dev tools/cmd/version-check.sh
+# Id: git-versioning/0.2.10-dev tools/cmd/version-check.sh
 
 # External hook for git-versioning.
 # See V_CHECK=$V_TOP_PATH/tools/version-check.sh
@@ -26,10 +26,10 @@ do
 
     ( grep -i 'version.*\<'$VER_STR'\>.*'$APP_ID $doc \
         || grep -i '[Ii]d[:=].*\<'$VER_STR'\>.*'$APPID $doc ) >> /dev/null && {
-      test $verbosity -lt 3 || \
+      test $verbosity -le 3 || \
         echo "Version match in $doc"
     } || {
-      test $verbosity -lt 3 || \
+      test $verbosity -le 3 || \
         echo "Version mismatch in $doc" 1>&2
       e=$(( $e + 1 ))
     }
