@@ -32,7 +32,7 @@ Options per project (config file relative to project root):
       echo test.sh >> .versioned-files.lst
 
 
-2. Or/and in addition, ``.version-attributes`` to customize main-document, list-file, and other
+2. Or/and in addition, ``.properties`` to customize main-document, list-file, and other
    settings::
 
       App-Id: git-versioning

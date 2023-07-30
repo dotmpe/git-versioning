@@ -11,7 +11,8 @@ ____________
     GIT workflow. Made tasks on hook install/manage.
 
 (0.2.10-dev)
-   ..
+   - Renamed ``.version-attributes`` file to ``.properties``, and made
+     configurable by env setting.
 
 .. [stack-25929225] https://stackoverflow.com/questions/25929225/how-to-deploy-to-github-with-file-pattern-on-travis
 .. _x-ci: //github.com/bvberkum/x-ci

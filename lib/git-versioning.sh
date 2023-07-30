@@ -52,6 +52,7 @@ version=0.2.10-dev # git-versioning
   V_SNAPSHOT_DATE_FMT=%Y%m%d-%H%M
 }
 
+[ -n "$V_PROPERTIES" ] || V_PROPERTIES=.properties
 
 
 # Determine package metafile
@@ -135,7 +136,7 @@ loadVersion()
 
   case "$doc" in
 
-    *.properties )
+    *"$V_PROPERTIES" )
         STR=`get_properties_version $doc `
         parse_version "$STR"
       ;;
@@ -175,14 +176,14 @@ load()
     exit 2
   }
 
-  # Load/override settings from version-attributes
-  test ! -e .version-attributes || {
+  # Load/override settings from properties
+  test ! -e "$V_PROPERTIES" || {
 
-    export_property .version-attributes File-List V_DOC_LIST
-    export_property .version-attributes App-Id APP_ID
-    export_property .version-attributes Main-File V_MAIN_DOC
-    export_property .version-attributes Other-Files V_DOC_LIST_FILES
-    export_property .version-attributes Version VER_STR
+    export_property "$V_PROPERTIES" File-List V_DOC_LIST
+    export_property "$V_PROPERTIES" App-Id APP_ID
+    export_property "$V_PROPERTIES" Main-File V_MAIN_DOC
+    export_property "$V_PROPERTIES" Other-Files V_DOC_LIST_FILES
+    export_property "$V_PROPERTIES" Version VER_STR
   }
 
   test -n "$APP_ID" || {
@@ -241,8 +242,8 @@ read_doc_list()
   done
 }
 
-test ! -e .version-attributes ||
-  formats=$(get_property .version-attributes Formats)
+test ! -e "$V_PROPERTIES" ||
+  formats=$(get_property "$V_PROPERTIES" Formats)
 test -n "$formats" && {
   test -e "$formats" && {
     source $formats
@@ -253,8 +254,8 @@ test -n "$formats" && {
   source $LIB/formats.sh
 }
 
-test ! -e .version-attributes ||
-  local_formats=$(get_property .version-attributes Local-Formats)
+test ! -e "$V_PROPERTIES" ||
+  local_formats=$(get_property "$V_PROPERTIES" Local-Formats)
 test -n "$local_formats" -a -e "$local_formats" && {
   stderr info "Including local formats from $local_formats"
   source $local_formats
