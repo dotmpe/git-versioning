@@ -1,3 +1,4 @@
+# ex:ft=todo:
 x 2016-03-25 2019-01-27 TODO: development, stabilization, release. Can some scripts help? Looking at the tools and issues. <doc/dev.rst> Moved all focus to +U_s and will probably be moving src/doc content there too while progressing.
 
 2017-03-07 TODO: add & test basher install <ReadMe.rst>
