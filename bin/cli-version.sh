@@ -49,7 +49,7 @@ if [ -n "$0" ] && [ $0 != "-bash" ]; then
 
     $scriptname | cli-version )
 
-        test -n "$verbosity" || verbosity=3
+        test -n "$verbosity" || verbosity=${v:-3}
 
         # function name first as argument,
         cmd=$1
